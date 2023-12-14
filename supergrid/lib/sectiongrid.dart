@@ -1,94 +1,127 @@
+library supergrid;
+
 import 'package:flutter/material.dart';
 
-class SectionGrid extends StatefulWidget {
-  final List<dynamic> sections;
-  final double itemDimension;
-  final bool fixed;
-  final double spacing;
-  final dynamic style;
-  final dynamic additionalRowStyle;
-  final dynamic itemContainerStyle;
-  final double staticDimension;
-  final Function onLayout;
-  final double maxDimension;
-  final String listKey;
-  final Function keyExtractor;
-  final bool invertedRow;
-  final int maxItemsPerRow;
-  final bool adjustGridToStyles;
-  final dynamic customSectionList;
-
-  SectionGrid({
-    required this.sections,
-    this.itemDimension = 120,
-    this.fixed = false,
-    this.spacing = 10,
-    this.style,
-    this.additionalRowStyle,
-    this.itemContainerStyle,
-    this.staticDimension,
-    this.onLayout,
-    this.maxDimension,
-    this.listKey,
-    this.keyExtractor,
-    this.invertedRow = false,
-    this.maxItemsPerRow,
-    this.adjustGridToStyles = false,
-    this.customSectionList,
-  });
-
+class SectionGridView extends StatefulWidget {
+  const SectionGridView(
+      {super.key,
+      required this.color,
+      required this.crossAxisCount,
+      required this.crossAxisSpacing,
+      required this.mainAxisSpacing,
+      required this.padding,
+      required this.sections,
+      required this.renderItem,
+      required this.itemCount,
+      required this.boxDecoration,
+      required this.crossAxisAlignment,
+      required this.onPressed,
+      required this.onLikePressed,
+      required this.icon,
+      this.emptyIndicator = false});
+  final Color color;
+  final int crossAxisCount;
+  final double crossAxisSpacing;
+  final double mainAxisSpacing;
+  final EdgeInsets padding;
+  final List sections;
+  final Widget Function(Object data) renderItem;
+  final int itemCount;
+  final BoxDecoration boxDecoration;
+  final CrossAxisAlignment crossAxisAlignment;
+  final IconData icon;
+  final bool emptyIndicator;
+  final void Function(int index)? onPressed;
+  final void Function(int index, bool liked)? onLikePressed;
   @override
-  _SectionGridState createState() => _SectionGridState();
+  State<SectionGridView> createState() => _SectionGridViewState();
 }
 
-class _SectionGridState extends State<SectionGrid> {
-  double totalDimension = 0;
-
+class _SectionGridViewState extends State<SectionGridView> {
+  List<bool> likedStates = [];
   @override
   void initState() {
     super.initState();
-    totalDimension = widget.staticDimension ?? MediaQuery.of(context).size.width;
+    likedStates = List<bool>.filled(widget.itemCount, false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (widget.staticDimension == null) {
-          totalDimension = constraints.maxWidth;
-        }
+    return Expanded(
+      child: Padding(
+        padding: widget.padding,
+        child: Container(
+          color: widget.color,
+          child: Stack(
+            children: [
+              Visibility(
+                  visible: widget.sections.isEmpty && widget.emptyIndicator,
+                  child: const Center(
+                      child: Text(
+                    'No items',
+                  ))),
+              Visibility(
+                visible: widget.sections.isNotEmpty,
+                child: ListView.builder(
+                  itemCount: widget.sections.length,
+                  itemBuilder: (context, sectionIndex) {
+                    final section = widget.sections[sectionIndex];
 
-        if (widget.onLayout != null) {
-          widget.onLayout!(constraints);
-        }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          section.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: widget.crossAxisCount,
+                            crossAxisSpacing: widget.crossAxisSpacing,
+                            mainAxisSpacing: widget.mainAxisSpacing,
+                          ),
+                          itemCount: section.data.length,
+                          itemBuilder: (context, index) {
+                            final data = section.data[index];
 
-        // Calculate the number of items per row and the item width based on the total width
-        int itemsPerRow = (totalDimension / widget.itemDimension).floor();
-        double itemWidth = totalDimension / itemsPerRow;
-
-        return ListView.builder(
-          itemCount: widget.sections.length,
-          itemBuilder: (context, index) {
-            var section = widget.sections[index];
-            var items = section['data'];
-
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: itemsPerRow,
-                childAspectRatio: itemWidth / widget.itemDimension,
+                            return InkWell(
+                              onTap: () {
+                                if (widget.onPressed != null) {
+                                  widget.onPressed!(index);
+                                }
+                              },
+                              child: Container(
+                                decoration: widget.boxDecoration,
+                                child: Column(
+                                  crossAxisAlignment: widget.crossAxisAlignment,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius:
+                                            const BorderRadius.vertical(
+                                          top: Radius.circular(8.0),
+                                        ),
+                                        child: widget.renderItem(data)),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: widget.renderItem(items[index]),
-                );
-              },
-            );
-          },
-        );
-      },
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
