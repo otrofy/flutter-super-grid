@@ -121,13 +121,11 @@ class _CustomGridViewState extends State<CustomGridView> {
                             Expanded(
                               child: Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: [
-                                        
-                                      ],
+                                      children: [],
                                     ),
                                   ),
                                   const SizedBox(height: 8),
