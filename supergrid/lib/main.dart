@@ -2,7 +2,6 @@ library supergrid;
 
 import 'package:flutter/material.dart';
 
-
 class CustomGridView extends StatefulWidget {
   CustomGridView(
       {super.key,
@@ -35,6 +34,7 @@ class CustomGridView extends StatefulWidget {
   @override
   State<CustomGridView> createState() => _CustomGridViewState();
 }
+
 class _CustomGridViewState extends State<CustomGridView> {
   List<bool> likedStates = [];
   @override
@@ -42,9 +42,9 @@ class _CustomGridViewState extends State<CustomGridView> {
     super.initState();
     likedStates = List<bool>.filled(widget.itemCount, false);
   }
+
   @override
   Widget build(BuildContext context) {
-    List products = [];
     return Expanded(
       child: Padding(
         padding: widget.padding,
@@ -56,11 +56,8 @@ class _CustomGridViewState extends State<CustomGridView> {
                   visible: widget.list.isEmpty && widget.emptyIndicator,
                   child: const Center(
                       child: Text(
-                    'No items for this category',
-                
-                  )
-                  )
-                  ),
+                    'No items',
+                  ))),
               Visibility(
                 visible: widget.list.isNotEmpty,
                 child: GridView.builder(
@@ -69,15 +66,12 @@ class _CustomGridViewState extends State<CustomGridView> {
                     crossAxisSpacing: widget.crossAxisSpacing,
                     mainAxisSpacing: widget.mainAxisSpacing,
                   ),
-                  itemCount: widget
-                      .itemCount,
+                  itemCount: widget.itemCount,
                   itemBuilder: (context, index) {
-                    String title = widget.list[index].productName;
-                    String price = widget.list[index].price;
-                    String photo = widget.list[index].productFiles[0].file.path;
+                    String photo = widget.list[index];
                     int id = widget.list[index].id;
                     bool isLiked = false;
-                  
+
                     return InkWell(
                       onTap: () {
                         if (widget.onPressed != null) {
@@ -132,21 +126,7 @@ class _CustomGridViewState extends State<CustomGridView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 1),
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              title,
-                                              softWrap: true,
-                                              maxLines:
-                                                  1, // Ajusta el número de líneas según lo necesites
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ),
-                                       
+                                        
                                       ],
                                     ),
                                   ),
