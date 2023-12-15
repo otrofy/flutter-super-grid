@@ -50,9 +50,6 @@ SimpleGridView(
   horizontalSpacing: 10.0,
   horizontal: false,
   invertedRow: false,
-  onPressed: (index) {
-    // Handle item tap
-  },
 )
 ```
 
@@ -114,6 +111,22 @@ SectionGridView(
   ),
 )
 ```
+
+## Configuration
+
+- `data`: The sections to display in the grid.
+- `renderItem`: The function that renders each item in the grid.
+- `itemWidth`: The width of each grid item.
+- `itemHeight`: The height of each grid item.
+- `color`: Background color of the grid container.
+- `padding`: Padding around the grid container.
+- `gridViewPadding`: Padding for the internal GridView.
+- `verticalSpacing`: Spacing between grid items vertically.
+- `horizontalSpacing`: Spacing between grid items horizontally.
+- `horizontal`: Whether the grid view is horizontal.
+- `invertedRow`: Whether to invert the row.
+- `onPressed`: Callback when an item is tapped.
+
 
 ## Documentation
 

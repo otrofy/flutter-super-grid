@@ -10,7 +10,7 @@ enum TitleAlignment {
 
 /// A widget that displays a grid of sections.
 class SimpleGridView extends StatefulWidget {
-  /// Creates a `FlatGridView`.
+  /// Creates a `SimpleGridView`.
   const SimpleGridView({
     super.key,
     required this.data,
@@ -24,7 +24,6 @@ class SimpleGridView extends StatefulWidget {
     this.horizontalSpacing = 10,
     this.horizontal = false,
     this.invertedRow = false,
-    this.onPressed,
   });
 
   /// The background color of the grid container.
@@ -53,9 +52,6 @@ class SimpleGridView extends StatefulWidget {
 
   /// The function that renders each item in the grid.
   final Widget Function(dynamic data) renderItem;
-
-  /// The callback function when an item is pressed.
-  final void Function(int index)? onPressed;
 
   /// Whether to invert the row.
   final bool invertedRow;
@@ -107,14 +103,8 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                     final itemData = widget.invertedRow
                         ? widget.data.reversed.toList()[index]
                         : widget.data[index];
-                    return InkWell(
-                      onTap: () {
-                        if (widget.onPressed != null) {
-                          widget.onPressed!(index);
-                        }
-                      },
-                      child: widget.renderItem(itemData),
-                    );
+
+                    return widget.renderItem(itemData);
                   },
                 ),
               ),
