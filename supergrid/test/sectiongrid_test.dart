@@ -10,11 +10,11 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: SectionGridView(
+              itemsPerRow: 3,
               sections: const [],
               renderItem: (data) =>
                   Container(), // Replace with your custom item widget
-              itemWidth: 100,
-              itemHeight: 100,
+              itemSize: 100,
             ),
           ),
         ),
@@ -28,11 +28,11 @@ void main() {
       final sections = [
         {
           'title': 'Section 1',
-          'data': [1, 2, 3],
+          'data': [1, 2, 3, 4, 5, 6, 7],
         },
         {
           'title': 'Section 2',
-          'data': [4, 5, 6],
+          'data': [4, 5, 6, 7, 8, 9, 10],
         },
       ];
 
@@ -40,11 +40,11 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: SectionGridView(
+              itemsPerRow: 2,
               sections: sections,
               renderItem: (data) =>
                   Container(), // Replace with your custom item widget
-              itemWidth: 100,
-              itemHeight: 100,
+              itemSize: 100,
             ),
           ),
         ),
