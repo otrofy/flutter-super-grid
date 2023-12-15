@@ -4,23 +4,17 @@ import 'package:supergrid/sectiongrid.dart';
 
 void main() {
   group('SectionGridView', () {
-    testWidgets('Renders empty indicator when section is empty',
-        (tester) async {
+    testWidgets('Renders correctly with empty sections',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: SectionGridView(
-              color: Colors.white,
-              itemWidth: 200,
-              itemHeight: 200,
-              horizontalSpacing: 10,
-              verticalSpacing: 10,
-              padding: EdgeInsets.all(10),
               sections: const [],
-              renderItem: (data) => Container(),
-              itemCount: 0,
-              boxDecoration: BoxDecoration(),
-              onPressed: null,
+              renderItem: (data) =>
+                  Container(), // Replace with your custom item widget
+              itemWidth: 100,
+              itemHeight: 100,
             ),
           ),
         ),
@@ -29,16 +23,16 @@ void main() {
       expect(find.text('No items'), findsOneWidget);
     });
 
-    testWidgets('Renders section title and items when section is not empty',
-        (tester) async {
+    testWidgets('Renders correctly with non-empty sections',
+        (WidgetTester tester) async {
       final sections = [
         {
           'title': 'Section 1',
-          'data': [1, 2, 3]
+          'data': [1, 2, 3],
         },
         {
           'title': 'Section 2',
-          'data': [4, 5, 6]
+          'data': [4, 5, 6],
         },
       ];
 
@@ -46,26 +40,11 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: SectionGridView(
-              color: Colors.white,
-              itemWidth: 200,
-              itemHeight: 200,
-              horizontalSpacing: 10,
-              verticalSpacing: 10,
-              padding: EdgeInsets.all(10),
-              sections: const [
-                {
-                  'title': 'title 1',
-                  'data': [1, 2, 3]
-                },
-                {
-                  'title': 'title 2',
-                  'data': [4, 5, 6]
-                },
-              ],
-              renderItem: (data) => Container(),
-              itemCount: sections.length,
-              boxDecoration: BoxDecoration(),
-              onPressed: null,
+              sections: sections,
+              renderItem: (data) =>
+                  Container(), // Replace with your custom item widget
+              itemWidth: 100,
+              itemHeight: 100,
             ),
           ),
         ),
@@ -73,7 +52,12 @@ void main() {
 
       expect(find.text('Section 1'), findsOneWidget);
       expect(find.text('Section 2'), findsOneWidget);
-      expect(find.byType(InkWell), findsNWidgets(6));
+      expect(
+          find.byType(InkWell),
+          findsNWidgets(
+              6)); // Replace with the number of items in your sections
     });
+
+    // Add more test cases as needed
   });
 }
