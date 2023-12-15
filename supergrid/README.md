@@ -121,18 +121,18 @@ SectionGridView(
 - `itemHeight`: The height of each grid item.
 - `color`: Background color of the grid container.
 - `padding`: Padding around the grid container.
-gridViewHeight
-gridViewWidth
+- `gridViewHeight`: Height of the internal GridView.
+- `gridViewWidth`: Width of the internal GridView.
 - `gridViewPadding`: Padding for the internal GridView.
 - `verticalSpacing`: Spacing between grid items vertically.
 - `horizontalSpacing`: Spacing between grid items horizontally.
 - `horizontal`: Whether the grid view is horizontal.
 - `invertedRow`: Whether to invert the row.
 - `onPressed`: Callback when an item is tapped.
- this.titleAlignment = TitleAlignment.start,
-    this.titleBackgroundColor = Colors.transparent,
-    this.titlePadding = const EdgeInsets.all(8.0),
-    this.titleTextStyle 
+- `titleAlignment`: Alignment of the section title. (Default is `TitleAlignment.start`)
+- `titleBackgroundColor`: Background color of the section title container. (Default is `Colors.transparent`)
+- `titlePadding`: Padding around the section title. (Default is `EdgeInsets.all(8.0)`)
+- `titleTextStyle`: Style of the section title text. (Default is a basic text style)
 
 
 ## Documentation
