@@ -11,7 +11,7 @@ void main() {
           home: Scaffold(
             body: SectionGridView(
               color: Colors.white,
-              crossAxisCount: 2,
+              maxItemWidth: 200,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               padding: EdgeInsets.all(10),
@@ -20,10 +20,10 @@ void main() {
               itemCount: 0,
               boxDecoration: BoxDecoration(),
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               onPressed: null,
               onLikePressed: null,
               icon: Icons.favorite,
-              emptyIndicator: true,
             ),
           ),
         ),
@@ -50,7 +50,7 @@ void main() {
           home: Scaffold(
             body: SectionGridView(
               color: Colors.white,
-              crossAxisCount: 2,
+              maxItemWidth: 200,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               padding: EdgeInsets.all(10),
@@ -68,10 +68,10 @@ void main() {
               itemCount: sections.length,
               boxDecoration: BoxDecoration(),
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               onPressed: null,
               onLikePressed: null,
               icon: Icons.favorite,
-              emptyIndicator: true,
             ),
           ),
         ),
