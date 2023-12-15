@@ -137,6 +137,7 @@ class _SectionGridViewState extends State<SectionGridView> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GridView.builder(
+                          padding: widget.gridViewPadding,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
