@@ -67,52 +67,90 @@ class FlatGridView extends StatefulWidget {
   State<FlatGridView> createState() => _FlatGridViewState();
 }
 
+// The _FlatGridViewState class manages the state for the FlatGridView widget.
+// It extends the generic State class specialized for the FlatGridView.
 class _FlatGridViewState extends State<FlatGridView> {
+  // The initState method is the first method called when this object is
+  // inserted into the tree. The Flutter framework will call this method exactly
+  // once for each State object it creates.
   @override
   void initState() {
-    super.initState();
+    super
+        .initState(); // Always call super.initState() first in initState() method.
   }
 
+  // The build method is called each time Flutter needs to render the widget on
+  // the screen. It returns a widget tree that Flutter will display.
   @override
   Widget build(BuildContext context) {
+    // Padding widget adds space around the grid view.
     return Padding(
-      padding: widget.padding,
+      padding: widget.padding, // Uses padding from the widget's properties.
       child: Container(
-        color: widget.color,
+        color: widget
+            .color, // Sets the background color for the entire container of the grid view.
+        // Stack allows for overlapping of widgets.
         child: Stack(
           children: [
+            // The Visibility widget conditionally renders its child widget based on the visible property.
+            // This particular Visibility widget displays a message when there are no items to show.
             Visibility(
-              visible: widget.data.isEmpty,
-              child: const Center(child: Text('No items')),
+              visible: widget.data
+                  .isEmpty, // Determines visibility based on if the data list is empty.
+              child: const Center(
+                  child: Text(
+                      'No items')), // Centered text to display when no items are present.
             ),
+            // Another Visibility widget to only show the grid when there is data.
             Visibility(
-              visible: widget.data.isNotEmpty,
+              visible: widget.data
+                  .isNotEmpty, // Visibility depends on if there's data in the list.
+              // SingleChildScrollView allows the grid to be scrollable.
               child: SingleChildScrollView(
-                scrollDirection:
-                    widget.horizontal ? Axis.horizontal : Axis.vertical,
+                scrollDirection: widget.horizontal
+                    ? Axis.horizontal
+                    : Axis
+                        .vertical, // Sets the scroll direction based on the horizontal property.
+                // GridView.builder creates a grid of items.
                 child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection:
-                      widget.horizontal ? Axis.horizontal : Axis.vertical,
-                  padding: widget.gridViewPadding,
-                  shrinkWrap: true,
+                  physics:
+                      const NeverScrollableScrollPhysics(), // Disables scrolling within the GridView itself.
+                  scrollDirection: widget.horizontal
+                      ? Axis.horizontal
+                      : Axis
+                          .vertical, // Sets the scroll direction of the GridView.
+                  padding:
+                      widget.gridViewPadding, // Padding within the GridView.
+                  shrinkWrap:
+                      true, // Ensures that the GridView only occupies space for its children.
+                  // The gridDelegate manages the layout of the grid.
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: widget.itemsPerRow,
-                    mainAxisExtent: widget.itemSize,
-                    crossAxisSpacing: widget.horizontalSpacing,
-                    mainAxisSpacing: widget.verticalSpacing,
+                    crossAxisCount: widget
+                        .itemsPerRow, // Number of items per row or column.
+                    mainAxisExtent:
+                        widget.itemSize, // The size of items in the main axis.
+                    crossAxisSpacing: widget
+                        .horizontalSpacing, // Spacing between items horizontally.
+                    mainAxisSpacing: widget
+                        .verticalSpacing, // Spacing between items vertically.
                   ),
-                  itemCount: widget.data.length,
+                  itemCount:
+                      widget.data.length, // The number of items to display.
                   itemBuilder: (context, index) {
+                    // Builder function that creates each item.
+                    // Determines the data for the current item, inverting if necessary.
                     final itemData = widget.invertedRow
                         ? widget.data.reversed.toList()[index]
                         : widget.data[index];
+                    // InkWell is used to detect taps on individual grid items.
                     return InkWell(
                       onTap: () {
+                        // Calls the onPressed callback when an item is tapped.
                         if (widget.onPressed != null) {
                           widget.onPressed!(index);
                         }
                       },
+                      // The renderItem function is called to build the UI for each item.
                       child: widget.renderItem(itemData),
                     );
                   },
