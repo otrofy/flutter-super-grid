@@ -14,12 +14,15 @@ class SectionGridView extends StatefulWidget {
   const SectionGridView({
     super.key,
     required this.sections,
+    required this.itemsPerRow,
     required this.renderItem,
-    required this.itemWidth,
-    required this.itemHeight,
+    required this.itemSize,
+    this.gridViewHeight = 500,
+    this.gridViewWidth = double.infinity,
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(0),
     this.gridViewPadding = const EdgeInsets.all(8.0),
+    this.horizontal = false,
     this.verticalSpacing = 10,
     this.horizontalSpacing = 10,
     this.invertedRow = false,
@@ -37,11 +40,20 @@ class SectionGridView extends StatefulWidget {
   /// The background color of the grid container.
   final Color color;
 
-  /// The width of each grid item.
-  final double itemWidth;
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
+  final int itemsPerRow;
 
-  /// The height of each grid item.
-  final double itemHeight;
+  /// The size of the grid item in the main axis direction [The grid will occupy the whole space available in the cross axis].
+  final double itemSize;
+
+  /// The height of the gridview.
+  final double gridViewHeight;
+
+  /// The width of the gridview.
+  final double gridViewWidth;
+
+  /// Whether the gridview grows horizontally or vertically.
+  final bool horizontal;
 
   /// The spacing between grid items vertically.
   final double verticalSpacing;
@@ -134,34 +146,39 @@ class _SectionGridViewState extends State<SectionGridView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       getTitleWidget(title),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.builder(
-                          padding: widget.gridViewPadding,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: widget.itemWidth,
-                            childAspectRatio:
-                                widget.itemWidth / widget.itemHeight,
-                            crossAxisSpacing: widget.horizontalSpacing,
-                            mainAxisSpacing: widget.verticalSpacing,
+                      SizedBox(
+                        height: widget.gridViewHeight,
+                        width: widget.gridViewWidth,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            scrollDirection: widget.horizontal
+                                ? Axis.horizontal
+                                : Axis.vertical,
+                            padding: widget.gridViewPadding,
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: widget.itemsPerRow,
+                              mainAxisExtent: widget.itemSize,
+                              crossAxisSpacing: widget.horizontalSpacing,
+                              mainAxisSpacing: widget.verticalSpacing,
+                            ),
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              final itemData = widget.invertedRow
+                                  ? dataInverted[index]
+                                  : data[index];
+                              return InkWell(
+                                onTap: () {
+                                  if (widget.onPressed != null) {
+                                    widget.onPressed!(sectionIndex, index);
+                                  }
+                                },
+                                child: widget.renderItem(itemData),
+                              );
+                            },
                           ),
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            final itemData = widget.invertedRow
-                                ? dataInverted[index]
-                                : data[index];
-                            return InkWell(
-                              onTap: () {
-                                if (widget.onPressed != null) {
-                                  widget.onPressed!(sectionIndex, index);
-                                }
-                              },
-                              child: widget.renderItem(itemData),
-                            );
-                          },
                         ),
                       ),
                     ],
