@@ -1,39 +1,113 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# supergrid
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+[![Pub Version](https://img.shields.io/pub/v/supergrid)](https://pub.dev/packages/supergrid)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+A customizable Flutter package for displaying grid views of sections with additional features.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Installation
 
-## Features
+Add the following to your `pubspec.yaml` file:
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  supergrid: ^1.0.0
 ```
 
-## Additional information
+Then, run:
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```bash
+$ flutter pub get
+```
+
+## FlatGridView
+
+### Usage
+
+```dart
+import 'package:supergrid/supergrid.dart';
+
+FlatGridView(
+  data: yourDataList,
+  renderItem: (itemData) {
+    // Customize how each item is rendered
+    return YourCustomItemWidget(itemData);
+  },
+  itemWidth: 150.0,
+  itemHeight: 200.0,
+  color: Colors.blue,
+  padding: EdgeInsets.all(16.0),
+  gridViewPadding: EdgeInsets.all(8.0),
+  verticalSpacing: 10.0,
+  horizontalSpacing: 10.0,
+  horizontal: false,
+  invertedRow: false,
+  onPressed: (index) {
+    // Handle item tap
+  },
+)
+```
+
+### Features
+
+- Customizable grid view with various configuration options.
+- Support for item tap callbacks.
+- Option to invert the row and display the grid horizontally.
+
+## SectionGridView
+
+### Usage
+
+```dart
+import 'package:supergrid/supergrid.dart';
+
+SectionGridView(
+  sections: yourSectionsList,
+  renderItem: (itemData) {
+    // Customize how each item is rendered
+    return YourCustomItemWidget(itemData);
+  },
+  itemWidth: 150.0,
+  itemHeight: 200.0,
+  color: Colors.blue,
+  padding: EdgeInsets.all(16.0),
+  gridViewPadding: EdgeInsets.all(8.0),
+  verticalSpacing: 10.0,
+  horizontalSpacing: 10.0,
+  invertedRow: false,
+  onPressed: (sectionIndex, index) {
+    // Handle item tap
+  },
+  titleAlignment: TitleAlignment.start,
+  titleBackgroundColor: Colors.transparent,
+  titlePadding: EdgeInsets.all(8.0),
+  titleTextStyle: TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 16,
+    color: Colors.black,
+  ),
+)
+```
+
+### Features
+
+- Customizable grid view with sections and various configuration options.
+- Support for item tap callbacks with section and item indices.
+- Option to invert the row and display the grid horizontally.
+- Section titles with customizable styling and alignment.
+
+
+## Contributing
+
+If you would like to contribute to this project, please follow the steps outlined in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments
+
+Special thanks to [contributors](link-to-contributors) who have helped make this package better.
+
+## Issues and Contributions 
+If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository. Contributions and pull requests are welcome!
