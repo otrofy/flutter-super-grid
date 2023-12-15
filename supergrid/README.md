@@ -1,39 +1,143 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# supergrid
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+A customizable Flutter package for displaying grid views of sections with additional features.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+## Installation
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Add the following to your `pubspec.yaml` file:
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  supergrid: ^1.0.0
 ```
 
-## Additional information
+Then, run:
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```bash
+$ flutter pub get
+```
+
+
+### Features
+
+- Customizable grid view with sections and various configuration options.
+- Support for item tap callbacks with section and item indices.
+- Option to invert the row and display the grid horizontally.
+- Section titles with customizable styling and alignment.
+
+
+### Usage
+
+### SimpleGridView
+
+```dart
+import 'package:supergrid/supergrid.dart';
+
+
+
+SimpleGridView(
+  data: yourDataList,
+  renderItem: (itemData) {
+    // Customize how each item is rendered
+    return YourCustomItemWidget(itemData);
+  },
+  itemWidth: 150.0,
+  itemHeight: 200.0,
+  color: Colors.blue,
+  padding: EdgeInsets.all(16.0),
+  gridViewPadding: EdgeInsets.all(8.0),
+  verticalSpacing: 10.0,
+  horizontalSpacing: 10.0,
+  horizontal: false,
+  invertedRow: false,
+)
+```
+
+### FlatGridView
+```dart
+import 'package:supergrid/supergrid.dart';
+
+
+FlatGridView(
+  data: yourDataList,
+  renderItem: (itemData) {
+    // Customize how each item is rendered
+    return YourCustomItemWidget(itemData);
+  },
+  itemWidth: 150.0,
+  itemHeight: 200.0,
+  color: Colors.blue,
+  padding: EdgeInsets.all(16.0),
+  gridViewPadding: EdgeInsets.all(8.0),
+  verticalSpacing: 10.0,
+  horizontalSpacing: 10.0,
+  horizontal: false,
+  invertedRow: false,
+  onPressed: (index) {
+    // Handle item tap
+  },
+)
+```
+
+### SectionGridView
+
+```dart
+import 'package:supergrid/supergrid.dart';
+
+SectionGridView(
+  sections: yourSectionsList,
+  renderItem: (itemData) {
+    // Customize how each item is rendered
+    return YourCustomItemWidget(itemData);
+  },
+  itemWidth: 150.0,
+  itemHeight: 200.0,
+  color: Colors.blue,
+  padding: EdgeInsets.all(16.0),
+  gridViewPadding: EdgeInsets.all(8.0),
+  verticalSpacing: 10.0,
+  horizontalSpacing: 10.0,
+  invertedRow: false,
+  onPressed: (sectionIndex, index) {
+    // Handle item tap
+  },
+  titleAlignment: TitleAlignment.start,
+  titleBackgroundColor: Colors.transparent,
+  titlePadding: EdgeInsets.all(8.0),
+  titleTextStyle: TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 16,
+    color: Colors.black,
+  ),
+)
+```
+
+## Configuration
+
+- `data`: The sections to display in the grid.
+- `renderItem`: The function that renders each item in the grid.
+- `itemWidth`: The width of each grid item.
+- `itemHeight`: The height of each grid item.
+- `color`: Background color of the grid container.
+- `padding`: Padding around the grid container.
+- `gridViewPadding`: Padding for the internal GridView.
+- `verticalSpacing`: Spacing between grid items vertically.
+- `horizontalSpacing`: Spacing between grid items horizontally.
+- `horizontal`: Whether the grid view is horizontal.
+- `invertedRow`: Whether to invert the row.
+- `onPressed`: Callback when an item is tapped.
+
+
+## Documentation
+
+For detailed documentation, see [API Documentation](https://github.com/otrofy/flutter-super-grid/docs).
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/otrofy/flutter-super-grid/blob/main/LICENSE.md) file for details.
+
+
+
+## Issues and Contributions 
+If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository. Contributions and pull requests are welcome!
