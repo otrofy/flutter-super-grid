@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supergrid/simplegrid.dart';
 
 void main() {
-  group('FlatGridView', () {
+  group('SimpleGridView', () {
     testWidgets('renders empty grid with "No items" text',
         (WidgetTester tester) async {
       await tester.pumpWidget(
