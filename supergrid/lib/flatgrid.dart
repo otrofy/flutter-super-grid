@@ -87,30 +87,36 @@ class _FlatGridViewState extends State<FlatGridView> {
             ),
             Visibility(
               visible: widget.data.isNotEmpty,
-              child: GridView.builder(
-                padding: widget.gridViewPadding,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: widget.itemWidth,
-                  childAspectRatio: widget.itemWidth / widget.itemHeight,
-                  crossAxisSpacing: widget.horizontalSpacing,
-                  mainAxisSpacing: widget.verticalSpacing,
+              child: SingleChildScrollView(
+                scrollDirection:
+                    widget.horizontal ? Axis.horizontal : Axis.vertical,
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection:
+                      widget.horizontal ? Axis.horizontal : Axis.vertical,
+                  padding: widget.gridViewPadding,
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: widget.itemWidth,
+                    childAspectRatio: widget.itemWidth / widget.itemHeight,
+                    crossAxisSpacing: widget.horizontalSpacing,
+                    mainAxisSpacing: widget.verticalSpacing,
+                  ),
+                  itemCount: widget.data.length,
+                  itemBuilder: (context, index) {
+                    final itemData = widget.invertedRow
+                        ? widget.data.reversed.toList()[index]
+                        : widget.data[index];
+                    return InkWell(
+                      onTap: () {
+                        if (widget.onPressed != null) {
+                          widget.onPressed!(index);
+                        }
+                      },
+                      child: widget.renderItem(itemData),
+                    );
+                  },
                 ),
-                itemCount: widget.data.length,
-                itemBuilder: (context, index) {
-                  final itemData = widget.invertedRow
-                      ? widget.data.reversed.toList()[index]
-                      : widget.data[index];
-                  return InkWell(
-                    onTap: () {
-                      if (widget.onPressed != null) {
-                        widget.onPressed!(index);
-                      }
-                    },
-                    child: widget.renderItem(itemData),
-                  );
-                },
               ),
             ),
           ],
