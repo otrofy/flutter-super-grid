@@ -31,7 +31,7 @@ $ flutter pub get
 ### SimpleGridView
 
 ```dart
-import 'package:supergrid/supergrid.dart';
+import 'package:supergrid/simplegrid.dart';
 
 
 
@@ -55,7 +55,7 @@ SimpleGridView(
 
 ### FlatGridView
 ```dart
-import 'package:supergrid/supergrid.dart';
+import 'package:supergrid/flatgrid.dart';
 
 
 FlatGridView(
@@ -82,7 +82,7 @@ FlatGridView(
 ### SectionGridView
 
 ```dart
-import 'package:supergrid/supergrid.dart';
+import 'package:supergrid/sectiongrid.dart';
 
 SectionGridView(
   sections: yourSectionsList,
@@ -114,18 +114,25 @@ SectionGridView(
 
 ## Configuration
 
-- `data`: The sections to display in the grid.
+- `data`: The data to display in the flatgrid or simplegrid.
+- `sections`: The sections to be displayed on the sectiongrid.
 - `renderItem`: The function that renders each item in the grid.
 - `itemWidth`: The width of each grid item.
 - `itemHeight`: The height of each grid item.
 - `color`: Background color of the grid container.
 - `padding`: Padding around the grid container.
+gridViewHeight
+gridViewWidth
 - `gridViewPadding`: Padding for the internal GridView.
 - `verticalSpacing`: Spacing between grid items vertically.
 - `horizontalSpacing`: Spacing between grid items horizontally.
 - `horizontal`: Whether the grid view is horizontal.
 - `invertedRow`: Whether to invert the row.
 - `onPressed`: Callback when an item is tapped.
+ this.titleAlignment = TitleAlignment.start,
+    this.titleBackgroundColor = Colors.transparent,
+    this.titlePadding = const EdgeInsets.all(8.0),
+    this.titleTextStyle 
 
 
 ## Documentation
