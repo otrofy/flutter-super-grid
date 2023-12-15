@@ -15,8 +15,8 @@ class FlatGridView extends StatefulWidget {
     super.key,
     required this.data,
     required this.renderItem,
-    required this.itemWidth,
-    required this.itemHeight,
+    required this.itemsPerRow,
+    required this.itemSize,
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(16),
     this.gridViewPadding = const EdgeInsets.all(8.0),
@@ -27,14 +27,17 @@ class FlatGridView extends StatefulWidget {
     this.onPressed,
   });
 
+  /// The sections to display in the grid.
+  final List data;
+
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
+  final int itemsPerRow;
+
   /// The background color of the grid container.
   final Color color;
 
-  /// The width of each grid item.
-  final double itemWidth;
-
-  /// The height of each grid item.
-  final double itemHeight;
+  /// The size of the grid item in the main axis direction [The grid will occupy the whole space available in the cross axis].
+  final double itemSize;
 
   /// The spacing between grid items vertically.
   final double verticalSpacing;
@@ -47,9 +50,6 @@ class FlatGridView extends StatefulWidget {
 
   /// The padding for the gridView.
   final EdgeInsets gridViewPadding;
-
-  /// The sections to display in the grid.
-  final List data;
 
   /// The function that renders each item in the grid.
   final Widget Function(dynamic data) renderItem;
@@ -96,9 +96,9 @@ class _FlatGridViewState extends State<FlatGridView> {
                       widget.horizontal ? Axis.horizontal : Axis.vertical,
                   padding: widget.gridViewPadding,
                   shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: widget.itemWidth,
-                    childAspectRatio: widget.itemWidth / widget.itemHeight,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: widget.itemsPerRow,
+                    mainAxisExtent: widget.itemSize,
                     crossAxisSpacing: widget.horizontalSpacing,
                     mainAxisSpacing: widget.verticalSpacing,
                   ),
