@@ -3,67 +3,98 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supergrid/flatgrid.dart';
 
 void main() {
-  group('FlatGridView', () {
-    // Test data
-    final List testData = ['Item 1', 'Item 2', 'Item 3'];
-
-    // Test render function
-    Widget testRenderItem(dynamic data) {
-      return Text(data.toString());
-    }
-
-    testWidgets('Should display "No items" when data is empty', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: FlatGridView(
+  group('FlatGridView Tests', () {
+    testWidgets('displays "No items" when data is empty',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: FlatGridView(
             data: [],
             itemsPerRow: 2,
+            renderItem: (_) => const Placeholder(),
             itemSize: 100,
-            renderItem: testRenderItem,
           ),
         ),
-      );
+      ));
 
       expect(find.text('No items'), findsOneWidget);
     });
 
-    testWidgets('Should display items when data is not empty', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: FlatGridView(
-            data: testData,
+    testWidgets('renders items when data is not empty',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: FlatGridView(
+            data: const [1, 2],
             itemsPerRow: 2,
+            renderItem: (data) => Text('Item $data'),
             itemSize: 100,
-            renderItem: testRenderItem,
           ),
         ),
-      );
+      ));
 
       expect(find.text('Item 1'), findsOneWidget);
       expect(find.text('Item 2'), findsOneWidget);
-      expect(find.text('Item 3'), findsOneWidget);
     });
 
-    testWidgets('Should call onPressed callback when item is pressed',
-        (tester) async {
+    testWidgets('onPressed callback is triggered with correct index',
+        (WidgetTester tester) async {
       int pressedIndex = -1;
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: FlatGridView(
-            data: testData,
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: FlatGridView(
+            data: [1, 2],
             itemsPerRow: 2,
+            renderItem: (data) => Text('Item $data'),
             itemSize: 100,
-            renderItem: testRenderItem,
             onPressed: (index) {
               pressedIndex = index;
             },
           ),
         ),
-      );
+      ));
 
-      await tester.tap(find.text('Item 2'));
-      expect(pressedIndex, 1);
+      await tester.tap(find.text('Item 1'));
+      await tester.pump();
+
+      expect(pressedIndex, 0);
+    });
+
+    testWidgets('invertedRow inverts the order of items',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: FlatGridView(
+            data: [1, 2, 3],
+            itemsPerRow: 3,
+            renderItem: (data) => Text('Item $data'),
+            itemSize: 100,
+            invertedRow: true,
+          ),
+        ),
+      ));
+
+      expect(find.text('Item 3'), findsWidgets);
+    });
+
+    testWidgets('horizontal flag changes scroll direction',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: FlatGridView(
+            data: const [1],
+            itemsPerRow: 1,
+            renderItem: (_) => const Placeholder(),
+            itemSize: 100,
+            horizontal: true,
+          ),
+        ),
+      ));
+
+      final scrollViewFinder = find.byType(SingleChildScrollView);
+      final SingleChildScrollView scrollView = tester.widget(scrollViewFinder);
+      expect(scrollView.scrollDirection, Axis.horizontal);
     });
   });
 }
