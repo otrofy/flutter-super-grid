@@ -4,17 +4,22 @@ import 'package:supergrid/flatgrid.dart';
 
 void main() {
   group('FlatGridView', () {
-    testWidgets('renders empty grid with "No items" text',
-        (WidgetTester tester) async {
+    // Test data
+    final List testData = ['Item 1', 'Item 2', 'Item 3'];
+
+    // Test render function
+    Widget testRenderItem(dynamic data) {
+      return Text(data.toString());
+    }
+
+    testWidgets('Should display "No items" when data is empty', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: FlatGridView(
-              data: const [],
-              renderItem: (data) => Container(),
-              itemWidth: 100,
-              itemHeight: 100,
-            ),
+          home: FlatGridView(
+            data: [],
+            itemsPerRow: 2,
+            itemSize: 100,
+            renderItem: testRenderItem,
           ),
         ),
       );
@@ -22,18 +27,14 @@ void main() {
       expect(find.text('No items'), findsOneWidget);
     });
 
-    testWidgets('renders grid with items', (WidgetTester tester) async {
-      final List<String> testData = ['Item 1', 'Item 2', 'Item 3'];
-
+    testWidgets('Should display items when data is not empty', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: FlatGridView(
-              data: testData,
-              renderItem: (data) => Text(data),
-              itemWidth: 100,
-              itemHeight: 100,
-            ),
+          home: FlatGridView(
+            data: testData,
+            itemsPerRow: 2,
+            itemSize: 100,
+            renderItem: testRenderItem,
           ),
         ),
       );
@@ -43,24 +44,20 @@ void main() {
       expect(find.text('Item 3'), findsOneWidget);
     });
 
-    testWidgets('calls onPressed callback when item is pressed',
-        (WidgetTester tester) async {
+    testWidgets('Should call onPressed callback when item is pressed',
+        (tester) async {
       int pressedIndex = -1;
-
-      final List<String> testData = ['Item 1', 'Item 2', 'Item 3'];
 
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: FlatGridView(
-              data: testData,
-              renderItem: (data) => Text(data),
-              itemWidth: 100,
-              itemHeight: 100,
-              onPressed: (index) {
-                pressedIndex = index;
-              },
-            ),
+          home: FlatGridView(
+            data: testData,
+            itemsPerRow: 2,
+            itemSize: 100,
+            renderItem: testRenderItem,
+            onPressed: (index) {
+              pressedIndex = index;
+            },
           ),
         ),
       );
