@@ -13,28 +13,18 @@ class FlatGridView extends StatefulWidget {
   /// Creates a `FlatGridView`.
   const FlatGridView({
     super.key,
-    required this.color,
-    required this.itemWidth,
-    required this.itemHeight,
-    this.verticalSpacing = 10,
-    this.horizontalSpacing = 10,
-    required this.padding,
     required this.data,
     required this.renderItem,
-    required this.itemCount,
-    this.boxDecoration = const BoxDecoration(),
-    required this.onPressed,
+    required this.itemWidth,
+    required this.itemHeight,
+    this.color = Colors.transparent,
+    this.padding = const EdgeInsets.all(16),
     this.gridViewPadding = const EdgeInsets.all(8.0),
-    this.titleAlignment = TitleAlignment.start,
-    this.titleBackgroundColor = Colors.transparent,
-    this.titlePadding = const EdgeInsets.all(8.0),
-    this.titleTextStyle = const TextStyle(
-      fontWeight: FontWeight.normal,
-      fontSize: 16,
-      color: Colors.black,
-    ),
-    this.invertedRow = false,
+    this.verticalSpacing = 10,
+    this.horizontalSpacing = 10,
     this.horizontal = false,
+    this.invertedRow = false,
+    this.onPressed,
   });
 
   /// The background color of the grid container.
@@ -52,38 +42,20 @@ class FlatGridView extends StatefulWidget {
   /// The spacing between grid items horizontally.
   final double horizontalSpacing;
 
-  /// The padding around the grid view.
-  final EdgeInsets gridViewPadding;
-
-  /// The padding around each section.
+  /// The padding for the container.
   final EdgeInsets padding;
+
+  /// The padding for the gridView.
+  final EdgeInsets gridViewPadding;
 
   /// The sections to display in the grid.
   final List data;
 
   /// The function that renders each item in the grid.
-  final Widget Function(Object data) renderItem;
-
-  /// The total number of items in the grid.
-  final int itemCount;
-
-  /// The decoration for each grid item.
-  final BoxDecoration boxDecoration;
+  final Widget Function(dynamic data) renderItem;
 
   /// The callback function when an item is pressed.
   final void Function(int index)? onPressed;
-
-  /// The padding around the title.
-  final EdgeInsets titlePadding;
-
-  /// The alignment of the title.
-  final TitleAlignment titleAlignment;
-
-  /// The background color of the title container.
-  final Color titleBackgroundColor;
-
-  /// The style of the title.
-  final TextStyle titleTextStyle;
 
   /// Whether to invert the row.
   final bool invertedRow;
@@ -96,35 +68,10 @@ class FlatGridView extends StatefulWidget {
 }
 
 class _FlatGridViewState extends State<FlatGridView> {
-  List<bool> likedStates = [];
-
   @override
   void initState() {
     super.initState();
-    likedStates = List<bool>.filled(widget.itemCount, false);
   }
-
-  Widget getTitleWidget(String title) {
-    return Container(
-      color: widget.titleBackgroundColor,
-      width: double.infinity, // Full width
-      padding: widget.titlePadding,
-      child: Align(
-        alignment: {
-          TitleAlignment.start: Alignment.centerLeft,
-          TitleAlignment.center: Alignment.center,
-          TitleAlignment.end: Alignment.centerRight,
-        }[widget.titleAlignment]!,
-        child: Text(
-          title,
-          style: widget.titleTextStyle,
-        ),
-      ),
-    );
-  }
-
-  final data = section['data'] as List;
-  final dataInverted = data.reversed.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -135,12 +82,13 @@ class _FlatGridViewState extends State<FlatGridView> {
         child: Stack(
           children: [
             Visibility(
-              visible: widget.sections.isEmpty,
+              visible: widget.data.isEmpty,
               child: const Center(child: Text('No items')),
             ),
             Visibility(
-              visible: widget.sections.isNotEmpty,
+              visible: widget.data.isNotEmpty,
               child: GridView.builder(
+                padding: widget.gridViewPadding,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -149,10 +97,11 @@ class _FlatGridViewState extends State<FlatGridView> {
                   crossAxisSpacing: widget.horizontalSpacing,
                   mainAxisSpacing: widget.verticalSpacing,
                 ),
-                itemCount: data.length,
+                itemCount: widget.data.length,
                 itemBuilder: (context, index) {
-                  final itemData =
-                      widget.invertedRow ? dataInverted[index] : data[index];
+                  final itemData = widget.invertedRow
+                      ? widget.data.reversed.toList()[index]
+                      : widget.data[index];
                   return InkWell(
                     onTap: () {
                       if (widget.onPressed != null) {
