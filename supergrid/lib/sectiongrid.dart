@@ -95,86 +95,138 @@ class SectionGridView extends StatefulWidget {
   State<SectionGridView> createState() => _SectionGridViewState();
 }
 
+// This is the state class for SectionGridView which extends Stateful widget.
+// It defines the state and behavior of the SectionGridView.
 class _SectionGridViewState extends State<SectionGridView> {
+  // initState is the first method called when the widget is created (after the constructor).
+  // Here it calls super.initState() to ensure the parent class is initialized properly.
   @override
   void initState() {
-    super.initState();
+    super
+        .initState(); // Always call super.initState() first in initState() method.
   }
 
+  // getTitleWidget is a helper method that creates a title widget with the provided title string.
+  // It styles and aligns the title text based on the widget's properties.
   Widget getTitleWidget(String title) {
     return Container(
-      color: widget.titleBackgroundColor,
-      width: double.infinity, // Full width
-      padding: widget.titlePadding,
+      color: widget
+          .titleBackgroundColor, // Sets the background color of the title container.
+      width: double
+          .infinity, // Ensures the container fills the width of its parent.
+      padding: widget.titlePadding, // Applies padding around the title text.
       child: Align(
+        // Align widget allows alignment of the child within itself.
         alignment: {
+          // A map that returns the correct alignment based on the titleAlignment enum.
           TitleAlignment.start: Alignment.centerLeft,
           TitleAlignment.center: Alignment.center,
           TitleAlignment.end: Alignment.centerRight,
-        }[widget.titleAlignment]!,
+        }[widget
+            .titleAlignment]!, // The '!' asserts that the value will not be null.
         child: Text(
-          title,
-          style: widget.titleTextStyle,
+          title, // The actual title text.
+          style: widget
+              .titleTextStyle, // The style for the title text, defined in the parent widget.
         ),
       ),
     );
   }
 
+  // The build method is where the UI is constructed.
   @override
   Widget build(BuildContext context) {
+    // Padding widget to add space around the entire grid view.
     return Padding(
-      padding: widget.padding,
+      padding: widget.padding, // Uses padding from the widget's properties.
       child: Container(
-        color: widget.color,
+        color:
+            widget.color, // Sets the background color for the grid container.
         child: Stack(
+          // Stack widget allows stacking of widgets on top of each other.
           children: [
+            // This Visibility widget conditionally displays the 'No items' text
+            // when there are no sections to display.
             Visibility(
-              visible: widget.sections.isEmpty,
-              child: const Center(child: Text('No items')),
+              visible: widget
+                  .sections.isEmpty, // Checks if the sections list is empty.
+              child: const Center(
+                  child: Text(
+                      'No items')), // Centered text to display when no items are present.
             ),
+            // This Visibility widget conditionally displays the grid view
+            // when there are sections to display.
             Visibility(
-              visible: widget.sections.isNotEmpty,
+              visible: widget.sections
+                  .isNotEmpty, // Checks if there are sections to display.
+              // ListView.builder is used to create a list of sections dynamically.
               child: ListView.builder(
-                itemCount: widget.sections.length,
+                itemCount: widget
+                    .sections.length, // The number of sections to display.
                 itemBuilder: (context, sectionIndex) {
+                  // Retrieves the section data based on the index.
                   final section = widget.sections[sectionIndex];
-                  final title = section['title'] as String;
-                  final data = section['data'] as List;
-                  final dataInverted = data.reversed.toList();
+                  final title =
+                      section['title'] as String; // The title of the section.
+                  final data = section['data']
+                      as List; // The data items within the section.
+                  final dataInverted = data.reversed
+                      .toList(); // Reverses the data if invertedRow is true.
 
+                  // Column widget to layout the title and the grid view vertically.
                   return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment
+                        .start, // Aligns the children to the start of the main-axis.
                     children: [
-                      getTitleWidget(title),
+                      getTitleWidget(
+                          title), // Calls getTitleWidget to get the title widget.
+                      // SizedBox constrains the size of the grid view.
                       SizedBox(
-                        height: widget.gridViewHeight,
-                        width: widget.gridViewWidth,
+                        height: widget
+                            .gridViewHeight, // The height of the grid view.
+                        width:
+                            widget.gridViewWidth, // The width of the grid view.
+                        // Padding around the grid view.
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
+                          // GridView.builder creates a grid of items.
                           child: GridView.builder(
-                            scrollDirection: widget.horizontal
+                            scrollDirection: widget
+                                    .horizontal // Sets the scroll direction of the grid view.
                                 ? Axis.horizontal
                                 : Axis.vertical,
-                            padding: widget.gridViewPadding,
-                            shrinkWrap: true,
+                            padding: widget
+                                .gridViewPadding, // The padding inside the grid view.
+                            shrinkWrap:
+                                true, // Ensures the GridView takes minimum space.
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: widget.itemsPerRow,
-                              mainAxisExtent: widget.itemSize,
-                              crossAxisSpacing: widget.horizontalSpacing,
-                              mainAxisSpacing: widget.verticalSpacing,
+                              crossAxisCount: widget
+                                  .itemsPerRow, // The number of items per row/column.
+                              mainAxisExtent: widget
+                                  .itemSize, // The size of items on the main axis.
+                              crossAxisSpacing: widget
+                                  .horizontalSpacing, // Spacing between items horizontally.
+                              mainAxisSpacing: widget
+                                  .verticalSpacing, // Spacing between items vertically.
                             ),
-                            itemCount: data.length,
+                            itemCount: data
+                                .length, // The number of items in the section.
                             itemBuilder: (context, index) {
+                              // Builder function for each item.
+                              // Decides if the row should be inverted based on the invertedRow property.
                               final itemData = widget.invertedRow
                                   ? dataInverted[index]
                                   : data[index];
+                              // InkWell wraps each item to provide tap functionality.
                               return InkWell(
                                 onTap: () {
+                                  // Calls the onPressed callback when the item is tapped.
                                   if (widget.onPressed != null) {
                                     widget.onPressed!(sectionIndex, index);
                                   }
                                 },
+                                // Calls renderItem to build the UI for each item.
                                 child: widget.renderItem(itemData),
                               );
                             },
