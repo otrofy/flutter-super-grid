@@ -6,6 +6,12 @@ enum TitleAlignment {
   end,
 }
 
+enum ItemAlignment {
+  start,
+  center,
+  end,
+}
+
 /// A widget that displays a grid of sections.
 class SectionGridView extends StatefulWidget {
   /// Creates a `SectionGridView`.
@@ -14,26 +20,29 @@ class SectionGridView extends StatefulWidget {
     required this.color,
     required this.maxItemWidth,
     this.itemAspectRatio = 1.0,
-    required this.crossAxisSpacing,
-    required this.mainAxisSpacing,
+    this.verticalSpacing = 10,
+    this.horizontalSpacing = 10,
     required this.padding,
     required this.sections,
     required this.renderItem,
     required this.itemCount,
     this.boxDecoration = const BoxDecoration(),
-    required this.crossAxisAlignment,
-    required this.mainAxisAlignment,
+    this.horizontalAlignment = ItemAlignment.center,
+    this.verticalAlignment = ItemAlignment.center,
     required this.onPressed,
-    required this.onLikePressed,
-    required this.icon,
     this.gridViewPadding = const EdgeInsets.all(8.0),
     this.titleAlignment = TitleAlignment.start,
     this.titleBackgroundColor = Colors.transparent,
     this.titlePadding = const EdgeInsets.all(8.0),
-    this.titleColor = Colors.white,
+    this.titleTextStyle = const TextStyle(
+      fontWeight: FontWeight.normal,
+      fontSize: 16,
+      color: Colors.black,
+    ),
+    this.invertedRow = false,
   });
 
-  /// The background color of the grid.
+  /// The background color of the grid container.
   final Color color;
 
   /// The maximum width of each grid item.
@@ -42,11 +51,11 @@ class SectionGridView extends StatefulWidget {
   /// The aspect ratio of each grid item. The aspect ratio is width / height.
   final double itemAspectRatio;
 
-  /// The spacing between grid items along the cross axis.
-  final double crossAxisSpacing;
+  /// The spacing between grid items vertically.
+  final double verticalSpacing;
 
-  /// The spacing between grid items along the main axis.
-  final double mainAxisSpacing;
+  /// The spacing between grid items horizontally.
+  final double horizontalSpacing;
 
   /// The padding around the grid view.
   final EdgeInsets gridViewPadding;
@@ -66,20 +75,14 @@ class SectionGridView extends StatefulWidget {
   /// The decoration for each grid item.
   final BoxDecoration boxDecoration;
 
-  /// The alignment of items along the cross axis.
-  final CrossAxisAlignment crossAxisAlignment;
+  /// The alignment of the render item horizontally in the grid container.
+  final ItemAlignment horizontalAlignment;
 
-  /// The alignment of items along the main axis.
-  final MainAxisAlignment mainAxisAlignment;
+  /// The alignment of the render item vertically in the grid container.
+  final ItemAlignment verticalAlignment;
 
   /// The callback function when an item is pressed.
   final void Function(int index)? onPressed;
-
-  /// The callback function when the like button is pressed.
-  final void Function(int index, bool liked)? onLikePressed;
-
-  /// The icon to display in the grid.
-  final IconData icon;
 
   /// The padding around the title.
   final EdgeInsets titlePadding;
@@ -87,11 +90,14 @@ class SectionGridView extends StatefulWidget {
   /// The alignment of the title.
   final TitleAlignment titleAlignment;
 
-  /// The color of the title.
-  final Color titleColor;
-
-  /// The background color of the title.
+  /// The background color of the title container.
   final Color titleBackgroundColor;
+
+  /// The style of the title.
+  final TextStyle titleTextStyle;
+
+  /// Whether to invert the row.
+  final bool invertedRow;
 
   @override
   State<SectionGridView> createState() => _SectionGridViewState();
@@ -119,11 +125,7 @@ class _SectionGridViewState extends State<SectionGridView> {
         }[widget.titleAlignment]!,
         child: Text(
           title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: widget.titleColor,
-          ),
+          style: widget.titleTextStyle,
         ),
       ),
     );
@@ -150,6 +152,7 @@ class _SectionGridViewState extends State<SectionGridView> {
                     final section = widget.sections[sectionIndex] as Map;
                     final title = section['title'] as String;
                     final data = section['data'] as List;
+                    final dataInverted = data.reversed.toList();
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,12 +166,14 @@ class _SectionGridViewState extends State<SectionGridView> {
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: widget.maxItemWidth,
-                              crossAxisSpacing: widget.crossAxisSpacing,
-                              mainAxisSpacing: widget.mainAxisSpacing,
+                              crossAxisSpacing: widget.horizontalSpacing,
+                              mainAxisSpacing: widget.verticalSpacing,
                             ),
                             itemCount: data.length,
                             itemBuilder: (context, index) {
-                              final itemData = data[index];
+                              final itemData = widget.invertedRow
+                                  ? dataInverted[index]
+                                  : data[index];
                               return InkWell(
                                 onTap: () {
                                   if (widget.onPressed != null) {
@@ -179,8 +184,21 @@ class _SectionGridViewState extends State<SectionGridView> {
                                   decoration: widget.boxDecoration,
                                   child: Column(
                                     crossAxisAlignment:
-                                        widget.crossAxisAlignment,
-                                    mainAxisAlignment: widget.mainAxisAlignment,
+                                        widget.horizontalAlignment ==
+                                                ItemAlignment.start
+                                            ? CrossAxisAlignment.start
+                                            : widget.horizontalAlignment ==
+                                                    ItemAlignment.center
+                                                ? CrossAxisAlignment.center
+                                                : CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        widget.verticalAlignment ==
+                                                ItemAlignment.start
+                                            ? MainAxisAlignment.start
+                                            : widget.verticalAlignment ==
+                                                    ItemAlignment.center
+                                                ? MainAxisAlignment.center
+                                                : MainAxisAlignment.end,
                                     children: [
                                       widget.renderItem(itemData),
                                     ],
