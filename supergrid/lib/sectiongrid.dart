@@ -13,18 +13,17 @@ class SectionGridView extends StatefulWidget {
   /// Creates a `SectionGridView`.
   const SectionGridView({
     super.key,
-    required this.color,
-    required this.itemWidth,
-    required this.itemHeight,
-    this.verticalSpacing = 10,
-    this.horizontalSpacing = 10,
-    required this.padding,
     required this.sections,
     required this.renderItem,
-    required this.itemCount,
-    this.boxDecoration = const BoxDecoration(),
-    required this.onPressed,
+    required this.itemWidth,
+    required this.itemHeight,
+    this.color = Colors.transparent,
+    this.padding = const EdgeInsets.all(0),
     this.gridViewPadding = const EdgeInsets.all(8.0),
+    this.verticalSpacing = 10,
+    this.horizontalSpacing = 10,
+    this.invertedRow = false,
+    this.onPressed,
     this.titleAlignment = TitleAlignment.start,
     this.titleBackgroundColor = Colors.transparent,
     this.titlePadding = const EdgeInsets.all(8.0),
@@ -33,7 +32,6 @@ class SectionGridView extends StatefulWidget {
       fontSize: 16,
       color: Colors.black,
     ),
-    this.invertedRow = false,
   });
 
   /// The background color of the grid container.
@@ -61,16 +59,10 @@ class SectionGridView extends StatefulWidget {
   final List<Map<String, dynamic>> sections;
 
   /// The function that renders each item in the grid.
-  final Widget Function(Object data) renderItem;
-
-  /// The total number of items in the grid.
-  final int itemCount;
-
-  /// The decoration for each grid item.
-  final BoxDecoration boxDecoration;
+  final Widget Function(dynamic data) renderItem;
 
   /// The callback function when an item is pressed.
-  final void Function(int index)? onPressed;
+  final void Function(int sectionIndex, int index)? onPressed;
 
   /// The padding around the title.
   final EdgeInsets titlePadding;
@@ -92,12 +84,9 @@ class SectionGridView extends StatefulWidget {
 }
 
 class _SectionGridViewState extends State<SectionGridView> {
-  List<bool> likedStates = [];
-
   @override
   void initState() {
     super.initState();
-    likedStates = List<bool>.filled(widget.itemCount, false);
   }
 
   Widget getTitleWidget(String title) {
@@ -166,7 +155,7 @@ class _SectionGridViewState extends State<SectionGridView> {
                             return InkWell(
                               onTap: () {
                                 if (widget.onPressed != null) {
-                                  widget.onPressed!(index);
+                                  widget.onPressed!(sectionIndex, index);
                                 }
                               },
                               child: widget.renderItem(itemData),
