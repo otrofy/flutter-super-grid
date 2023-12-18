@@ -9,7 +9,7 @@ void main() {
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
           body: SectionGridView(
-            sections: [],
+            sections: const [],
             itemsPerRow: 2,
             renderItem: (_) => const Placeholder(),
             itemSize: 100,
