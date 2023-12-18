@@ -1,4 +1,4 @@
-# Flutter Supergrid
+# Flutter Super Grid
 
 A customizable Flutter package for displaying grid views of sections with additional features.
 
