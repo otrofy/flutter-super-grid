@@ -137,12 +137,12 @@ SectionGridView(
 
 ## Documentation
 
-For detailed documentation, see [API Documentation](https://github.com/otrofy/flutter-super-grid/docs).
+For detailed documentation, see [API Documentation](https://github.com/otrofy/flutter-super-grid/).
 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/otrofy/flutter-super-grid/blob/main/LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/otrofy/flutter-super-grid/blob/main/LICENSE) file for details.
 
 
 
