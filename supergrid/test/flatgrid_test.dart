@@ -9,7 +9,7 @@ void main() {
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
           body: FlatGridView(
-            data: [],
+            data: const [],
             itemsPerRow: 2,
             renderItem: (_) => const Placeholder(),
             itemSize: 100,
@@ -44,7 +44,7 @@ void main() {
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
           body: FlatGridView(
-            data: [1, 2],
+            data: const [1, 2],
             itemsPerRow: 2,
             renderItem: (data) => Text('Item $data'),
             itemSize: 100,
@@ -66,7 +66,7 @@ void main() {
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
           body: FlatGridView(
-            data: [1, 2, 3],
+            data: const [1, 2, 3],
             itemsPerRow: 3,
             renderItem: (data) => Text('Item $data'),
             itemSize: 100,
