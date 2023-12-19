@@ -1,3 +1,4 @@
+import 'package:example/data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,263 +10,6 @@ class FirstTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var quickPickData = [
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcAW_-GLPerG7FYgKfPH6chkONDwu12pY8nYwGpzj2EjCOahUbxLwgZf9zsxvN3C6sQnA&usqp=CAU',
-        'RecomendedMusic': 'Sueños Nocturnos',
-        'recomendedMusicArtist': 'Los Viajeros del Tiempo',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/42347499/r/il/7f2979/4843696398/il_300x300.4843696398_jfto.jpg',
-        'RecomendedMusic': 'Caminos Perdidos',
-        'recomendedMusicArtist': 'Luna Azul',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTqbspo7cUK5uJn8X9-bGlS7YSTmy_V4MzBBUBThIDXjdYO9-zpLYB-wP3lmaprIBXTfk&usqp=CAU',
-        'RecomendedMusic': 'Entre Sombras',
-        'recomendedMusicArtist': 'Estrella Fugaz',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3u0qIUD7nu18fEJTxPBeyGFRyIa9sPzT95ndLMHChAeCXwpKQswTZTd9mxa5ipEFHIxI&usqp=CAU',
-        'RecomendedMusic': 'Amanecer Estelar',
-        'recomendedMusicArtist': 'Orquesta Nebular'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.pinimg.com/originals/a4/b6/fc/a4b6fc000e66d3e07ebea1d9a9bffa33.jpg',
-        'RecomendedMusic': 'Melodías del Abismo',
-        'recomendedMusicArtist': 'Orquesta Nebular'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://media.gq-magazine.co.uk/photos/63341fa5885571856e6edb7d/master/pass/Best-pop-albums-of-the-21st-century-hp-b.jpg',
-        'RecomendedMusic': 'Melodías del Abismo',
-        'recomendedMusicArtist': 'Orquesta Nebular'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/61Wmtp9w7WL._AC_.jpg',
-        'RecomendedMusic': 'Lunar Harmony',
-        'recomendedMusicArtist': 'Starry Night',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vF8OLMupL._AC_.jpg',
-        'RecomendedMusic': 'Aurora in Chords',
-        'recomendedMusicArtist': 'Aurora Harmony',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/35092126/r/il/cb2be4/3863487335/il_fullxfull.3863487335_7n3w.jpg',
-        'RecomendedMusic': 'Symphony of Elements',
-        'recomendedMusicArtist': 'Elemental Soundscapes',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ1Xh3RqpdthF2BzDVvUeoWMMcTY87r56sSoP3_e0haNhyWlF77ClEeTKh1oNLaPxwlRU&usqp=CAU',
-        'RecomendedMusic': 'Echoes from the Past',
-        'recomendedMusicArtist': 'Temporal Symphony'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/A1hIzwbPW0L.jpg',
-        'RecomendedMusic': 'Notes in Zero Gravity',
-        'recomendedMusicArtist': 'Floating in Space'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/42347499/r/il/7f2979/4843696398/il_300x300.4843696398_jfto.jpg',
-        'RecomendedMusic': 'Stellar Dawn',
-        'recomendedMusicArtist': 'Shooting Star'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.pinimg.com/1200x/90/03/3d/90033d794599f52c6e57d65282dae33a.jpg',
-        'RecomendedMusic': 'Musical Destiny',
-        'recomendedMusicArtist': 'Astral Journey'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/61Wmtp9w7WL._AC_.jpg',
-        'RecomendedMusic': 'Lunar Harmony',
-        'recomendedMusicArtist': 'Starry Night',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vF8OLMupL._AC_.jpg',
-        'RecomendedMusic': 'Aurora in Chords',
-        'recomendedMusicArtist': 'Aurora Harmony',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/35092126/r/il/cb2be4/3863487335/il_fullxfull.3863487335_7n3w.jpg',
-        'RecomendedMusic': 'Symphony of Elements',
-        'recomendedMusicArtist': 'Elemental Soundscapes',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ1Xh3RqpdthF2BzDVvUeoWMMcTY87r56sSoP3_e0haNhyWlF77ClEeTKh1oNLaPxwlRU&usqp=CAU',
-        'RecomendedMusic': 'Echoes from the Past',
-        'recomendedMusicArtist': 'Temporal Symphony'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/A1hIzwbPW0L.jpg',
-        'RecomendedMusic': 'Notes in Zero Gravity',
-        'recomendedMusicArtist': 'Floating in Space'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/42347499/r/il/7f2979/4843696398/il_300x300.4843696398_jfto.jpg',
-        'RecomendedMusic': 'Stellar Dawn',
-        'recomendedMusicArtist': 'Shooting Star'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.pinimg.com/1200x/90/03/3d/90033d794599f52c6e57d65282dae33a.jpg',
-        'RecomendedMusic': 'Musical Destiny',
-        'recomendedMusicArtist': 'Astral Journey'
-      }
-    ];
-    var recomendedArtistData = [
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/61Wmtp9w7WL._AC_.jpg',
-        'RecomendedMusic': 'Lunar Harmony',
-        'recomendedMusicArtist': 'Starry Night',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vF8OLMupL._AC_.jpg',
-        'RecomendedMusic': 'Aurora in Chords',
-        'recomendedMusicArtist': 'Aurora Harmony',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/35092126/r/il/cb2be4/3863487335/il_fullxfull.3863487335_7n3w.jpg',
-        'RecomendedMusic': 'Symphony of Elements',
-        'recomendedMusicArtist': 'Elemental Soundscapes',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ1Xh3RqpdthF2BzDVvUeoWMMcTY87r56sSoP3_e0haNhyWlF77ClEeTKh1oNLaPxwlRU&usqp=CAU',
-        'RecomendedMusic': 'Echoes from the Past',
-        'recomendedMusicArtist': 'Temporal Symphony'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/A1hIzwbPW0L.jpg',
-        'RecomendedMusic': 'Notes in Zero Gravity',
-        'recomendedMusicArtist': 'Floating in Space'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/42347499/r/il/7f2979/4843696398/il_300x300.4843696398_jfto.jpg',
-        'RecomendedMusic': 'Stellar Dawn',
-        'recomendedMusicArtist': 'Shooting Star'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.pinimg.com/1200x/90/03/3d/90033d794599f52c6e57d65282dae33a.jpg',
-        'RecomendedMusic': 'Musical Destiny',
-        'recomendedMusicArtist': 'Astral Journey'
-      }
-    ];
-    var recomendedMusic = [
-      {
-        'recomendedMusicAlbums':
-            'https://blog.pearlacademy.com/wp-content/uploads/2022/06/erik-mclean-9y1cTVKe1IY-unsplash-1080x675.jpg',
-        'RecomendedMusic': 'Reflections in Water',
-        'recomendedMusicArtist': 'Musical Aurora',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/71rHAeo7BnL._UF1000,1000_QL80_.jpg',
-        'RecomendedMusic': 'Celestial Rhythm',
-        'recomendedMusicArtist': 'Funk Galaxy',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/33708229/r/il/fb8057/3744612133/il_570xN.3744612133_2bv4.jpg',
-        'RecomendedMusic': 'Echoes from the Past',
-        'recomendedMusicArtist': 'Temporal Symphony',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ1Xh3RqpdthF2BzDVvUeoWMMcTY87r56sSoP3_e0haNhyWlF77ClEeTKh1oNLaPxwlRU&usqp=CAU',
-        'RecomendedMusic': 'Echoes from the Past',
-        'recomendedMusicArtist': 'Temporal Symphony'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://m.media-amazon.com/images/I/A1hIzwbPW0L.jpg',
-        'RecomendedMusic': 'Notes in Zero Gravity',
-        'recomendedMusicArtist': 'Floating in Space'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.pinimg.com/1200x/90/03/3d/90033d794599f52c6e57d65282dae33a.jpg',
-        'RecomendedMusic': 'Musical Destiny',
-        'recomendedMusicArtist': 'Astral Journey'
-      }
-    ];
-    var forYouData = [
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcAW_-GLPerG7FYgKfPH6chkONDwu12pY8nYwGpzj2EjCOahUbxLwgZf9zsxvN3C6sQnA&usqp=CAU',
-        'RecomendedMusic': 'Sueños Nocturnos',
-        'recomendedMusicArtist': 'Los Viajeros del Tiempo',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.etsystatic.com/42347499/r/il/7f2979/4843696398/il_300x300.4843696398_jfto.jpg',
-        'RecomendedMusic': 'Caminos Perdidos',
-        'recomendedMusicArtist': 'Luna Azul',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTqbspo7cUK5uJn8X9-bGlS7YSTmy_V4MzBBUBThIDXjdYO9-zpLYB-wP3lmaprIBXTfk&usqp=CAU',
-        'RecomendedMusic': 'Entre Sombras',
-        'recomendedMusicArtist': 'Estrella Fugaz',
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3u0qIUD7nu18fEJTxPBeyGFRyIa9sPzT95ndLMHChAeCXwpKQswTZTd9mxa5ipEFHIxI&usqp=CAU',
-        'RecomendedMusic': 'Amanecer Estelar',
-        'recomendedMusicArtist': 'Orquesta Nebular'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://i.pinimg.com/originals/a4/b6/fc/a4b6fc000e66d3e07ebea1d9a9bffa33.jpg',
-        'RecomendedMusic': 'Melodías del Abismo',
-        'recomendedMusicArtist': 'Orquesta Nebular'
-      },
-      {
-        'recomendedMusicAlbums':
-            'https://media.gq-magazine.co.uk/photos/63341fa5885571856e6edb7d/master/pass/Best-pop-albums-of-the-21st-century-hp-b.jpg',
-        'RecomendedMusic': 'Melodías del Abismo',
-        'recomendedMusicArtist': 'Orquesta Nebular'
-      }
-    ];
-    var sections = [
-      {'title': 'Recomended Music', 'data': recomendedMusic},
-      {'title': 'Recomended Artist', 'data': recomendedArtistData},
-      {'title': 'For you', 'data': forYouData}
-    ];
-    var sectionsSmall = [
-      {'title': 'Quick Picks', 'data': quickPickData},
-    ];
-    var sectionsVideos = [
-      {'title': 'Videos for you', 'data': quickPickData},
-    ];
-    var sectionsLast = [
-      {'title': 'Pick where you left', 'data': recomendedMusic},
-      {'title': 'Pump it up', 'data': recomendedArtistData},
-    ];
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       physics: const ScrollPhysics(),
@@ -373,26 +117,46 @@ class FirstTab extends StatelessWidget {
                     ),
                     SizedBox(
                       width: 250,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Text(
-                            itemData['RecomendedMusic'].toString(),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold),
-                            maxLines: 1,
-                            textAlign: TextAlign.left,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                itemData['RecomendedMusic'].toString(),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold),
+                                maxLines: 1,
+                                textAlign: TextAlign.left,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.e_mobiledata_outlined,
+                                    size: 18,
+                                    color: Colors.grey,
+                                  ),
+                                  Text(
+                                    itemData['recomendedMusicArtist']
+                                        .toString(),
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 10),
+                                    textAlign: TextAlign.left,
+                                    maxLines: 1,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          Text(
-                            itemData['recomendedMusicArtist'].toString(),
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 10),
-                            textAlign: TextAlign.left,
-                            maxLines: 1,
-                          ),
+                          const Spacer(),
+                          const Icon(
+                            Icons.more_vert,
+                            size: 24,
+                            color: Colors.white,
+                          )
                         ],
                       ),
                     )
@@ -407,7 +171,7 @@ class FirstTab extends StatelessWidget {
             child: SectionGridView(
               physics: const NeverScrollableScrollPhysics(),
               sections: sectionsVideos,
-              gridViewHeight: 400,
+              gridViewHeight: 300,
               verticalSpacing: 50,
               itemsPerRow: 1,
               horizontal: true,
@@ -416,54 +180,74 @@ class FirstTab extends StatelessWidget {
                   fontSize: 24,
                   fontWeight: FontWeight.bold),
               renderItem: (itemData) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                return Stack(
                   children: [
-                    SizedBox(
-                      height: 220,
-                      width: 400,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(2.0),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              itemData['recomendedMusicAlbums'].toString(),
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          fit: BoxFit.fitWidth,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 220,
+                          width: 400,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(2.0),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  itemData['recomendedMusicAlbums'].toString(),
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        SizedBox(
+                          width: 250,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                itemData['RecomendedMusic'].toString(),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                                maxLines: 1,
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                itemData['recomendedMusicArtist'].toString(),
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 12),
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    SizedBox(
-                      width: 250,
+                    const Align(
+                      alignment: Alignment.center,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            itemData['RecomendedMusic'].toString(),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                            maxLines: 1,
-                            textAlign: TextAlign.left,
+                          Icon(
+                            Icons.play_circle_filled_rounded,
+                            color: Colors.white,
+                            size: 60,
                           ),
-                          Text(
-                            itemData['recomendedMusicArtist'].toString(),
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 12),
-                            textAlign: TextAlign.left,
-                            maxLines: 1,
-                          ),
+                          SizedBox(
+                            height: 50,
+                          )
                         ],
                       ),
-                    )
+                    ),
                   ],
                 );
               },
@@ -533,7 +317,272 @@ class FirstTab extends StatelessWidget {
               itemSize: 120,
             ),
           ),
+          Container(
+            height: 550,
+            width: MediaQuery.of(context).size.width - 40,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 42, 25, 18),
+              borderRadius: BorderRadius.circular(
+                  20.0), // Ajusta el radio según tus necesidades
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 8, top: 16),
+                      height: 120,
+                      width: 110,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: CachedNetworkImage(
+                          imageUrl: quickPickData.last['recomendedMusicAlbums']
+                              .toString(),
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 16, top: 20),
+                      height: 120,
+                      width: 160,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Billion Views Club - Rock",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                            softWrap: true,
+                            maxLines: 2,
+                          ),
+                          const Spacer(),
+                          const Text(
+                            "Grid View Music",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 203, 114, 98),
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                            softWrap: true,
+                            maxLines: 1,
+                          ),
+                          Text(
+                            "${quickPickData.length.toString()} songs",
+                            style: const TextStyle(
+                                color: Color.fromARGB(255, 203, 114, 98),
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                            softWrap: true,
+                            maxLines: 1,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  height: 45,
+                  padding: const EdgeInsets.only(left: 16, top: 8),
+                  child: const Text(
+                    "Rock hits with over 1 billion music video views on GridView",
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 203, 114, 98),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                    softWrap: true,
+                    maxLines: 2,
+                  ),
+                ),
+                SizedBox(
+                  height: 280,
+                  child: SectionGridView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    sections: billionViews,
+                    gridViewHeight: 250,
+                    verticalSpacing: 40,
+                    itemsPerRow: 3,
+                    horizontal: true,
+                    titleTextStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                    renderItem: (itemData) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(2.0),
+                              child: CachedNetworkImage(
+                                imageUrl: itemData['recomendedMusicAlbums']
+                                    .toString(),
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          SizedBox(
+                            width: 250,
+                            child: Row(
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      itemData['RecomendedMusic'].toString(),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold),
+                                      maxLines: 1,
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.e_mobiledata_outlined,
+                                          size: 18,
+                                          color: Colors.grey,
+                                        ),
+                                        Text(
+                                          itemData['recomendedMusicArtist']
+                                              .toString(),
+                                          style: const TextStyle(
+                                              color: Colors.grey, fontSize: 10),
+                                          textAlign: TextAlign.left,
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                const Icon(
+                                  Icons.more_vert,
+                                  size: 24,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                    itemSize: 300,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      buildCircularIcon(Icons.play_arrow, Colors.white),
+                      buildCircularIcon(Icons.cast, Colors.white),
+                      buildCircularIcon(Icons.playlist_add, Colors.white),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 150,
+            child: SectionGridView(
+              physics: const NeverScrollableScrollPhysics(),
+              sections: const [
+                {
+                  "title": "Explore",
+                  "data": [
+                    {"icon": Icons.music_note_outlined, "name": "New releases"},
+                    {
+                      "icon": Icons.keyboard_double_arrow_up_outlined,
+                      "name": "Charts"
+                    },
+                    {"icon": Icons.face, "name": "Moods & genres"},
+                  ]
+                }
+              ],
+              gridViewHeight: 150,
+              itemsPerRow: 1,
+              horizontal: true,
+              titleTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+              renderItem: (itemData) {
+                return Container(
+                  padding: const EdgeInsets.all(8),
+                  color: const Color.fromARGB(255, 26, 25, 25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        itemData["icon"],
+                        color: Colors.white,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        width: 80,
+                        child: Text(
+                          itemData["name"].toString(),
+                          style: const TextStyle(color: Colors.white),
+                          textAlign: TextAlign.left,
+                          maxLines: 2,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+              itemSize: 100,
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget buildCircularIcon(IconData icon, Color color) {
+    return Container(
+      width: 40,
+      height: 40,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.transparent,
+        border: Border.all(
+          color: color, // Color del borde
+          width: 1, // Ancho del borde
+        ),
+      ),
+      child: Icon(
+        icon,
+        size: 30,
+        color: color,
       ),
     );
   }
