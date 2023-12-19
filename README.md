@@ -8,7 +8,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  supergrid: ^1.0.0
+  flutter_super_grid: ^1.0.0
 ```
 
 Then, run:
@@ -30,7 +30,7 @@ $ flutter pub get
 ### Usage
 
 ```dart
-import 'package:supergrid/supergrid.dart';
+import 'package:flutter_super_grid/flutter_super_grid.dart';
 
 SimpleGridView(
   data: yourDataList,
@@ -73,7 +73,7 @@ SimpleGridView(
 ### Usage
 
 ```dart
-import 'package:supergrid/supergrid.dart';
+import 'package:flutter_super_grid/flutter_super_grid.dart';
 
 FlatGridView(
   data: yourDataList,
@@ -116,7 +116,7 @@ FlatGridView(
 ### Usage
 
 ```dart
-import 'package:supergrid/supergrid.dart';
+import 'package:flutter_super_grid/flutter_super_grid.dart';
 
 SectionGridView(
   sections: yourSectionsList,
@@ -164,6 +164,9 @@ SectionGridView(
 - `titlePadding`: Padding around the title.
 - `titleTextStyle`: Style of the title.
 
+### Example App
+
+![Example Image](https://github.com/otrofy/flutter-super-grid/blob/PubPublish/gif/supergrid.gif?raw=true)
 
 
 ## Documentation
