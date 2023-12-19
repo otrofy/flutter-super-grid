@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supergrid/simplegrid.dart';
+import 'package:flutter_super_grid/simplegrid.dart';
 
 void main() {
   group('SimpleGridView', () {
