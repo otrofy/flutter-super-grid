@@ -17,6 +17,8 @@ class SimpleGridView extends StatefulWidget {
     required this.renderItem,
     required this.itemWidth,
     required this.itemHeight,
+    this.itemsPerRow = 0,
+    this.itemSize = 100,
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(16),
     this.gridViewPadding = const EdgeInsets.all(8.0),
@@ -31,6 +33,12 @@ class SimpleGridView extends StatefulWidget {
 
   /// The width of each grid item.
   final double itemWidth;
+
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
+  final int itemsPerRow;
+
+  /// The size of the grid item in the main axis direction [The grid will occupy the whole space available in the cross axis].
+  final double itemSize;
 
   /// The height of each grid item.
   final double itemHeight;
@@ -120,17 +128,31 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                   shrinkWrap:
                       true, // Ensures the GridView only takes up necessary space.
                   // The gridDelegate manages the layout of the grid.
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: widget
-                        .itemWidth, // The maximum extent of items in the cross axis.
-                    childAspectRatio: widget.itemWidth /
-                        widget
-                            .itemHeight, // Aspect ratio for children in the grid.
-                    crossAxisSpacing: widget
-                        .horizontalSpacing, // Spacing between items along the cross axis.
-                    mainAxisSpacing: widget
-                        .verticalSpacing, // Spacing between items along the main axis.
-                  ),
+                  gridDelegate: widget.itemsPerRow == 0
+                      // If itemsPerRow is 2, use SliverGridDelegateWithFixedCrossAxisCount. Otherwise, use SliverGridDelegateWithMaxCrossAxisExtent.
+                      // This is because SliverGridDelegateWithFixedCrossAxisCount requires a fixed number of items per row.
+                      // SliverGridDelegateWithMaxCrossAxisExtent allows for a variable number of items per row.
+                      ? SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: widget
+                              .itemWidth, // The maximum extent of items in the cross axis.
+                          childAspectRatio: widget.itemWidth /
+                              widget
+                                  .itemHeight, // Aspect ratio for children in the grid.
+                          crossAxisSpacing: widget
+                              .horizontalSpacing, // Spacing between items along the cross axis.
+                          mainAxisSpacing: widget
+                              .verticalSpacing, // Spacing between items along the main axis.
+                        )
+                      : SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: widget
+                              .itemsPerRow, // Number of items per row or column.
+                          mainAxisExtent: widget
+                              .itemSize, // The size of items in the main axis.
+                          crossAxisSpacing: widget
+                              .horizontalSpacing, // Spacing between items horizontally.
+                          mainAxisSpacing: widget
+                              .verticalSpacing, // Spacing between items vertically.
+                        ),
                   itemCount: widget
                       .data.length, // The number of items in the data list.
                   itemBuilder: (context, index) {
