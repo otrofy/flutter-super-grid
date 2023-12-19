@@ -259,6 +259,13 @@ class FirstTab extends StatelessWidget {
     var sectionsSmall = [
       {'title': 'Quick Picks', 'data': quickPickData},
     ];
+    var sectionsVideos = [
+      {'title': 'Videos for you', 'data': quickPickData},
+    ];
+    var sectionsLast = [
+      {'title': 'Pick where you left', 'data': recomendedMusic},
+      {'title': 'Pump it up', 'data': recomendedArtistData},
+    ];
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       physics: const ScrollPhysics(),
@@ -282,7 +289,8 @@ class FirstTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 120,
+                      height: 115,
+                      width: 120,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(2.0),
                         child: CachedNetworkImage(
@@ -292,7 +300,7 @@ class FirstTab extends StatelessWidget {
                               const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         ),
                       ),
                     ),
@@ -313,9 +321,10 @@ class FirstTab extends StatelessWidget {
                         ),
                         Text(
                           itemData['recomendedMusicArtist'].toString(),
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 10),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 8),
                           textAlign: TextAlign.left,
+                          maxLines: 1,
                         ),
                       ],
                     ),
@@ -331,8 +340,7 @@ class FirstTab extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               sections: sectionsSmall,
               gridViewHeight: 200,
-              gridViewWidth: 600,
-              verticalSpacing: 160,
+              verticalSpacing: 40,
               itemsPerRow: 4,
               horizontal: true,
               titleTextStyle: const TextStyle(
@@ -364,7 +372,7 @@ class FirstTab extends StatelessWidget {
                       width: 5,
                     ),
                     SizedBox(
-                      width: 75,
+                      width: 250,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,13 +389,144 @@ class FirstTab extends StatelessWidget {
                           Text(
                             itemData['recomendedMusicArtist'].toString(),
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 10),
+                                color: Colors.grey, fontSize: 10),
                             textAlign: TextAlign.left,
                             maxLines: 1,
                           ),
                         ],
                       ),
                     )
+                  ],
+                );
+              },
+              itemSize: 300,
+            ),
+          ),
+          SizedBox(
+            height: 330,
+            child: SectionGridView(
+              physics: const NeverScrollableScrollPhysics(),
+              sections: sectionsVideos,
+              gridViewHeight: 400,
+              verticalSpacing: 50,
+              itemsPerRow: 1,
+              horizontal: true,
+              titleTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+              renderItem: (itemData) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 220,
+                      width: 400,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2.0),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              itemData['recomendedMusicAlbums'].toString(),
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    SizedBox(
+                      width: 250,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            itemData['RecomendedMusic'].toString(),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            textAlign: TextAlign.left,
+                          ),
+                          Text(
+                            itemData['recomendedMusicArtist'].toString(),
+                            style: const TextStyle(
+                                color: Colors.grey, fontSize: 12),
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
+              itemSize: 400,
+            ),
+          ),
+          SizedBox(
+            height: 450,
+            child: SectionGridView(
+              physics: const NeverScrollableScrollPhysics(),
+              sections: sectionsLast,
+              gridViewHeight: 185,
+              itemsPerRow: 1,
+              horizontal: true,
+              titleTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+              renderItem: (itemData) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 115,
+                      width: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2.0),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              itemData['recomendedMusicAlbums'].toString(),
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          itemData['RecomendedMusic'].toString(),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          itemData['recomendedMusicArtist'].toString(),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 8),
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
                   ],
                 );
               },
