@@ -2,6 +2,29 @@
 
 A customizable Flutter package for displaying grid views of sections.
 
+## Installation
+
+Add the following to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  supergrid: ^1.0.0
+```
+
+Then, run:
+
+```bash
+$ flutter pub get
+```
+
+
+### Features
+
+- Customizable grid view with sections and various configuration options.
+- Support for item tap callbacks with section and item indices.
+- Option to invert the row and display the grid horizontally.
+- Section titles with customizable styling and alignment.
+
 ## SimpleGridView
 
 ### Usage
