@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:example/first_tab.dart';
+import 'package:supergrid/flatgrid.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,41 +16,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+              .copyWith(background: Colors.black)),
+      home: const MyHomePage(title: 'Super grid Sample App'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -55,71 +33,84 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    List data = [
+      'https://hips.hearstapps.com/hmg-prod/images/hotel-transylvania-1670879477.jpeg?resize=980:*',
+      'https://img.asmedia.epimg.net/resizer/b4Bar9lwlU_uRARRJRTycUzf6XQ=/1472x1104/cloudfront-eu-central-1.images.arcpublishing.com/diarioas/3372EDXE4NLDXLE6ABIUJBLSDU.jpg',
+      'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2016/06/607612-proximas-peliculas-pixar-despues-buscando-dory.jpg?tf=3840x',
+      'https://i.blogs.es/679f07/diseno-sin-titulo-5-/650_1200.jpeg',
+      'https://hips.hearstapps.com/hmg-prod/images/demon-slayer-1657889450.jpeg',
+      'https://i.blogs.es/30018b/25-mejores-animes/840_560.jpg',
+      'https://hips.hearstapps.com/hmg-prod/images/pluto-5-653d534fe4511.jpg?crop=0.566xw:1.00xh;0.263xw,0&resize=1200:*',
+      'https://hips.hearstapps.com/hmg-prod/images/abd9e1b06f340e7479ae4f2c1b132bda1601341053-main-1672918395.jpg?crop=0.526xw:0.938xh;0.228xw,0&resize=640:*',
+      'https://lumiere-a.akamaihd.net/v1/images/image_5c76f0c6.jpeg?region=0%2C0%2C540%2C810&width=320',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYR4Qqn5hTjibWr6h2Jl0VKVNv1P400j7Tvw&usqp=CAU',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnn7747ZnvV2Qhg3JmVR-jZexYlEnbmzNlx-BCQtZXcZdAP3jCnCYdRiOkcGtrD1OWsFA&usqp=CAU',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgW3wbDTtLbNaV7p68vwJ1YnFZDykuhdYGpQ&usqp=CAU',
+      'https://www.lavanguardia.com/files/image_449_220/uploads/2023/02/20/63f30ca39d330.jpeg',
+      'https://lumiere-a.akamaihd.net/v1/images/bc0ee6e1acd3e61149bdce1d08de5c7a_2764x4096_354a7134.jpeg',
+      'https://www.justwatch.com/images/poster/305307533/s332/dungeons-y-dragons',
+      // 'https://files.lafm.com.co/assets/public/styles/img_node_706x392/public/2022-07/uncharted.jpg.webp?VersionId=89GRI5GE8vUyTOgK8KFAO_VQrh3RhGY_&itok=hu-W0paq'
+      // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQebXKm_bcBfJWs4edHRcnCr5f3igYKpQSnZQ&usqp=CAU',
+      // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjtuaYw3gDJ7qPlxUhcHqLT_vorHZ2arie-w&usqp=CAU',
+      // 'https://pymstatic.com/25893/conversions/peliculas-ver-en-familia-wide.jpg',
+    ];
+
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: const Text(
+            "Super Grid App",
+            style: TextStyle(color: Colors.red),
+          ),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Section Grid'),
+              Tab(text: 'FlatGrid'),
+              Tab(text: 'SimpleGrid'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            const FirstTab(),
+            FlatGridView(
+              data: data,
+              renderItem: (itemData) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      15.0), // Ajusta el radio según sea necesario
+                  child: CachedNetworkImage(
+                    imageUrl: itemData,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(), // Puedes personalizar el indicador de carga
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    fit: BoxFit
+                        .cover, // Ajusta el modo de ajuste de la imagen según sea necesario
+                  ),
+                );
+              },
+              itemSize: 100.0,
+              itemsPerRow: 3,
+              color: Colors.transparent,
+              padding: const EdgeInsets.all(16.0),
+              gridViewPadding: const EdgeInsets.all(8.0),
+              verticalSpacing: 10.0,
+              horizontalSpacing: 10.0,
+              horizontal: false,
+              invertedRow: false,
+              onPressed: (index) {
+                // Handle item tap
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            const Text("22222")
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
