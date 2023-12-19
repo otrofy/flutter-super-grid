@@ -17,6 +17,7 @@ class FlatGridView extends StatefulWidget {
     required this.renderItem,
     required this.itemsPerRow,
     required this.itemSize,
+    this.minItemDimension = 120.0, // default value set to 120 px
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(16),
     this.gridViewPadding = const EdgeInsets.all(8.0),
@@ -62,6 +63,9 @@ class FlatGridView extends StatefulWidget {
 
   /// Whether the grid view is horizontal.
   final bool horizontal;
+
+  /// The minimum dimension (width or height) of each grid item.
+  final double minItemDimension;
 
   @override
   State<FlatGridView> createState() => _FlatGridViewState();
@@ -127,8 +131,10 @@ class _FlatGridViewState extends State<FlatGridView> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: widget
                         .itemsPerRow, // Number of items per row or column.
-                    mainAxisExtent:
-                        widget.itemSize, // The size of items in the main axis.
+                    mainAxisExtent: (widget.minItemDimension > widget.itemSize
+                        ? widget.minItemDimension
+                        : widget
+                            .itemSize), // The size of items on the main axis.
                     crossAxisSpacing: widget
                         .horizontalSpacing, // Spacing between items horizontally.
                     mainAxisSpacing: widget
