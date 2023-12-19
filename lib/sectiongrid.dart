@@ -13,28 +13,32 @@ class SectionGridView extends StatefulWidget {
   /// Creates a `SectionGridView`.
   const SectionGridView({
     super.key,
-    required this.sections,
-    required this.itemsPerRow,
-    required this.renderItem,
-    required this.itemSize,
-    this.gridViewHeight = 500,
-    this.gridViewWidth = double.infinity,
-    this.color = Colors.transparent,
-    this.padding = const EdgeInsets.all(0),
-    this.gridViewPadding = const EdgeInsets.all(8.0),
-    this.horizontal = false,
-    this.verticalSpacing = 10,
-    this.horizontalSpacing = 10,
-    this.invertedRow = false,
-    this.onPressed,
-    this.titleAlignment = TitleAlignment.start,
-    this.titleBackgroundColor = Colors.transparent,
-    this.titlePadding = const EdgeInsets.all(8.0),
+    required this.sections, // required property
+    required this.itemsPerRow, // required property
+    required this.renderItem, // required property
+    required this.itemSize, // required property
+    this.physics,
+    this.minItemDimension = 120.0, // default value set to 120 px
+    this.gridViewHeight = 300, // default value set to 300 px
+    this.gridViewWidth = double.infinity, // default value set to infinity
+    this.color = Colors.transparent, // default value set to transparent
+    this.padding = const EdgeInsets.all(0), // default value set to 0
+    this.gridViewPadding =
+        const EdgeInsets.all(8.0), // default value set to 8 px
+    this.horizontal = false, // default value set to false
+    this.verticalSpacing = 10, // default value set to 10 px
+    this.horizontalSpacing = 10, // default value set to 10 px
+    this.invertedRow = false, // default value set to false
+    this.onPressed, // default value set to null
+    this.titleAlignment = TitleAlignment.start, // default value set to start
+    this.titleBackgroundColor =
+        Colors.transparent, // default value set to transparent
+    this.titlePadding = const EdgeInsets.all(8.0), // default value set to 8 px
     this.titleTextStyle = const TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 16,
       color: Colors.black,
-    ),
+    ), // default value set to normal, 16 px, black
   });
 
   /// The background color of the grid container.
@@ -90,6 +94,11 @@ class SectionGridView extends StatefulWidget {
 
   /// Whether to invert the row.
   final bool invertedRow;
+
+  /// The minimum dimension (width or height) of each grid item.
+  final double minItemDimension;
+
+  final ScrollPhysics? physics;
 
   @override
   State<SectionGridView> createState() => _SectionGridViewState();
@@ -161,6 +170,7 @@ class _SectionGridViewState extends State<SectionGridView> {
                   .isNotEmpty, // Checks if there are sections to display.
               // ListView.builder is used to create a list of sections dynamically.
               child: ListView.builder(
+                physics: widget.physics,
                 itemCount: widget
                     .sections.length, // The number of sections to display.
                 itemBuilder: (context, sectionIndex) {
@@ -203,8 +213,11 @@ class _SectionGridViewState extends State<SectionGridView> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: widget
                                   .itemsPerRow, // The number of items per row/column.
-                              mainAxisExtent: widget
-                                  .itemSize, // The size of items on the main axis.
+                              mainAxisExtent: (widget.minItemDimension >
+                                      widget.itemSize
+                                  ? widget.minItemDimension
+                                  : widget
+                                      .itemSize), // The size of items on the main axis.
                               crossAxisSpacing: widget
                                   .horizontalSpacing, // Spacing between items horizontally.
                               mainAxisSpacing: widget
