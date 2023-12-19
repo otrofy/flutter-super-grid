@@ -169,6 +169,7 @@ class FirstTab extends StatelessWidget {
           SizedBox(
             height: 330,
             child: SectionGridView(
+              invertedRow: true,
               physics: const NeverScrollableScrollPhysics(),
               sections: sectionsVideos,
               gridViewHeight: 300,
