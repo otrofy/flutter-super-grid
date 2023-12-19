@@ -3,6 +3,7 @@ library supergrid;
 
 import 'package:flutter/material.dart';
 
+///This is the enum for the title alignment.
 enum TitleAlignment {
   start,
   center,
@@ -261,6 +262,7 @@ class SectionGridView extends StatefulWidget {
   /// The minimum dimension (width or height) of each grid item.
   final double minItemDimension;
 
+  /// The physics of the grid view.
   final ScrollPhysics? physics;
 
   @override
