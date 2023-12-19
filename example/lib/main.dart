@@ -4,8 +4,6 @@ import 'package:example/first_tab.dart';
 import 'package:flutter_super_grid/flatgrid.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:flutter_super_grid/simplegrid.dart';
-
 void main() {
   runApp(const MyApp());
 }
