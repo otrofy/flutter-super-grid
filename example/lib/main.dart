@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:example/first_tab.dart';
-import 'package:supergrid/flatgrid.dart';
+import 'package:flutter_super_grid/flatgrid.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {

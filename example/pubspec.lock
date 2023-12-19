@@ -126,6 +126,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_super_grid:
+    dependency: "direct dev"
+    description:
+      path: "C:\\Users\\Usuario\\Documents\\GitHub\\flutter-super-grid"
+      relative: false
+    source: path
+    version: "1.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -328,14 +335,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  supergrid:
-    dependency: "direct dev"
-    description:
-      name: supergrid
-      sha256: b1eefa3262a5d4170caa2bd8f5df28620c32d42e7446918afcf837be92bf9cbb
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   synchronized:
     dependency: transitive
     description:

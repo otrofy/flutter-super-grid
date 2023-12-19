@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:supergrid/sectiongrid.dart';
+import 'package:flutter_super_grid/sectiongrid.dart';
 
 class FirstTab extends StatelessWidget {
   const FirstTab({super.key});
@@ -265,13 +265,9 @@ class FirstTab extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-              height: 600,
-              child: Container(
-                color: Colors.white,
-              )),
-          SizedBox(
-            height: 610,
+            height: 700,
             child: SectionGridView(
+              physics: const NeverScrollableScrollPhysics(),
               sections: sections,
               gridViewHeight: 185,
               itemsPerRow: 1,
@@ -332,6 +328,7 @@ class FirstTab extends StatelessWidget {
           SizedBox(
             height: 250,
             child: SectionGridView(
+              physics: const NeverScrollableScrollPhysics(),
               sections: sectionsSmall,
               gridViewHeight: 200,
               gridViewWidth: 600,
