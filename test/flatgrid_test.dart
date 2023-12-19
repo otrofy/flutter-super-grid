@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_super_grid/flatgrid.dart';
+import 'package:flutter_super_grid/flutter_super_grid.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
