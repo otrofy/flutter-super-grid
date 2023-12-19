@@ -164,6 +164,8 @@ SectionGridView(
 - `titlePadding`: Padding around the title.
 - `titleTextStyle`: Style of the title.
 
+
+
 ## Documentation
 
 For detailed documentation, see [API Documentation](https://github.com/otrofy/flutter-super-grid/).
