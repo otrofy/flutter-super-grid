@@ -137,7 +137,6 @@ void main() {
             itemsPerRow: 1,
             renderItem: (_) => const Placeholder(),
             itemSize: 100,
-            titleAlignment: TitleAlignment.end,
           ),
         ),
       ));
