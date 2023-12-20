@@ -30,7 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_super_grid: 
+    path: C:/Users/elias/OneDrive/Documents/Otrofy/simple_grid/flutter-super-grid/
+  cached_network_image: ^3.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -46,10 +48,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  cached_network_image: ^3.0.0
-  # supergrid: ^1.0.0
-  flutter_super_grid: 
-    path: C:\Users\Usuario\Documents\GitHub\flutter-super-grid
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

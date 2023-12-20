@@ -1,6 +1,6 @@
 # Flutter Super Grid
 
-A customizable Flutter package for displaying grid views of sections with additional features.
+A customizable Flutter package for displaying grid views of sections.
 
 ## Installation
 
@@ -8,7 +8,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  supergrid: ^1.0.0
+  flutter_super_grid: ^1.0.0
 ```
 
 Then, run:
@@ -25,40 +25,14 @@ $ flutter pub get
 - Option to invert the row and display the grid horizontally.
 - Section titles with customizable styling and alignment.
 
+## SimpleGridView
 
 ### Usage
 
-### SimpleGridView
-
 ```dart
-import 'package:supergrid/simplegrid.dart';
-
-
+import 'package:flutter_super_grid/flutter_super_grid.dart';
 
 SimpleGridView(
-  data: yourDataList,
-  renderItem: (itemData) {
-    // Customize how each item is rendered
-    return YourCustomItemWidget(itemData);
-  },
-  itemWidth: 150.0,
-  itemHeight: 200.0,
-  color: Colors.blue,
-  padding: EdgeInsets.all(16.0),
-  gridViewPadding: EdgeInsets.all(8.0),
-  verticalSpacing: 10.0,
-  horizontalSpacing: 10.0,
-  horizontal: false,
-  invertedRow: false,
-)
-```
-
-### FlatGridView
-```dart
-import 'package:supergrid/flatgrid.dart';
-
-
-FlatGridView(
   data: yourDataList,
   renderItem: (itemData) {
     // Customize how each item is rendered
@@ -79,10 +53,70 @@ FlatGridView(
 )
 ```
 
-### SectionGridView
+#### Configuration
+
+- `data`: The data to display in the grid.
+- `renderItem`: The function that renders each item in the grid.
+- `itemWidth`: The width of each grid item.
+- `itemHeight`: The height of each grid item.
+- `color`: Background color of the grid container.
+- `padding`: Padding around the grid container.
+- `gridViewPadding`: Padding for the internal GridView.
+- `verticalSpacing`: Spacing between grid items vertically.
+- `horizontalSpacing`: Spacing between grid items horizontally.
+- `horizontal`: Whether the grid view is horizontal.
+- `invertedRow`: Whether to invert the row.
+- `onPressed`: Callback when an item is tapped.
+
+## FlatGridView
+
+### Usage
 
 ```dart
-import 'package:supergrid/sectiongrid.dart';
+import 'package:flutter_super_grid/flutter_super_grid.dart';
+
+FlatGridView(
+  data: yourDataList,
+  renderItem: (itemData) {
+    // Customize how each item is rendered
+    return YourCustomItemWidget(itemData);
+  },
+  itemsPerRow: 3,
+  itemSize: 150.0,
+  color: Colors.blue,
+  padding: EdgeInsets.all(16.0),
+  gridViewPadding: EdgeInsets.all(8.0),
+  verticalSpacing: 10.0,
+  horizontalSpacing: 10.0,
+  horizontal: false,
+  invertedRow: false,
+  onPressed: (index) {
+    // Handle item tap
+  },
+)
+```
+
+#### Configuration
+
+- `data`: The data to display in the grid.
+- `renderItem`: The function that renders each item in the grid.
+- `itemsPerRow`: Number of items per row or column.
+- `itemSize`: The size of items in the main axis.
+- `color`: Background color of the grid container.
+- `padding`: Padding around the grid container.
+- `gridViewPadding`: Padding for the internal GridView.
+- `verticalSpacing`: Spacing between grid items vertically.
+- `horizontalSpacing`: Spacing between grid items horizontally.
+- `horizontal`: Whether the grid view is horizontal.
+- `invertedRow`: Whether to invert the row.
+- `onPressed`: Callback when an item is tapped.
+
+## SectionGridView
+
+### Usage
+
+```dart
+import 'package:flutter_super_grid/flutter_super_grid.dart';
 
 SectionGridView(
   sections: yourSectionsList,
@@ -90,8 +124,8 @@ SectionGridView(
     // Customize how each item is rendered
     return YourCustomItemWidget(itemData);
   },
-  itemWidth: 150.0,
-  itemHeight: 200.0,
+  itemsPerRow: 3,
+  itemSize: 150.0,
   color: Colors.blue,
   padding: EdgeInsets.all(16.0),
   gridViewPadding: EdgeInsets.all(8.0),
@@ -112,27 +146,27 @@ SectionGridView(
 )
 ```
 
-## Configuration
+#### Configuration
 
-- `data`: The data to display in the flatgrid or simplegrid.
-- `sections`: The sections to be displayed on the sectiongrid.
+- `sections`: The sections to display in the grid.
 - `renderItem`: The function that renders each item in the grid.
-- `itemWidth`: The width of each grid item.
-- `itemHeight`: The height of each grid item.
+- `itemsPerRow`: Number of items per row or column.
+- `itemSize`: The size of items in the main axis.
 - `color`: Background color of the grid container.
 - `padding`: Padding around the grid container.
-- `gridViewHeight`: Height of the internal GridView.
-- `gridViewWidth`: Width of the internal GridView.
 - `gridViewPadding`: Padding for the internal GridView.
 - `verticalSpacing`: Spacing between grid items vertically.
 - `horizontalSpacing`: Spacing between grid items horizontally.
-- `horizontal`: Whether the grid view is horizontal.
 - `invertedRow`: Whether to invert the row.
 - `onPressed`: Callback when an item is tapped.
-- `titleAlignment`: Alignment of the section title. (Default is `TitleAlignment.start`)
-- `titleBackgroundColor`: Background color of the section title container. (Default is `Colors.transparent`)
-- `titlePadding`: Padding around the section title. (Default is `EdgeInsets.all(8.0)`)
-- `titleTextStyle`: Style of the section title text. (Default is a basic text style)
+- `titleAlignment`: Alignment of the title.
+- `titleBackgroundColor`: Background color of the title container.
+- `titlePadding`: Padding around the title.
+- `titleTextStyle`: Style of the title.
+
+### Example App
+
+![Example Image](https://github.com/otrofy/flutter-super-grid/blob/PubPublish/gif/supergrid.gif?raw=true)
 
 
 ## Documentation
