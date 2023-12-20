@@ -2,6 +2,10 @@
 
 A customizable Flutter package for displaying grid views of sections.
 
+### Example App
+
+![Example Image](https://github.com/otrofy/flutter-super-grid/blob/PubPublish/gif/supergrid.gif?raw=true)
+
 ## Installation
 
 Add the following to your `pubspec.yaml` file:
@@ -163,10 +167,6 @@ SectionGridView(
 - `titleBackgroundColor`: Background color of the title container.
 - `titlePadding`: Padding around the title.
 - `titleTextStyle`: Style of the title.
-
-### Example App
-
-![Example Image](https://github.com/otrofy/flutter-super-grid/blob/PubPublish/gif/supergrid.gif?raw=true)
 
 
 ## Documentation
