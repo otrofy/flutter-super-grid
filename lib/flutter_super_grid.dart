@@ -20,9 +20,7 @@ class FlatGridView extends StatefulWidget {
     required this.itemsPerRow,
     required this.itemSize,
     this.minItemDimension = 120.0, // default value set to 120 px
-    this.color = Colors.transparent,
-    this.padding = const EdgeInsets.all(16),
-    this.gridViewPadding = const EdgeInsets.all(8.0),
+    this.style = const FlatGridViewStyle(),
     this.verticalSpacing = 10,
     this.horizontalSpacing = 10,
     this.horizontal = false,
@@ -30,14 +28,14 @@ class FlatGridView extends StatefulWidget {
     this.onPressed,
   });
 
+  /// The style of the grid view.
+  final FlatGridViewStyle style;
+
   /// The sections to display in the grid.
   final List data;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
   final int itemsPerRow;
-
-  /// The background color of the grid container.
-  final Color color;
 
   /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
   final double itemSize;
@@ -47,12 +45,6 @@ class FlatGridView extends StatefulWidget {
 
   /// The spacing between grid items horizontally.
   final double horizontalSpacing;
-
-  /// The padding for the container.
-  final EdgeInsets padding;
-
-  /// The padding for the gridView.
-  final EdgeInsets gridViewPadding;
 
   /// The function that renders each item in the grid.
   final Widget Function(dynamic data) renderItem;
@@ -91,9 +83,10 @@ class _FlatGridViewState extends State<FlatGridView> {
   Widget build(BuildContext context) {
     // Padding widget adds space around the grid view.
     return Padding(
-      padding: widget.padding, // Uses padding from the widget's properties.
+      padding:
+          widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
-        color: widget
+        color: widget.style
             .color, // Sets the background color for the entire container of the grid view.
         // Stack allows for overlapping of widgets.
         child: Stack(
@@ -125,8 +118,8 @@ class _FlatGridViewState extends State<FlatGridView> {
                       ? Axis.horizontal
                       : Axis
                           .vertical, // Sets the scroll direction of the GridView.
-                  padding:
-                      widget.gridViewPadding, // Padding within the GridView.
+                  padding: widget
+                      .style.gridViewPadding, // Padding within the GridView.
                   shrinkWrap:
                       true, // Ensures that the GridView only occupies space for its children.
                   // The gridDelegate manages the layout of the grid.
@@ -181,14 +174,10 @@ class SectionGridView extends StatefulWidget {
     required this.itemsPerRow, // required property
     required this.renderItem, // required property
     required this.itemSize, // required property
-    this.physics,
+    this.physics, // default value set to null
     this.minItemDimension = 120.0, // default value set to 120 px
     this.gridViewHeight = 300, // default value set to 300 px
     this.gridViewWidth = double.infinity, // default value set to infinity
-    this.color = Colors.transparent, // default value set to transparent
-    this.padding = const EdgeInsets.all(0), // default value set to 0
-    this.gridViewPadding =
-        const EdgeInsets.all(8.0), // default value set to 8 px
     this.horizontal = false, // default value set to false
     this.verticalSpacing = 10, // default value set to 10 px
     this.horizontalSpacing = 10, // default value set to 10 px
@@ -203,10 +192,11 @@ class SectionGridView extends StatefulWidget {
       fontSize: 16,
       color: Colors.black,
     ), // default value set to normal, 16 px, black
+    this.style = const SectionGridViewStyle(),
   });
 
-  /// The background color of the grid container.
-  final Color color;
+  /// The style of the grid view.
+  final SectionGridViewStyle style;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
   final int itemsPerRow;
@@ -228,12 +218,6 @@ class SectionGridView extends StatefulWidget {
 
   /// The spacing between grid items horizontally.
   final double horizontalSpacing;
-
-  /// The padding around the grid view.
-  final EdgeInsets gridViewPadding;
-
-  /// The padding around each section.
-  final EdgeInsets padding;
 
   /// The sections to display in the grid.
   final List<Map<String, dynamic>> sections;
@@ -262,6 +246,7 @@ class SectionGridView extends StatefulWidget {
   /// The minimum dimension (width or height) of each grid item.
   final double minItemDimension;
 
+  /// The physics of the grid view.
   final ScrollPhysics? physics;
 
   @override
@@ -311,10 +296,11 @@ class _SectionGridViewState extends State<SectionGridView> {
   Widget build(BuildContext context) {
     // Padding widget to add space around the entire grid view.
     return Padding(
-      padding: widget.padding, // Uses padding from the widget's properties.
+      padding:
+          widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
-        color:
-            widget.color, // Sets the background color for the grid container.
+        color: widget
+            .style.color, // Sets the background color for the grid container.
         child: Stack(
           // Stack widget allows stacking of widgets on top of each other.
           children: [
@@ -369,7 +355,7 @@ class _SectionGridViewState extends State<SectionGridView> {
                                     .horizontal // Sets the scroll direction of the grid view.
                                 ? Axis.horizontal
                                 : Axis.vertical,
-                            padding: widget
+                            padding: widget.style
                                 .gridViewPadding, // The padding inside the grid view.
                             shrinkWrap:
                                 true, // Ensures the GridView takes minimum space.
@@ -592,4 +578,30 @@ class _SimpleGridViewState extends State<SimpleGridView> {
       ),
     );
   }
+}
+
+class SectionGridViewStyle {
+  final Color color;
+  final EdgeInsets padding;
+  final EdgeInsets gridViewPadding;
+  // Add other style-related properties as needed
+
+  const SectionGridViewStyle({
+    this.color = Colors.transparent,
+    this.padding = const EdgeInsets.all(0),
+    this.gridViewPadding = const EdgeInsets.all(8.0),
+  });
+}
+
+class FlatGridViewStyle {
+  final Color color;
+  final EdgeInsets padding;
+  final EdgeInsets gridViewPadding;
+  // Add other style-related properties as needed
+
+  const FlatGridViewStyle({
+    this.color = Colors.transparent,
+    this.padding = const EdgeInsets.all(0),
+    this.gridViewPadding = const EdgeInsets.all(8.0),
+  });
 }
