@@ -23,10 +23,12 @@ class FirstTab extends StatelessWidget {
               gridViewHeight: 185,
               itemsPerRow: 1,
               horizontal: true,
-              titleTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+              style: const SectionGridViewStyle(
+                titleTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
               renderItem: (itemData) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -87,10 +89,12 @@ class FirstTab extends StatelessWidget {
               verticalSpacing: 40,
               itemsPerRow: 4,
               horizontal: true,
-              titleTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+              style: const SectionGridViewStyle(
+                titleTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
               renderItem: (itemData) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -176,10 +180,12 @@ class FirstTab extends StatelessWidget {
               verticalSpacing: 50,
               itemsPerRow: 1,
               horizontal: true,
-              titleTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+              style: const SectionGridViewStyle(
+                titleTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
               renderItem: (itemData) {
                 return Stack(
                   children: [
@@ -263,10 +269,12 @@ class FirstTab extends StatelessWidget {
               gridViewHeight: 185,
               itemsPerRow: 1,
               horizontal: true,
-              titleTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+              style: const SectionGridViewStyle(
+                titleTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
               renderItem: (itemData) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -322,7 +330,7 @@ class FirstTab extends StatelessWidget {
             height: 550,
             width: MediaQuery.of(context).size.width - 40,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 42, 25, 18),
+              color: const Color.fromARGB(255, 42, 25, 18),
               borderRadius: BorderRadius.circular(
                   20.0), // Ajusta el radio según tus necesidades
             ),
@@ -416,10 +424,12 @@ class FirstTab extends StatelessWidget {
                     verticalSpacing: 40,
                     itemsPerRow: 3,
                     horizontal: true,
-                    titleTextStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
+                    style: const SectionGridViewStyle(
+                      titleTextStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
                     renderItem: (itemData) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -529,10 +539,12 @@ class FirstTab extends StatelessWidget {
               gridViewHeight: 150,
               itemsPerRow: 1,
               horizontal: true,
-              titleTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+              style: const SectionGridViewStyle(
+                titleTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
               renderItem: (itemData) {
                 return Container(
                   padding: const EdgeInsets.all(8),
@@ -546,7 +558,7 @@ class FirstTab extends StatelessWidget {
                         color: Colors.white,
                       ),
                       Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         width: 80,
                         child: Text(
                           itemData["name"].toString(),
@@ -571,7 +583,7 @@ class FirstTab extends StatelessWidget {
     return Container(
       width: 40,
       height: 40,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.transparent,

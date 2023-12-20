@@ -27,6 +27,7 @@ class FlatGridView extends StatefulWidget {
     this.invertedRow = false,
     this.gridViewHeight = 300,
     this.gridViewWidth = double.infinity,
+    this.footerWidget = const SizedBox(),
     this.onPressed,
   });
 
@@ -35,6 +36,9 @@ class FlatGridView extends StatefulWidget {
 
   /// The data to display in the grid.
   final List data;
+
+  /// The widget rendered at the bottom of the grid view
+  final Widget footerWidget;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
   final int itemsPerRow;
@@ -83,6 +87,18 @@ class _FlatGridViewState extends State<FlatGridView> {
   void initState() {
     super
         .initState(); // Always call super.initState() first in initState() method.
+  }
+
+  Widget getFooterWidget(Widget widgetRendered) {
+    return SizedBox(
+      // color: widget.style
+      //     .titleBackgroundColor, // Sets the background color of the title container.
+      width: double
+          .infinity, // Ensures the container fills the width of its parent.
+      // padding:
+      //     widget.style.titlePadding, // Applies padding around the title text.
+      child: widgetRendered,
+    );
   }
 
   // The build method is called each time Flutter needs to render the widget on
@@ -181,6 +197,7 @@ class _FlatGridViewState extends State<FlatGridView> {
                 ],
               ),
             ),
+            getFooterWidget(widget.footerWidget),
           ],
         ),
       ),

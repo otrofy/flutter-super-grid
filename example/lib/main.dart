@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:example/first_tab.dart';
-import 'package:flutter_super_grid/flutter_super_grid.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_super_grid/flutter_super_grid.dart';
 
 void main() {
   runApp(const MyApp());
@@ -97,9 +96,30 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               itemSize: 100.0,
               itemsPerRow: 3,
-              color: Colors.transparent,
-              padding: const EdgeInsets.all(16.0),
-              gridViewPadding: const EdgeInsets.all(8.0),
+              style: const FlatGridViewStyle(
+                color: Colors.transparent,
+                padding: EdgeInsets.all(16.0),
+                gridViewPadding: EdgeInsets.all(8.0),
+              ),
+              footerWidget: Padding(
+                padding: EdgeInsets.only(left: 25, top: 26, right: 25),
+                child: Container(
+                  height: 100,
+                  color: Colors.red,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.abc,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Foot Render Widget",
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
+                ),
+              ),
               verticalSpacing: 10.0,
               horizontalSpacing: 10.0,
               horizontal: false,
