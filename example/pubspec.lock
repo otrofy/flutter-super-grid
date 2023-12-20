@@ -129,9 +129,10 @@ packages:
   flutter_super_grid:
     dependency: "direct main"
     description:
-      path: "C:/Users/elias/OneDrive/Documents/Otrofy/simple_grid/flutter-super-grid/"
-      relative: false
-    source: path
+      name: flutter_super_grid
+      sha256: "110c5c1ef4d30306ba75ad72ea0e7ff5d0b86dd6b43ba59333ac72f74a620f7e"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.0"
   flutter_test:
     dependency: "direct dev"
