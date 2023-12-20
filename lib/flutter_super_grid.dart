@@ -31,7 +31,7 @@ class FlatGridView extends StatefulWidget {
   /// The style of the grid view.
   final FlatGridViewStyle style;
 
-  /// The sections to display in the grid.
+  /// The data to display in the grid.
   final List data;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
@@ -86,8 +86,12 @@ class _FlatGridViewState extends State<FlatGridView> {
       padding:
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
-        color: widget.style
-            .color, // Sets the background color for the entire container of the grid view.
+        decoration: widget.style
+            .decoration, // Applies the decoration from the widget's properties.
+        color: widget.style.decoration != null
+            ? null
+            : widget.style
+                .color, // Sets the background color for the entire container of the grid view.
         // Stack allows for overlapping of widgets.
         child: Stack(
           children: [
@@ -183,19 +187,11 @@ class SectionGridView extends StatefulWidget {
     this.horizontalSpacing = 10, // default value set to 10 px
     this.invertedRow = false, // default value set to false
     this.onPressed, // default value set to null
-    this.titleAlignment = TitleAlignment.start, // default value set to start
-    this.titleBackgroundColor =
-        Colors.transparent, // default value set to transparent
-    this.titlePadding = const EdgeInsets.all(8.0), // default value set to 8 px
-    this.titleTextStyle = const TextStyle(
-      fontWeight: FontWeight.normal,
-      fontSize: 16,
-      color: Colors.black,
-    ), // default value set to normal, 16 px, black
-    this.style = const SectionGridViewStyle(),
+    this.style =
+        const SectionGridViewStyle(), // default value set to SectionGridViewStyle()
   });
 
-  /// The style of the grid view.
+  /// The style to to apply on the section grid.
   final SectionGridViewStyle style;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
@@ -228,18 +224,6 @@ class SectionGridView extends StatefulWidget {
   /// The callback function when an item is pressed.
   final void Function(int sectionIndex, int index)? onPressed;
 
-  /// The padding around the title.
-  final EdgeInsets titlePadding;
-
-  /// The alignment of the title.
-  final TitleAlignment titleAlignment;
-
-  /// The background color of the title container.
-  final Color titleBackgroundColor;
-
-  /// The style of the title.
-  final TextStyle titleTextStyle;
-
   /// Whether to invert the row.
   final bool invertedRow;
 
@@ -268,11 +252,12 @@ class _SectionGridViewState extends State<SectionGridView> {
   // It styles and aligns the title text based on the widget's properties.
   Widget getTitleWidget(String title) {
     return Container(
-      color: widget
+      color: widget.style
           .titleBackgroundColor, // Sets the background color of the title container.
       width: double
           .infinity, // Ensures the container fills the width of its parent.
-      padding: widget.titlePadding, // Applies padding around the title text.
+      padding:
+          widget.style.titlePadding, // Applies padding around the title text.
       child: Align(
         // Align widget allows alignment of the child within itself.
         alignment: {
@@ -280,11 +265,11 @@ class _SectionGridViewState extends State<SectionGridView> {
           TitleAlignment.start: Alignment.centerLeft,
           TitleAlignment.center: Alignment.center,
           TitleAlignment.end: Alignment.centerRight,
-        }[widget
+        }[widget.style
             .titleAlignment]!, // The '!' asserts that the value will not be null.
         child: Text(
           title, // The actual title text.
-          style: widget
+          style: widget.style
               .titleTextStyle, // The style for the title text, defined in the parent widget.
         ),
       ),
@@ -299,8 +284,12 @@ class _SectionGridViewState extends State<SectionGridView> {
       padding:
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
-        color: widget
-            .style.color, // Sets the background color for the grid container.
+        decoration: widget.style
+            .decoration, // Applies the decoration from the widget's properties.
+        color: widget.style.decoration != null
+            ? null
+            : widget.style
+                .color, // Sets the background color for the grid container.
         child: Stack(
           // Stack widget allows stacking of widgets on top of each other.
           children: [
@@ -419,9 +408,7 @@ class SimpleGridView extends StatefulWidget {
     required this.itemHeight,
     this.itemsPerRow = 0,
     this.itemSize = 100,
-    this.color = Colors.transparent,
-    this.padding = const EdgeInsets.all(16),
-    this.gridViewPadding = const EdgeInsets.all(8.0),
+    this.style = const SimpleGridViewStyle(),
     this.verticalSpacing = 10,
     this.horizontalSpacing = 10,
     this.horizontal = false,
@@ -429,8 +416,8 @@ class SimpleGridView extends StatefulWidget {
     this.minItemDimension = 80.0,
   });
 
-  /// The background color of the grid container.
-  final Color color;
+  /// The style of the grid view.
+  final SimpleGridViewStyle style;
 
   /// The width of each grid item.
   final double itemWidth;
@@ -449,12 +436,6 @@ class SimpleGridView extends StatefulWidget {
 
   /// The spacing between grid items horizontally.
   final double horizontalSpacing;
-
-  /// The padding for the container.
-  final EdgeInsets padding;
-
-  /// The padding for the gridView.
-  final EdgeInsets gridViewPadding;
 
   /// The sections to display in the grid.
   final List data;
@@ -492,10 +473,10 @@ class _SimpleGridViewState extends State<SimpleGridView> {
   Widget build(BuildContext context) {
     // Padding widget adds space around the entire grid view.
     return Padding(
-      padding:
-          widget.padding, // Applies the specified padding around the grid view.
+      padding: widget
+          .style.padding, // Applies the specified padding around the grid view.
       child: Container(
-        color: widget
+        color: widget.style
             .color, // Sets the background color for the grid view container.
         // Stack allows placing widgets on top of each other.
         child: Stack(
@@ -527,7 +508,7 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                       ? Axis.horizontal
                       : Axis
                           .vertical, // Sets the scroll direction of the GridView.
-                  padding: widget
+                  padding: widget.style
                       .gridViewPadding, // Sets the padding within the GridView.
                   shrinkWrap:
                       true, // Ensures the GridView only takes up necessary space.
@@ -581,27 +562,126 @@ class _SimpleGridViewState extends State<SimpleGridView> {
 }
 
 class SectionGridViewStyle {
-  final Color color;
-  final EdgeInsets padding;
-  final EdgeInsets gridViewPadding;
-  // Add other style-related properties as needed
-
   const SectionGridViewStyle({
+    this.decoration,
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(0),
     this.gridViewPadding = const EdgeInsets.all(8.0),
+    this.titlePadding = const EdgeInsets.all(8.0),
+    this.titleAlignment = TitleAlignment.start,
+    this.titleBackgroundColor = Colors.transparent,
+    this.titleTextStyle = const TextStyle(
+      fontWeight: FontWeight.normal,
+      fontSize: 16,
+      color: Colors.black,
+    ),
   });
+
+  /// The decoration to paint behind the main container.
+  ///
+  /// Use the [color] property to specify a simple solid color.
+  ///
+  /// The [child] is not clipped to the decoration. To clip a child to the shape
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  final BoxDecoration? decoration;
+
+  /// The color to paint behind the [child].
+  ///
+  /// This property should be preferred when the background is a simple color.
+  /// For other cases, such as gradients or images, use the [decoration]
+  /// property.
+  ///
+  /// If the [decoration] is used, this property must be null. A background
+  /// color may still be painted by the [decoration] even if this property is
+  /// null.
+  final Color color;
+
+  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  /// This padding is in addition to any padding inherent in the [decoration];
+  /// see [Decoration.padding].
+  final EdgeInsets padding;
+
+  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  final EdgeInsets gridViewPadding;
+
+  /// Empty space to inscribe inside the Title.
+  final EdgeInsets titlePadding;
+
+  /// The alignment of the title.
+  final TitleAlignment titleAlignment;
+
+  /// The background color of the title.
+  final Color titleBackgroundColor;
+
+  /// The style of the title text.
+  final TextStyle titleTextStyle;
 }
 
 class FlatGridViewStyle {
-  final Color color;
-  final EdgeInsets padding;
-  final EdgeInsets gridViewPadding;
-  // Add other style-related properties as needed
-
   const FlatGridViewStyle({
+    this.decoration,
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(0),
     this.gridViewPadding = const EdgeInsets.all(8.0),
   });
+
+  /// The decoration to paint behind the main container.
+  ///
+  /// Use the [color] property to specify a simple solid color.
+  ///
+  /// The [child] is not clipped to the decoration. To clip a child to the shape
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  final BoxDecoration? decoration;
+
+  /// The color to paint behind the [child].
+  ///
+  /// This property should be preferred when the background is a simple color.
+  /// For other cases, such as gradients or images, use the [decoration]
+  /// property.
+  ///
+  /// If the [decoration] is used, this property must be null. A background
+  /// color may still be painted by the [decoration] even if this property is
+  /// null.
+  final Color color;
+
+  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  /// This padding is in addition to any padding inherent in the [decoration];
+  /// see [Decoration.padding].
+  final EdgeInsets padding;
+
+  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  final EdgeInsets gridViewPadding;
+}
+
+class SimpleGridViewStyle {
+  const SimpleGridViewStyle({
+    this.color = Colors.transparent,
+    this.padding = const EdgeInsets.all(0),
+    this.gridViewPadding = const EdgeInsets.all(8.0),
+  });
+
+  /// The color to paint behind the [child].
+  ///
+  /// This property should be preferred when the background is a simple color.
+  final Color color;
+
+  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  /// This padding is in addition to any padding inherent in the [decoration];
+  /// see [Decoration.padding].
+  final EdgeInsets padding;
+
+  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  final EdgeInsets gridViewPadding;
 }
