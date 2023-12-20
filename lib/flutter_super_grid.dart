@@ -89,18 +89,6 @@ class _FlatGridViewState extends State<FlatGridView> {
         .initState(); // Always call super.initState() first in initState() method.
   }
 
-  Widget getFooterWidget(Widget widgetRendered) {
-    return SizedBox(
-      // color: widget.style
-      //     .titleBackgroundColor, // Sets the background color of the title container.
-      width: double
-          .infinity, // Ensures the container fills the width of its parent.
-      // padding:
-      //     widget.style.titlePadding, // Applies padding around the title text.
-      child: widgetRendered,
-    );
-  }
-
   // The build method is called each time Flutter needs to render the widget on
   // the screen. It returns a widget tree that Flutter will display.
   @override
@@ -197,7 +185,7 @@ class _FlatGridViewState extends State<FlatGridView> {
                 ],
               ),
             ),
-            getFooterWidget(widget.footerWidget),
+            widget.footerWidget,
           ],
         ),
       ),
