@@ -3,7 +3,7 @@ library supergrid;
 
 import 'package:flutter/material.dart';
 
-///This is the enum for the title alignment.
+///This is the enum
 enum TitleAlignment {
   start,
   center,
@@ -262,7 +262,6 @@ class SectionGridView extends StatefulWidget {
   /// The minimum dimension (width or height) of each grid item.
   final double minItemDimension;
 
-  /// The physics of the grid view.
   final ScrollPhysics? physics;
 
   @override
@@ -441,6 +440,7 @@ class SimpleGridView extends StatefulWidget {
     this.horizontalSpacing = 10,
     this.horizontal = false,
     this.invertedRow = false,
+    this.minItemDimension = 80.0,
   });
 
   /// The background color of the grid container.
@@ -481,6 +481,9 @@ class SimpleGridView extends StatefulWidget {
 
   /// Whether the grid view is horizontal.
   final bool horizontal;
+
+  /// The minimum dimension (width or height) of each grid item.
+  final double minItemDimension;
 
   @override
   State<SimpleGridView> createState() => _SimpleGridViewState();
@@ -544,7 +547,7 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                       true, // Ensures the GridView only takes up necessary space.
                   // The gridDelegate manages the layout of the grid.
                   gridDelegate: widget.itemsPerRow == 0
-                      // If itemsPerRow is 2, use SliverGridDelegateWithFixedCrossAxisCount. Otherwise, use SliverGridDelegateWithMaxCrossAxisExtent.
+                      // If itemsPerRow 0 > , use SliverGridDelegateWithFixedCrossAxisCount. Otherwise, use SliverGridDelegateWithMaxCrossAxisExtent.
                       // This is because SliverGridDelegateWithFixedCrossAxisCount requires a fixed number of items per row.
                       // SliverGridDelegateWithMaxCrossAxisExtent allows for a variable number of items per row.
                       ? SliverGridDelegateWithMaxCrossAxisExtent(
@@ -561,8 +564,10 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                       : SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: widget
                               .itemsPerRow, // Number of items per row or column.
-                          mainAxisExtent: widget
-                              .itemSize, // The size of items in the main axis.
+                          mainAxisExtent:
+                              (widget.minItemDimension > widget.itemSize
+                                  ? widget.minItemDimension
+                                  : widget.itemSize),
                           crossAxisSpacing: widget
                               .horizontalSpacing, // Spacing between items horizontally.
                           mainAxisSpacing: widget
