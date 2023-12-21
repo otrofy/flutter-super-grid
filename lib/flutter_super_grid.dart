@@ -21,20 +21,30 @@ class FlatGridView extends StatefulWidget {
     required this.itemSize,
     this.minItemDimension = 120.0, // default value set to 120 px
     this.style = const FlatGridViewStyle(),
+    this.containerStyle = const FlatGridViewContainerStyle(),
     this.verticalSpacing = 10,
     this.horizontalSpacing = 10,
     this.horizontal = false,
     this.invertedRow = false,
     this.gridViewHeight = 300,
     this.gridViewWidth = double.infinity,
+    this.containerHeight = 300,
+    this.containerWidth = double.infinity,
+    this.footerWidget = const SizedBox(),
     this.onPressed,
   });
 
   /// The style of the grid view.
   final FlatGridViewStyle style;
 
+  /// The style of the container of the widget in the grid view.
+  final FlatGridViewContainerStyle containerStyle;
+
   /// The data to display in the grid.
   final List data;
+
+  /// The widget rendered at the bottom of the grid view
+  final Widget footerWidget;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
   final int itemsPerRow;
@@ -44,6 +54,12 @@ class FlatGridView extends StatefulWidget {
 
   /// The width of the gridview.
   final double gridViewWidth;
+
+  /// The height of the containerHeight.
+  final double containerHeight;
+
+  /// The width of the containerHeight.
+  final double containerWidth;
 
   /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
   final double itemSize;
@@ -94,6 +110,8 @@ class _FlatGridViewState extends State<FlatGridView> {
       padding:
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
+        width: widget.containerWidth,
+        height: widget.containerHeight,
         decoration: widget.style
             .decoration, // Applies the decoration from the widget's properties.
         color: widget.style.decoration != null
@@ -172,7 +190,13 @@ class _FlatGridViewState extends State<FlatGridView> {
                               }
                             },
                             // The renderItem function is called to build the UI for each item.
-                            child: widget.renderItem(itemData),
+                            child: Container(
+                                decoration: widget.containerStyle
+                                    .decoration, // Applies the decoration from the widget's properties.
+                                color: widget.containerStyle.decoration != null
+                                    ? null
+                                    : widget.containerStyle.color,
+                                child: widget.renderItem(itemData)),
                           );
                         },
                       ),
@@ -181,6 +205,7 @@ class _FlatGridViewState extends State<FlatGridView> {
                 ],
               ),
             ),
+            widget.footerWidget,
           ],
         ),
       ),
@@ -680,6 +705,46 @@ class SectionGridViewStyle {
 
   /// The style of the title text.
   final TextStyle titleTextStyle;
+}
+
+class FlatGridViewContainerStyle {
+  const FlatGridViewContainerStyle({
+    this.decoration,
+    this.color = Colors.transparent,
+    this.padding = const EdgeInsets.all(0),
+    this.gridViewPadding = const EdgeInsets.all(8.0),
+  });
+
+  /// The decoration to paint behind the main container.
+  ///
+  /// Use the [color] property to specify a simple solid color.
+  ///
+  /// The [child] is not clipped to the decoration. To clip a child to the shape
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  final BoxDecoration? decoration;
+
+  /// The color to paint behind the [child].
+  ///
+  /// This property should be preferred when the background is a simple color.
+  /// For other cases, such as gradients or images, use the [decoration]
+  /// property.
+  ///
+  /// If the [decoration] is used, this property must be null. A background
+  /// color may still be painted by the [decoration] even if this property is
+  /// null.
+  final Color color;
+
+  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  /// This padding is in addition to any padding inherent in the [decoration];
+  /// see [Decoration.padding].
+  final EdgeInsets padding;
+
+  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  final EdgeInsets gridViewPadding;
 }
 
 class FlatGridViewStyle {
