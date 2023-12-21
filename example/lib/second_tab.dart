@@ -10,9 +10,7 @@ class SecondTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      width: 200,
+    return SingleChildScrollView(
       child: FlatGridView(
         data: data,
         renderItem: (itemData) {
@@ -29,10 +27,12 @@ class SecondTab extends StatelessWidget {
             ),
           );
         },
-        itemSize: 100.0,
+        itemSize: 80.0,
         itemsPerRow: 3,
-        gridViewWidth: 150,
+        gridViewWidth: 250,
         gridViewHeight: 300,
+        containerHeight: 450,
+        containerWidth: 300,
         style: const FlatGridViewStyle(
           color: Colors.green,
           padding: EdgeInsets.all(16.0),
@@ -57,7 +57,7 @@ class SecondTab extends StatelessWidget {
         ),
         verticalSpacing: 10.0,
         horizontalSpacing: 10.0,
-        horizontal: true,
+        horizontal: false,
         invertedRow: false,
         onPressed: (index) {
           // Handle item tap

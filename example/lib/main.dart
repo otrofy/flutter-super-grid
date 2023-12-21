@@ -53,12 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             FirstTab(),
-            Container(
-                color: Colors.red,
-                child: SizedBox(height: 52, width: 50, child: SecondTab())),
+            SizedBox(height: 52, width: 50, child: SecondTab()),
             Text("22222")
           ],
         ),

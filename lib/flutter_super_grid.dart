@@ -27,6 +27,8 @@ class FlatGridView extends StatefulWidget {
     this.invertedRow = false,
     this.gridViewHeight = 300,
     this.gridViewWidth = double.infinity,
+    this.containerHeight = 300,
+    this.containerWidth = double.infinity,
     this.footerWidget = const SizedBox(),
     this.onPressed,
   });
@@ -48,6 +50,12 @@ class FlatGridView extends StatefulWidget {
 
   /// The width of the gridview.
   final double gridViewWidth;
+
+  /// The height of the containerHeight.
+  final double containerHeight;
+
+  /// The width of the containerHeight.
+  final double containerWidth;
 
   /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
   final double itemSize;
@@ -98,6 +106,8 @@ class _FlatGridViewState extends State<FlatGridView> {
       padding:
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
+        width: widget.containerWidth,
+        height: widget.containerHeight,
         decoration: widget.style
             .decoration, // Applies the decoration from the widget's properties.
         color: widget.style.decoration != null
