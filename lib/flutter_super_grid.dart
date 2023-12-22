@@ -249,10 +249,11 @@ class SectionGridView extends StatefulWidget {
     this.onPressed, // default value set to null
     this.style =
         const SectionGridViewStyle(), // default value set to SectionGridViewStyle()
-    this.onNewItemAdded,
-    this.containerWidth = double.infinity,
-    this.footerWidget = const SizedBox(),
-    this.itemContainerStyle = const ContainerStyle(),
+    this.onNewItemAdded, // default value set to null
+    this.containerWidth = double.infinity, // default value set to infinity
+    this.footerWidget = const SizedBox(), // default value set to SizedBox()
+    this.itemContainerStyle =
+        const ContainerStyle(), // default value set to ContainerStyle()
   });
 
   /// The style of the container of the items in the grid view.
