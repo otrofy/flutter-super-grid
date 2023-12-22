@@ -35,6 +35,7 @@ class FlatGridView extends StatefulWidget {
     this.onNewItemAdded,
   });
 
+  /// The callback function when a new item is added to the data list.
   final void Function()? onNewItemAdded;
 
   /// The style of the grid view.
@@ -582,6 +583,7 @@ class SimpleGridView extends StatefulWidget {
   /// Specifies the style of the additional row.
   final AditionalRowStyle? additionalRowStyle;
 
+  /// The style of the container of the widget in the grid view.
   final SimpleGridViewContainerStyle containerStyle;
 
   @override
@@ -704,9 +706,11 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                         },
                       ),
                       Padding(
+                        // Applies the padding from the widget's properties.
                         padding: widget.additionalRowStyle?.padding ??
                             EdgeInsets.zero,
                         child: Container(
+                          // Applies the decoration from the widget's properties.
                           color: widget.additionalRowStyle?.color ??
                               Colors.transparent,
                           child: Row(
@@ -746,31 +750,31 @@ class SectionGridViewStyle {
 
   /// The decoration to paint behind the main container.
   ///
-  /// Use the [color] property to specify a simple solid color.
+  /// Use the (color) property to specify a simple solid color.
   ///
-  /// The [child] is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  /// The (child) is not clipped to the decoration. To clip a child to the shape
+  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
   final BoxDecoration? decoration;
 
-  /// The color to paint behind the [child].
+  /// The color to paint behind the (child).
   ///
   /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the [decoration]
+  /// For other cases, such as gradients or images, use the (decoration)
   /// property.
   ///
-  /// If the [decoration] is used, this property must be null. A background
-  /// color may still be painted by the [decoration] even if this property is
+  /// If the (decoration) is used, this property must be null. A background
+  /// color may still be painted by the (decoration) even if this property is
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// Empty space to inscribe inside the (decoration). The (child), if any, is
   /// placed inside this padding.
   ///
-  /// This padding is in addition to any padding inherent in the [decoration];
-  /// see [Decoration.padding].
+  /// This padding is in addition to any padding inherent in the (decoration);
+  /// see (Decoration.padding).
   final EdgeInsets padding;
 
-  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
   /// placed inside this padding.
   ///
   final EdgeInsets gridViewPadding;
@@ -798,31 +802,31 @@ class ContainerStyle {
 
   /// The decoration to paint behind the main container.
   ///
-  /// Use the [color] property to specify a simple solid color.
+  /// Use the (color) property to specify a simple solid color.
   ///
-  /// The [child] is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  /// The (child) is not clipped to the decoration. To clip a child to the shape
+  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
   final BoxDecoration? decoration;
 
-  /// The color to paint behind the [child].
+  /// The color to paint behind the (child).
   ///
   /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the [decoration]
+  /// For other cases, such as gradients or images, use the (decoration)
   /// property.
   ///
-  /// If the [decoration] is used, this property must be null. A background
-  /// color may still be painted by the [decoration] even if this property is
+  /// If the (decoration) is used, this property must be null. A background
+  /// color may still be painted by the (decoration) even if this property is
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// Empty space to inscribe inside the (decoration). The (child), if any, is
   /// placed inside this padding.
   ///
-  /// This padding is in addition to any padding inherent in the [decoration];
-  /// see [Decoration.padding].
+  /// This padding is in addition to any padding inherent in the (decoration);
+  /// see (Decoration.padding).
   final EdgeInsets padding;
 
-  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
   /// placed inside this padding.
   ///
   final EdgeInsets gridViewPadding;
@@ -838,31 +842,31 @@ class SimpleGridViewContainerStyle {
 
   /// The decoration to paint behind the main container.
   ///
-  /// Use the [color] property to specify a simple solid color.
+  /// Use the (color) property to specify a simple solid color.
   ///
-  /// The [child] is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  /// The (child) is not clipped to the decoration. To clip a child to the shape
+  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
   final BoxDecoration? decoration;
 
-  /// The color to paint behind the [child].
+  /// The color to paint behind the (child).
   ///
   /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the [decoration]
+  /// For other cases, such as gradients or images, use the (decoration)
   /// property.
   ///
-  /// If the [decoration] is used, this property must be null. A background
-  /// color may still be painted by the [decoration] even if this property is
+  /// If the (decoration) is used, this property must be null. A background
+  /// color may still be painted by the (decoration) even if this property is
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// Empty space to inscribe inside the (decoration). The (child), if any, is
   /// placed inside this padding.
   ///
-  /// This padding is in addition to any padding inherent in the [decoration];
-  /// see [Decoration.padding].
+  /// This padding is in addition to any padding inherent in the (decoration);
+  /// see (Decoration.padding).
   final EdgeInsets padding;
 
-  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
   /// placed inside this padding.
   ///
   final EdgeInsets gridViewPadding;
@@ -878,31 +882,31 @@ class FlatGridViewStyle {
 
   /// The decoration to paint behind the main container.
   ///
-  /// Use the [color] property to specify a simple solid color.
+  /// Use the (color) property to specify a simple solid color.
   ///
-  /// The [child] is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  /// The (child) is not clipped to the decoration. To clip a child to the shape
+  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
   final BoxDecoration? decoration;
 
-  /// The color to paint behind the [child].
+  /// The color to paint behind the (child).
   ///
   /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the [decoration]
+  /// For other cases, such as gradients or images, use the (decoration)
   /// property.
   ///
-  /// If the [decoration] is used, this property must be null. A background
-  /// color may still be painted by the [decoration] even if this property is
+  /// If the (decoration) is used, this property must be null. A background
+  /// color may still be painted by the (decoration) even if this property is
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// Empty space to inscribe inside the (decoration). The (child), if any, is
   /// placed inside this padding.
   ///
-  /// This padding is in addition to any padding inherent in the [decoration];
-  /// see [Decoration.padding].
+  /// This padding is in addition to any padding inherent in the (decoration);
+  /// see (Decoration.padding).
   final EdgeInsets padding;
 
-  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
   /// placed inside this padding.
   ///
   final EdgeInsets gridViewPadding;
@@ -918,25 +922,25 @@ class SimpleGridViewStyle {
 
   /// The decoration to paint behind the main container.
   ///
-  /// Use the [color] property to specify a simple solid color.
+  /// Use the (color) property to specify a simple solid color.
   ///
-  /// The [child] is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  /// The (chil) is not clipped to the decoration. To clip a child to the shape
+  /// of a particular (ShapeDecoration0, consider using a (ClipPath) widget.
   final BoxDecoration? decoration;
 
-  /// The color to paint behind the [child].
+  /// The color to paint behind the (child).
   ///
   /// This property should be preferred when the background is a simple color.
   final Color color;
 
-  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// Empty space to inscribe inside the (decoration). The (child), if any, is
   /// placed inside this padding.
   ///
-  /// This padding is in addition to any padding inherent in the [decoration];
-  /// see [Decoration.padding].
+  /// This padding is in addition to any padding inherent in the (decoration);
+  /// see (Decoration.padding).
   final EdgeInsets padding;
 
-  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
   /// placed inside this padding.
   ///
   final EdgeInsets gridViewPadding;
@@ -948,15 +952,15 @@ class AditionalRowStyle {
     this.padding = const EdgeInsets.all(0),
   });
 
-  /// The color to paint behind the [child].
+  /// The color to paint behind the (child).
   ///
   /// This property should be preferred when the background is a simple color.
   final Color color;
 
-  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// Empty space to inscribe inside the (decoration). The (child), if any, is
   /// placed inside this padding.
   ///
-  /// This padding is in addition to any padding inherent in the [decoration];
-  /// see [Decoration.padding].
+  /// This padding is in addition to any padding inherent in the (decoration);
+  /// see (Decoration.padding).
   final EdgeInsets padding;
 }
