@@ -753,7 +753,7 @@ class SectionGridViewStyle {
   /// Use the (color) property to specify a simple solid color.
   ///
   /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
 
   /// The color to paint behind the (child).
@@ -767,7 +767,7 @@ class SectionGridViewStyle {
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the (decoration). The (child), if any, is
+  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
   /// placed inside this padding.
   ///
   /// This padding is in addition to any padding inherent in the (decoration);
@@ -805,7 +805,7 @@ class ContainerStyle {
   /// Use the (color) property to specify a simple solid color.
   ///
   /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
 
   /// The color to paint behind the (child).
@@ -819,7 +819,7 @@ class ContainerStyle {
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the (decoration). The (child), if any, is
+  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
   /// placed inside this padding.
   ///
   /// This padding is in addition to any padding inherent in the (decoration);
@@ -845,7 +845,7 @@ class SimpleGridViewContainerStyle {
   /// Use the (color) property to specify a simple solid color.
   ///
   /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
 
   /// The color to paint behind the (child).
@@ -859,7 +859,7 @@ class SimpleGridViewContainerStyle {
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the (decoration). The (child), if any, is
+  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
   /// placed inside this padding.
   ///
   /// This padding is in addition to any padding inherent in the (decoration);
@@ -885,7 +885,7 @@ class FlatGridViewStyle {
   /// Use the (color) property to specify a simple solid color.
   ///
   /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular (ShapeDecoration), consider using a (ClipPath) widget.
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
 
   /// The color to paint behind the (child).
@@ -899,7 +899,7 @@ class FlatGridViewStyle {
   /// null.
   final Color color;
 
-  /// Empty space to inscribe inside the (decoration). The (child), if any, is
+  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
   /// placed inside this padding.
   ///
   /// This padding is in addition to any padding inherent in the (decoration);
@@ -924,8 +924,8 @@ class SimpleGridViewStyle {
   ///
   /// Use the (color) property to specify a simple solid color.
   ///
-  /// The (chil) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular (ShapeDecoration0, consider using a (ClipPath) widget.
+  /// The (child) is not clipped to the decoration. To clip a child to the shape
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
 
   /// The color to paint behind the (child).
@@ -933,7 +933,7 @@ class SimpleGridViewStyle {
   /// This property should be preferred when the background is a simple color.
   final Color color;
 
-  /// Empty space to inscribe inside the (decoration). The (child), if any, is
+  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
   /// placed inside this padding.
   ///
   /// This padding is in addition to any padding inherent in the (decoration);
@@ -957,10 +957,6 @@ class AditionalRowStyle {
   /// This property should be preferred when the background is a simple color.
   final Color color;
 
-  /// Empty space to inscribe inside the (decoration). The (child), if any, is
-  /// placed inside this padding.
-  ///
-  /// This padding is in addition to any padding inherent in the (decoration);
-  /// see (Decoration.padding).
+  /// see [Decoration.padding].
   final EdgeInsets padding;
 }
