@@ -32,7 +32,10 @@ class FlatGridView extends StatefulWidget {
     this.footerWidget = const SizedBox(),
     this.physics,
     this.onPressed,
+    this.onNewItemAdded,
   });
+
+  final void Function()? onNewItemAdded;
 
   /// The style of the grid view.
   final FlatGridViewStyle style;
@@ -92,9 +95,17 @@ class FlatGridView extends StatefulWidget {
 // The _FlatGridViewState class manages the state for the FlatGridView widget.
 // It extends the generic State class specialized for the FlatGridView.
 class _FlatGridViewState extends State<FlatGridView> {
-  // The initState method is the first method called when this object is
-  // inserted into the tree. The Flutter framework will call this method exactly
-  // once for each State object it creates.
+  @override
+  void didUpdateWidget(FlatGridView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if new items have been added to the list
+    if (widget.data.length > oldWidget.data.length) {
+      // Invoke the callback function
+      widget.onNewItemAdded?.call();
+    }
+  }
+
   @override
   void initState() {
     super
@@ -489,26 +500,44 @@ class _SectionGridViewState extends State<SectionGridView> {
 /// A widget that displays a simple grid view.
 class SimpleGridView extends StatefulWidget {
   /// Creates a `SimpleGridView`.
-  const SimpleGridView(
-      {super.key,
-      required this.data,
-      required this.renderItem,
-      required this.itemWidth,
-      required this.itemHeight,
-      this.itemsPerRow = 0,
-      this.itemSize = 100,
-      this.style = const SimpleGridViewStyle(),
-      this.verticalSpacing = 10,
-      this.horizontalSpacing = 10,
-      this.horizontal = false,
-      this.invertedRow = false,
-      this.minItemDimension = 80.0,
-      this.staticDimension,
-      this.additionalRow,
-      this.additionalRowStyle});
+  const SimpleGridView({
+    super.key,
+    required this.data,
+    required this.renderItem,
+    required this.itemWidth,
+    required this.itemHeight,
+    this.itemsPerRow = 0,
+    this.itemSize = 100,
+    this.style = const SimpleGridViewStyle(),
+    this.verticalSpacing = 10,
+    this.horizontalSpacing = 10,
+    this.horizontal = false,
+    this.invertedRow = false,
+    this.minItemDimension = 80.0,
+    this.staticDimension,
+    this.additionalRow,
+    this.additionalRowStyle,
+    this.containerStyle = const SimpleGridViewContainerStyle(),
+    this.containerHeight = double.infinity,
+    this.containerWidth = double.infinity,
+    this.gridViewHeight = 300,
+    this.gridViewWidth = double.infinity,
+  });
 
   /// The style of the grid view.
   final SimpleGridViewStyle style;
+
+  /// The height of the containerHeight.
+  final double containerHeight;
+
+  /// The width of the containerHeight.
+  final double containerWidth;
+
+  /// The height of the gridview.
+  final double gridViewHeight;
+
+  /// The width of the gridview.
+  final double gridViewWidth;
 
   /// The width of each grid item.
   final double itemWidth;
@@ -552,6 +581,8 @@ class SimpleGridView extends StatefulWidget {
   /// Specifies the style of the additional row.
   final AditionalRowStyle? additionalRowStyle;
 
+  final SimpleGridViewContainerStyle containerStyle;
+
   @override
   State<SimpleGridView> createState() => _SimpleGridViewState();
 }
@@ -576,102 +607,120 @@ class _SimpleGridViewState extends State<SimpleGridView> {
       padding: widget
           .style.padding, // Applies the specified padding around the grid view.
       child: Container(
-        color: widget.style
-            .color, // Sets the background color for the grid view container.
+        decoration: widget.style
+            .decoration, // Applies the decoration from the widget's properties.
+        color: widget.style.decoration != null
+            ? null
+            : widget.style
+                .color, // Sets the background color for the grid view container.
+        width: widget.containerWidth,
+        height: widget.containerHeight,
         // Stack allows placing widgets on top of each other.
-        child: Stack(
-          children: [
-            // Visibility widget conditionally renders its child based on the 'visible' property.
-            // Here, it displays a message when the data list is empty.
-            Visibility(
-              visible: widget.data
-                  .isEmpty, // Visibility depends on whether the data list is empty.
-              child: const Center(
-                  child: Text(
-                      'No items')), // Text displayed when no data is available.
-            ),
-            // Visibility widget to show the grid view when there is data.
-            Visibility(
-              visible: widget.data
-                  .isNotEmpty, // Visibility depends on whether there's data in the list.
-              // SingleChildScrollView allows the grid to be scrollable.
-              child: SingleChildScrollView(
-                scrollDirection: widget.horizontal
-                    ? Axis.horizontal
-                    : Axis
-                        .vertical, // Sets the scroll direction based on the horizontal flag.
-                // GridView.builder creates a grid of items.
-                child: Column(
-                  children: [
-                    GridView.builder(
-                      physics:
-                          const NeverScrollableScrollPhysics(), // Disables scrolling within the GridView itself.
-                      scrollDirection: widget.horizontal
-                          ? Axis.horizontal
-                          : Axis
-                              .vertical, // Sets the scroll direction of the GridView.
-                      padding: widget.style
-                          .gridViewPadding, // Sets the padding within the GridView.
-                      shrinkWrap:
-                          true, // Ensures the GridView only takes up necessary space.
-                      // The gridDelegate manages the layout of the grid.
-                      gridDelegate: widget.itemsPerRow == 0
-                          // If itemsPerRow 0 > , use SliverGridDelegateWithFixedCrossAxisCount. Otherwise, use SliverGridDelegateWithMaxCrossAxisExtent.
-                          // This is because SliverGridDelegateWithFixedCrossAxisCount requires a fixed number of items per row.
-                          // SliverGridDelegateWithMaxCrossAxisExtent allows for a variable number of items per row.
-                          ? SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: widget
-                                  .itemWidth, // The maximum extent of items in the cross axis.
-                              childAspectRatio: widget.itemWidth /
-                                  widget
-                                      .itemHeight, // Aspect ratio for children in the grid.
-                              crossAxisSpacing: widget
-                                  .horizontalSpacing, // Spacing between items along the cross axis.
-                              mainAxisSpacing: widget
-                                  .verticalSpacing, // Spacing between items along the main axis.
-                            )
-                          : SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: widget
-                                  .itemsPerRow, // Number of items per row or column.
-                              mainAxisExtent: widget.staticDimension ??
-                                  (widget.minItemDimension > widget.itemSize
-                                      ? widget.minItemDimension
-                                      : widget.itemSize),
-                              crossAxisSpacing: widget
-                                  .horizontalSpacing, // Spacing between items horizontally.
-                              mainAxisSpacing: widget
-                                  .verticalSpacing, // Spacing between items vertically.
-                            ),
-                      itemCount: widget
-                          .data.length, // The number of items in the data list.
-                      itemBuilder: (context, index) {
-                        // Builder function to construct each item in the grid.
-                        // Chooses the appropriate data, inverting the order if invertedRow is true.
-                        final itemData = widget.invertedRow
-                            ? widget.data.reversed.toList()[index]
-                            : widget.data[index];
-                        // Calls renderItem to build the UI for each item.
-                        return widget.renderItem(itemData);
-                      },
-                    ),
-                    Padding(
-                      padding:
-                          widget.additionalRowStyle?.padding ?? EdgeInsets.zero,
-                      child: Container(
-                        color: widget.additionalRowStyle?.color ??
-                            Colors.transparent,
-                        child: Row(
-                          children: [
-                            widget.additionalRow ?? Container(),
-                          ],
-                        ),
+        child: SizedBox(
+          height:
+              widget.gridViewHeight, // The height of the grid view container.
+          width: widget.gridViewWidth, // The width of the grid view container.
+          child: Stack(
+            children: [
+              // Visibility widget conditionally renders its child based on the 'visible' property.
+              // Here, it displays a message when the data list is empty.
+              Visibility(
+                visible: widget.data
+                    .isEmpty, // Visibility depends on whether the data list is empty.
+                child: const Center(
+                    child: Text(
+                        'No items')), // Text displayed when no data is available.
+              ),
+              // Visibility widget to show the grid view when there is data.
+              Visibility(
+                visible: widget.data
+                    .isNotEmpty, // Visibility depends on whether there's data in the list.
+                // SingleChildScrollView allows the grid to be scrollable.
+                child: SingleChildScrollView(
+                  scrollDirection: widget.horizontal
+                      ? Axis.horizontal
+                      : Axis
+                          .vertical, // Sets the scroll direction based on the horizontal flag.
+                  // GridView.builder creates a grid of items.
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                        physics:
+                            const NeverScrollableScrollPhysics(), // Disables scrolling within the GridView itself.
+                        scrollDirection: widget.horizontal
+                            ? Axis.horizontal
+                            : Axis
+                                .vertical, // Sets the scroll direction of the GridView.
+                        padding: widget.style
+                            .gridViewPadding, // Sets the padding within the GridView.
+                        shrinkWrap:
+                            true, // Ensures the GridView only takes up necessary space.
+                        // The gridDelegate manages the layout of the grid.
+                        gridDelegate: widget.itemsPerRow == 0
+                            // If itemsPerRow 0 > , use SliverGridDelegateWithFixedCrossAxisCount. Otherwise, use SliverGridDelegateWithMaxCrossAxisExtent.
+                            // This is because SliverGridDelegateWithFixedCrossAxisCount requires a fixed number of items per row.
+                            // SliverGridDelegateWithMaxCrossAxisExtent allows for a variable number of items per row.
+                            ? SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: widget
+                                    .itemWidth, // The maximum extent of items in the cross axis.
+                                childAspectRatio: widget.itemWidth /
+                                    widget
+                                        .itemHeight, // Aspect ratio for children in the grid.
+                                crossAxisSpacing: widget
+                                    .horizontalSpacing, // Spacing between items along the cross axis.
+                                mainAxisSpacing: widget
+                                    .verticalSpacing, // Spacing between items along the main axis.
+                              )
+                            : SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: widget
+                                    .itemsPerRow, // Number of items per row or column.
+                                mainAxisExtent: widget.staticDimension ??
+                                    (widget.minItemDimension > widget.itemSize
+                                        ? widget.minItemDimension
+                                        : widget.itemSize),
+                                crossAxisSpacing: widget
+                                    .horizontalSpacing, // Spacing between items horizontally.
+                                mainAxisSpacing: widget
+                                    .verticalSpacing, // Spacing between items vertically.
+                              ),
+                        itemCount: widget.data
+                            .length, // The number of items in the data list.
+                        itemBuilder: (context, index) {
+                          // Builder function to construct each item in the grid.
+                          // Chooses the appropriate data, inverting the order if invertedRow is true.
+                          final itemData = widget.invertedRow
+                              ? widget.data.reversed.toList()[index]
+                              : widget.data[index];
+                          // Container Style
+                          return Container(
+                              decoration: widget.containerStyle
+                                  .decoration, // Applies the decoration from the widget's properties.,
+                              color: widget.containerStyle.decoration != null
+                                  ? null
+                                  : widget.containerStyle.color,
+                              // Calls renderItem to build the UI for each item.
+                              child: widget.renderItem(itemData));
+                        },
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: widget.additionalRowStyle?.padding ??
+                            EdgeInsets.zero,
+                        child: Container(
+                          color: widget.additionalRowStyle?.color ??
+                              Colors.transparent,
+                          child: Row(
+                            children: [
+                              widget.additionalRow ?? Container(),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -778,6 +827,46 @@ class ContainerStyle {
   final EdgeInsets gridViewPadding;
 }
 
+class SimpleGridViewContainerStyle {
+  const SimpleGridViewContainerStyle({
+    this.decoration,
+    this.color = Colors.transparent,
+    this.padding = const EdgeInsets.all(0),
+    this.gridViewPadding = const EdgeInsets.all(8.0),
+  });
+
+  /// The decoration to paint behind the main container.
+  ///
+  /// Use the [color] property to specify a simple solid color.
+  ///
+  /// The [child] is not clipped to the decoration. To clip a child to the shape
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  final BoxDecoration? decoration;
+
+  /// The color to paint behind the [child].
+  ///
+  /// This property should be preferred when the background is a simple color.
+  /// For other cases, such as gradients or images, use the [decoration]
+  /// property.
+  ///
+  /// If the [decoration] is used, this property must be null. A background
+  /// color may still be painted by the [decoration] even if this property is
+  /// null.
+  final Color color;
+
+  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  /// This padding is in addition to any padding inherent in the [decoration];
+  /// see [Decoration.padding].
+  final EdgeInsets padding;
+
+  /// Empty space to inscribe between the main container and grid view. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  final EdgeInsets gridViewPadding;
+}
+
 class FlatGridViewStyle {
   const FlatGridViewStyle({
     this.decoration,
@@ -820,10 +909,19 @@ class FlatGridViewStyle {
 
 class SimpleGridViewStyle {
   const SimpleGridViewStyle({
+    this.decoration,
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(0),
     this.gridViewPadding = const EdgeInsets.all(8.0),
   });
+
+  /// The decoration to paint behind the main container.
+  ///
+  /// Use the [color] property to specify a simple solid color.
+  ///
+  /// The [child] is not clipped to the decoration. To clip a child to the shape
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  final BoxDecoration? decoration;
 
   /// The color to paint behind the [child].
   ///
