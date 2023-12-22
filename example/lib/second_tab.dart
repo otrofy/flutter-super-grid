@@ -31,9 +31,8 @@ class SecondTab extends StatelessWidget {
         itemsPerRow: 3,
         gridViewWidth: 250,
         gridViewHeight: 300,
-        containerHeight: 450,
         containerWidth: 300,
-        containerStyle: const FlatGridViewContainerStyle(color: Colors.red),
+        itemContainerStyle: const ContainerStyle(color: Colors.red),
         style: const FlatGridViewStyle(
           color: Colors.green,
           padding: EdgeInsets.all(16.0),

@@ -46,7 +46,7 @@ class FlatGridView extends StatefulWidget {
   /// The data to display in the grid.
   final List data;
 
-  /// The widget rendered at the bottom of the grid view
+  /// The widget rendered at the bottom of the grid view.
   final Widget footerWidget;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
