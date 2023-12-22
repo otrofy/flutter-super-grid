@@ -21,16 +21,16 @@ class FlatGridView extends StatefulWidget {
     required this.itemSize,
     this.minItemDimension = 120.0, // default value set to 120 px
     this.style = const FlatGridViewStyle(),
-    this.containerStyle = const FlatGridViewContainerStyle(),
+    this.itemContainerStyle = const ContainerStyle(),
     this.verticalSpacing = 10,
     this.horizontalSpacing = 10,
     this.horizontal = false,
     this.invertedRow = false,
     this.gridViewHeight = 300,
     this.gridViewWidth = double.infinity,
-    this.containerHeight = 300,
     this.containerWidth = double.infinity,
     this.footerWidget = const SizedBox(),
+    this.physics,
     this.onPressed,
   });
 
@@ -38,7 +38,7 @@ class FlatGridView extends StatefulWidget {
   final FlatGridViewStyle style;
 
   /// The style of the container of the widget in the grid view.
-  final FlatGridViewContainerStyle containerStyle;
+  final ContainerStyle itemContainerStyle;
 
   /// The data to display in the grid.
   final List data;
@@ -55,10 +55,7 @@ class FlatGridView extends StatefulWidget {
   /// The width of the gridview.
   final double gridViewWidth;
 
-  /// The height of the containerHeight.
-  final double containerHeight;
-
-  /// The width of the containerHeight.
+  /// The width of the main container.
   final double containerWidth;
 
   /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
@@ -84,6 +81,9 @@ class FlatGridView extends StatefulWidget {
 
   /// The minimum dimension (width or height) of each grid item.
   final double minItemDimension;
+
+  /// The physics of the grid view.
+  final ScrollPhysics? physics;
 
   @override
   State<FlatGridView> createState() => _FlatGridViewState();
@@ -111,7 +111,6 @@ class _FlatGridViewState extends State<FlatGridView> {
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
         width: widget.containerWidth,
-        height: widget.containerHeight,
         decoration: widget.style
             .decoration, // Applies the decoration from the widget's properties.
         color: widget.style.decoration != null
@@ -143,6 +142,7 @@ class _FlatGridViewState extends State<FlatGridView> {
                         .isNotEmpty, // Visibility depends on if there's data in the list.
                     // SingleChildScrollView allows the grid to be scrollable.
                     child: SingleChildScrollView(
+                      physics: widget.physics,
                       scrollDirection: widget.horizontal
                           ? Axis.horizontal
                           : Axis
@@ -191,12 +191,17 @@ class _FlatGridViewState extends State<FlatGridView> {
                             },
                             // The renderItem function is called to build the UI for each item.
                             child: Container(
-                                decoration: widget.containerStyle
-                                    .decoration, // Applies the decoration from the widget's properties.
-                                color: widget.containerStyle.decoration != null
-                                    ? null
-                                    : widget.containerStyle.color,
-                                child: widget.renderItem(itemData)),
+                              decoration: widget.itemContainerStyle
+                                  .decoration, // Applies the decoration from the widget's properties.
+                              color:
+                                  widget.itemContainerStyle.decoration != null
+                                      ? null
+                                      : widget.itemContainerStyle.color,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: widget.renderItem(itemData),
+                              ),
+                            ),
                           );
                         },
                       ),
@@ -234,8 +239,21 @@ class SectionGridView extends StatefulWidget {
     this.style =
         const SectionGridViewStyle(), // default value set to SectionGridViewStyle()
     this.onNewItemAdded,
+    this.containerWidth = double.infinity,
+    this.footerWidget = const SizedBox(),
+    this.itemContainerStyle = const ContainerStyle(),
   });
 
+  /// The style of the container of the items in the grid view.
+  final ContainerStyle itemContainerStyle;
+
+  /// The width of the mainContainer.
+  final double containerWidth;
+
+  /// The footer width.
+  final Widget footerWidget;
+
+  /// The callback function when a new item is added to the sections list.
   final void Function()? onNewItemAdded;
 
   /// The style to to apply on the section grid.
@@ -342,6 +360,7 @@ class _SectionGridViewState extends State<SectionGridView> {
       padding:
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
+        width: widget.containerWidth,
         decoration: widget.style
             .decoration, // Applies the decoration from the widget's properties.
         color: widget.style.decoration != null
@@ -437,12 +456,24 @@ class _SectionGridViewState extends State<SectionGridView> {
                                   }
                                 },
                                 // Calls renderItem to build the UI for each item.
-                                child: widget.renderItem(itemData),
+                                child: Container(
+                                  decoration: widget.itemContainerStyle
+                                      .decoration, // Applies the decoration from the widget's properties.
+                                  color: widget.itemContainerStyle.decoration !=
+                                          null
+                                      ? null
+                                      : widget.itemContainerStyle.color,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: widget.renderItem(itemData),
+                                  ),
+                                ),
                               );
                             },
                           ),
                         ),
                       ),
+                      widget.footerWidget,
                     ],
                   );
                 },
@@ -707,8 +738,8 @@ class SectionGridViewStyle {
   final TextStyle titleTextStyle;
 }
 
-class FlatGridViewContainerStyle {
-  const FlatGridViewContainerStyle({
+class ContainerStyle {
+  const ContainerStyle({
     this.decoration,
     this.color = Colors.transparent,
     this.padding = const EdgeInsets.all(0),
