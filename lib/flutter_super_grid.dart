@@ -32,7 +32,10 @@ class FlatGridView extends StatefulWidget {
     this.containerWidth = double.infinity,
     this.footerWidget = const SizedBox(),
     this.onPressed,
+    this.onNewItemAdded,
   });
+
+  final void Function()? onNewItemAdded;
 
   /// The style of the grid view.
   final FlatGridViewStyle style;
@@ -92,9 +95,17 @@ class FlatGridView extends StatefulWidget {
 // The _FlatGridViewState class manages the state for the FlatGridView widget.
 // It extends the generic State class specialized for the FlatGridView.
 class _FlatGridViewState extends State<FlatGridView> {
-  // The initState method is the first method called when this object is
-  // inserted into the tree. The Flutter framework will call this method exactly
-  // once for each State object it creates.
+  @override
+  void didUpdateWidget(FlatGridView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if new items have been added to the list
+    if (widget.data.length > oldWidget.data.length) {
+      // Invoke the callback function
+      widget.onNewItemAdded?.call();
+    }
+  }
+
   @override
   void initState() {
     super
