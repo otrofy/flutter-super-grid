@@ -181,4 +181,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 
 ## Issues and Contributions 
-If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository. Contributions and pull requests are welcome!
+
+Feel free to contribute to this project.
+
+If you find a bug or want a feature, but don't know how to fix/implement it, please fill an [issue](https://github.com/otrofy/flutter-super-grid/issues).
+
+If you fixed a bug or implemented a feature, please send a [pull request](https://github.com/otrofy/flutter-super-grid/pulls).
