@@ -14,29 +14,30 @@ class SecondTab extends StatelessWidget {
       child: FlatGridView(
         data: data,
         renderItem: (itemData) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(
-                15.0), // Ajusta el radio según sea necesario
-            child: CachedNetworkImage(
-              imageUrl: itemData,
-              placeholder: (context, url) =>
-                  const CircularProgressIndicator(), // Puedes personalizar el indicador de carga
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit
-                  .cover, // Ajusta el modo de ajuste de la imagen según sea necesario
+          return Container(
+            height: 10 * (data.indexOf(itemData) * 1 + 1),
+            width: 10 * (data.indexOf(itemData) * 1 + 1),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(
+                  15.0), // Ajusta el radio según sea necesario
+              child: CachedNetworkImage(
+                imageUrl: itemData,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(), // Puedes personalizar el indicador de carga
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit
+                    .cover, // Ajusta el modo de ajuste de la imagen según sea necesario
+              ),
             ),
           );
         },
         itemSize: 80.0,
         itemsPerRow: 3,
-        gridViewWidth: 250,
-        gridViewHeight: 300,
-        containerWidth: 300,
-        itemContainerStyle: const ContainerStyle(color: Colors.red),
+        isFixed: true,
         style: const FlatGridViewStyle(
           color: Colors.green,
           padding: EdgeInsets.all(16.0),
-          gridViewPadding: EdgeInsets.all(8.0),
+          gridViewPadding: EdgeInsets.all(24.0),
         ),
         footerWidget: Container(
           height: 100,
@@ -57,10 +58,10 @@ class SecondTab extends StatelessWidget {
         ),
         verticalSpacing: 10.0,
         horizontalSpacing: 10.0,
-        horizontal: false,
-        invertedRow: false,
+        horizontal: true,
+        invertedRow: true,
         onPressed: (index) {
-          // Handle item tap
+          // Handle item tapER
         },
       ),
     );
