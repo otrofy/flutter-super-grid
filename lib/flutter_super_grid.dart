@@ -27,9 +27,11 @@ class FlatGridView extends StatefulWidget {
     this.isFixed = false,
     this.horizontal = false,
     this.invertedRow = false,
+    this.adjustGridToStyles = false,
     this.gridViewHeight = 300,
     this.gridViewWidth = double.infinity,
     this.containerWidth = double.infinity,
+    this.containerHeight = 300,
     this.footerWidget = const SizedBox(),
     this.physics,
     this.onPressed,
@@ -41,6 +43,9 @@ class FlatGridView extends StatefulWidget {
 
   /// is true will use a wrap instead of a gridView to render the item
   final bool isFixed;
+
+  /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
+  final bool adjustGridToStyles;
 
   /// The style of the grid view.
   final FlatGridViewStyle style;
@@ -65,6 +70,9 @@ class FlatGridView extends StatefulWidget {
 
   /// The width of the main container, only matters if it's greater than [gridViewWidth] .
   final double containerWidth;
+
+  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
+  final double containerHeight;
 
   /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
   final double itemSize;
@@ -202,10 +210,14 @@ class _FlatGridViewState extends State<FlatGridView> {
         child: Column(
           children: [
             SizedBox(
-              height: widget
-                  .gridViewHeight, // The height of the grid view container.
-              width:
-                  widget.gridViewWidth, // The width of the grid view container.
+              height: widget.adjustGridToStyles
+                  ? widget.containerHeight
+                  : widget
+                      .gridViewHeight, // The height of the grid view container.
+              width: widget.adjustGridToStyles
+                  ? widget.containerWidth
+                  : widget
+                      .gridViewWidth, // The width of the grid view container.
               child: Stack(
                 children: [
                   // The Visibility widget conditionally renders its child widget based on the visible property.
