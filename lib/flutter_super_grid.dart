@@ -728,7 +728,6 @@ class _SimpleGridViewState extends State<SimpleGridView> {
             : widget.style
                 .color, // Sets the background color for the grid view container.
         width: widget.gridViewWidth,
-        height: widget.gridViewHeight,
         // Stack allows placing widgets on top of each other.
         child: Column(
           children: [
