@@ -41,7 +41,7 @@ class FlatGridView extends StatefulWidget {
   /// The callback function when a new item is added to the data list.
   final void Function()? onNewItemAdded;
 
-  /// is true will use a wrap instead of a gridView to render the item
+  /// is true will use the original size instead of adjusting to grid
   final bool isFixed;
 
   /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
@@ -272,6 +272,7 @@ class SectionGridView extends StatefulWidget {
     this.horizontalSpacing = 10, // default value set to 10 px
     this.invertedRow = false, // default value set to false
     this.onPressed, // default value set to null
+    this.isFixed = false, // default value set to false
     this.style =
         const SectionGridViewStyle(), // default value set to SectionGridViewStyle()
     this.onNewItemAdded, // default value set to null
@@ -295,6 +296,9 @@ class SectionGridView extends StatefulWidget {
 
   /// The style to to apply on the section grid.
   final SectionGridViewStyle style;
+
+  /// is true will use the original size instead of adjusting to grid
+  final bool isFixed;
 
   /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
   final int itemsPerRow;
@@ -359,6 +363,79 @@ class _SectionGridViewState extends State<SectionGridView> {
   void initState() {
     super
         .initState(); // Always call super.initState() first in initState() method.
+  }
+
+  Widget buildGridView(section, title, data, dataInverted, sectionIndex) {
+    return GridView.builder(
+      scrollDirection:
+          widget.horizontal // Sets the scroll direction of the grid view.
+              ? Axis.horizontal
+              : Axis.vertical,
+      padding:
+          widget.style.gridViewPadding, // The padding inside the grid view.
+      shrinkWrap: true, // Ensures the GridView takes minimum space.
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount:
+            widget.itemsPerRow, // The number of items per row/column.
+        mainAxisExtent: (widget.minItemDimension > widget.itemSize
+            ? widget.minItemDimension
+            : widget.itemSize), // The size of items on the main axis.
+        crossAxisSpacing:
+            widget.horizontalSpacing, // Spacing between items horizontally.
+        mainAxisSpacing:
+            widget.verticalSpacing, // Spacing between items vertically.
+      ),
+      itemCount: data.length, // The number of items in the section.
+      itemBuilder: (context, index) {
+        // Builder function for each item.
+        // Decides if the row should be inverted based on the invertedRow property.
+        final itemData = widget.invertedRow ? dataInverted[index] : data[index];
+        // InkWell wraps each item to provide tap functionality.
+        return InkWell(
+          onTap: () {
+            // Calls the onPressed callback when the item is tapped.
+            if (widget.onPressed != null) {
+              widget.onPressed!(sectionIndex, index);
+            }
+          },
+          // Calls renderItem to build the UI for each item.
+          child: Container(
+            decoration: widget.itemContainerStyle
+                .decoration, // Applies the decoration from the widget's properties.
+            color: widget.itemContainerStyle.decoration != null
+                ? null
+                : widget.itemContainerStyle.color,
+            child: Align(
+              alignment: Alignment.center,
+              child: widget.renderItem(itemData),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget wrapWidget(sectionIndex, data) {
+    return Padding(
+      padding: widget.style.gridViewPadding,
+      child: Wrap(
+        direction: widget.horizontal ? Axis.vertical : Axis.horizontal,
+        spacing: widget.horizontalSpacing,
+        runSpacing: widget.verticalSpacing,
+        children: data.map<Widget>((itemData) {
+          return InkWell(
+            onTap: () {
+              if (widget.onPressed != null) {
+                if (widget.onPressed != null) {
+                  widget.onPressed!(sectionIndex, data.indexOf(itemData));
+                } // Calls the onPressed callback when the item is tapped.
+              }
+            },
+            child: widget.renderItem(itemData),
+          );
+        }).toList(),
+      ),
+    );
   }
 
   // getTitleWidget is a helper method that creates a title widget with the provided title string.
@@ -453,61 +530,10 @@ class _SectionGridViewState extends State<SectionGridView> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           // GridView.builder creates a grid of items.
-                          child: GridView.builder(
-                            scrollDirection: widget
-                                    .horizontal // Sets the scroll direction of the grid view.
-                                ? Axis.horizontal
-                                : Axis.vertical,
-                            padding: widget.style
-                                .gridViewPadding, // The padding inside the grid view.
-                            shrinkWrap:
-                                true, // Ensures the GridView takes minimum space.
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: widget
-                                  .itemsPerRow, // The number of items per row/column.
-                              mainAxisExtent: (widget.minItemDimension >
-                                      widget.itemSize
-                                  ? widget.minItemDimension
-                                  : widget
-                                      .itemSize), // The size of items on the main axis.
-                              crossAxisSpacing: widget
-                                  .horizontalSpacing, // Spacing between items horizontally.
-                              mainAxisSpacing: widget
-                                  .verticalSpacing, // Spacing between items vertically.
-                            ),
-                            itemCount: data
-                                .length, // The number of items in the section.
-                            itemBuilder: (context, index) {
-                              // Builder function for each item.
-                              // Decides if the row should be inverted based on the invertedRow property.
-                              final itemData = widget.invertedRow
-                                  ? dataInverted[index]
-                                  : data[index];
-                              // InkWell wraps each item to provide tap functionality.
-                              return InkWell(
-                                onTap: () {
-                                  // Calls the onPressed callback when the item is tapped.
-                                  if (widget.onPressed != null) {
-                                    widget.onPressed!(sectionIndex, index);
-                                  }
-                                },
-                                // Calls renderItem to build the UI for each item.
-                                child: Container(
-                                  decoration: widget.itemContainerStyle
-                                      .decoration, // Applies the decoration from the widget's properties.
-                                  color: widget.itemContainerStyle.decoration !=
-                                          null
-                                      ? null
-                                      : widget.itemContainerStyle.color,
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: widget.renderItem(itemData),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                          child: widget.isFixed
+                              ? buildGridView(section, title, data,
+                                  dataInverted, sectionIndex)
+                              : wrapWidget(sectionIndex, data),
                         ),
                       ),
                       widget.footerWidget,
