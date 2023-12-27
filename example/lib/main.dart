@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white)
               .copyWith(background: Colors.black)),
       home: const MyHomePage(title: 'Super grid Sample App'),
     );
@@ -41,11 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: const Text(
-            "Super Grid App",
-            style: TextStyle(color: Colors.red),
-          ),
           bottom: const TabBar(
+            labelColor: Colors.white,
+            dividerColor: Colors.white,
+            indicatorColor: Colors.white,
+            unselectedLabelColor: Colors.grey,
             tabs: [
               Tab(text: 'Section Grid'),
               Tab(text: 'FlatGrid'),

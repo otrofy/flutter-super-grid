@@ -17,18 +17,21 @@ class FlatGridView extends StatefulWidget {
     super.key,
     required this.data,
     required this.renderItem,
-    required this.itemsPerRow,
-    required this.itemSize,
+    this.itemsPerRow = 3,
+    this.itemSize = 120,
     this.minItemDimension = 120.0, // default value set to 120 px
     this.style = const FlatGridViewStyle(),
     this.itemContainerStyle = const ContainerStyle(),
     this.verticalSpacing = 10,
     this.horizontalSpacing = 10,
+    this.isFixed = false,
     this.horizontal = false,
     this.invertedRow = false,
+    this.adjustGridToStyles = false,
     this.gridViewHeight = 300,
     this.gridViewWidth = double.infinity,
     this.containerWidth = double.infinity,
+    this.containerHeight = 300,
     this.footerWidget = const SizedBox(),
     this.physics,
     this.onPressed,
@@ -38,10 +41,16 @@ class FlatGridView extends StatefulWidget {
   /// The callback function when a new item is added to the data list.
   final void Function()? onNewItemAdded;
 
+  /// is true will use the original size instead of adjusting to grid
+  final bool isFixed;
+
+  /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
+  final bool adjustGridToStyles;
+
   /// The style of the grid view.
   final FlatGridViewStyle style;
 
-  /// The style of the container of the widget in the grid view.
+  /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
   final ContainerStyle itemContainerStyle;
 
   /// The data to display in the grid.
@@ -50,7 +59,7 @@ class FlatGridView extends StatefulWidget {
   /// The widget rendered at the bottom of the grid view.
   final Widget footerWidget;
 
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
   final int itemsPerRow;
 
   /// The height of the gridview.
@@ -59,10 +68,13 @@ class FlatGridView extends StatefulWidget {
   /// The width of the gridview.
   final double gridViewWidth;
 
-  /// The width of the main container.
+  /// The width of the main container, only matters if it's greater than [gridViewWidth] .
   final double containerWidth;
 
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
+  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
+  final double containerHeight;
+
+  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
   final double itemSize;
 
   /// The spacing between grid items vertically.
@@ -83,7 +95,7 @@ class FlatGridView extends StatefulWidget {
   /// Whether the grid view is horizontal.
   final bool horizontal;
 
-  /// The minimum dimension (width or height) of each grid item.
+  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
   final double minItemDimension;
 
   /// The physics of the grid view.
@@ -113,6 +125,71 @@ class _FlatGridViewState extends State<FlatGridView> {
         .initState(); // Always call super.initState() first in initState() method.
   }
 
+  Widget buildGridView() {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: widget.horizontal ? Axis.horizontal : Axis.vertical,
+      padding: widget.style.gridViewPadding,
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: widget.itemsPerRow,
+        mainAxisExtent: (widget.minItemDimension > widget.itemSize
+            ? widget.minItemDimension
+            : widget.itemSize),
+        crossAxisSpacing: widget.horizontalSpacing,
+        mainAxisSpacing: widget.verticalSpacing,
+      ),
+      itemCount: widget.data.length,
+      itemBuilder: (context, index) {
+        final itemData = widget.invertedRow
+            ? widget.data.reversed.toList()[index]
+            : widget.data[index];
+
+        return InkWell(
+          onTap: () {
+            if (widget.onPressed != null) {
+              widget.onPressed!(index);
+            }
+          },
+          child: Container(
+            decoration: widget.itemContainerStyle.decoration,
+            color: widget.itemContainerStyle.decoration != null
+                ? null
+                : widget.itemContainerStyle.color,
+            child: Align(
+              alignment: Alignment.center,
+              child: widget.renderItem(itemData),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget wrapWidget() {
+    final data =
+        widget.invertedRow ? widget.data.reversed.toList() : widget.data;
+    return Padding(
+      padding: widget.style.gridViewPadding,
+      child: Wrap(
+        direction: widget.horizontal ? Axis.vertical : Axis.horizontal,
+        spacing: widget.horizontalSpacing,
+        runSpacing: widget.verticalSpacing,
+        children: data.map<Widget>((itemData) {
+          return InkWell(
+            onTap: () {
+              if (widget.onPressed != null) {
+                widget.onPressed!(widget.data.indexOf(
+                    itemData)); // Calls the onPressed callback when the item is tapped.
+              }
+            },
+            child: widget.renderItem(itemData),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
   // The build method is called each time Flutter needs to render the widget on
   // the screen. It returns a widget tree that Flutter will display.
   @override
@@ -120,11 +197,11 @@ class _FlatGridViewState extends State<FlatGridView> {
     // Padding widget adds space around the grid view.
     return Padding(
       padding:
-          widget.style.padding, // Uses padding from the widget's properties.
+          widget.style.padding, // Uses padding from the widget’s properties.
       child: Container(
         width: widget.containerWidth,
         decoration: widget.style
-            .decoration, // Applies the decoration from the widget's properties.
+            .decoration, // Applies the decoration from the widget’s properties.
         color: widget.style.decoration != null
             ? null
             : widget.style
@@ -133,10 +210,14 @@ class _FlatGridViewState extends State<FlatGridView> {
         child: Column(
           children: [
             SizedBox(
-              height: widget
-                  .gridViewHeight, // The height of the grid view container.
-              width:
-                  widget.gridViewWidth, // The width of the grid view container.
+              height: widget.adjustGridToStyles
+                  ? widget.containerHeight
+                  : widget
+                      .gridViewHeight, // The height of the grid view container.
+              width: widget.adjustGridToStyles
+                  ? widget.containerWidth
+                  : widget
+                      .gridViewWidth, // The width of the grid view container.
               child: Stack(
                 children: [
                   // The Visibility widget conditionally renders its child widget based on the visible property.
@@ -146,78 +227,21 @@ class _FlatGridViewState extends State<FlatGridView> {
                         .isEmpty, // Determines visibility based on if the data list is empty.
                     child: const Center(
                         child: Text(
-                            'No items')), // Centered text to display when no items are present.
+                            "No items")), // Centered text to display when no items are present.
                   ),
                   // Another Visibility widget to only show the grid when there is data.
                   Visibility(
                     visible: widget.data
-                        .isNotEmpty, // Visibility depends on if there's data in the list.
+                        .isNotEmpty, // Visibility depends on if there’s data in the list.
                     // SingleChildScrollView allows the grid to be scrollable.
                     child: SingleChildScrollView(
-                      physics: widget.physics,
-                      scrollDirection: widget.horizontal
-                          ? Axis.horizontal
-                          : Axis
-                              .vertical, // Sets the scroll direction based on the horizontal property.
-                      // GridView.builder creates a grid of items.
-                      child: GridView.builder(
-                        physics:
-                            const NeverScrollableScrollPhysics(), // Disables scrolling within the GridView itself.
+                        physics: widget.physics,
                         scrollDirection: widget.horizontal
                             ? Axis.horizontal
                             : Axis
-                                .vertical, // Sets the scroll direction of the GridView.
-                        padding: widget.style
-                            .gridViewPadding, // Padding within the GridView.
-                        shrinkWrap:
-                            true, // Ensures that the GridView only occupies space for its children.
-                        // The gridDelegate manages the layout of the grid.
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: widget
-                              .itemsPerRow, // Number of items per row or column.
-                          mainAxisExtent: (widget.minItemDimension >
-                                  widget.itemSize
-                              ? widget.minItemDimension
-                              : widget
-                                  .itemSize), // The size of items on the main axis.
-                          crossAxisSpacing: widget
-                              .horizontalSpacing, // Spacing between items horizontally.
-                          mainAxisSpacing: widget
-                              .verticalSpacing, // Spacing between items vertically.
-                        ),
-                        itemCount: widget
-                            .data.length, // The number of items to display.
-                        itemBuilder: (context, index) {
-                          // Builder function that creates each item.
-                          // Determines the data for the current item, inverting if necessary.
-                          final itemData = widget.invertedRow
-                              ? widget.data.reversed.toList()[index]
-                              : widget.data[index];
-                          // InkWell is used to detect taps on individual grid items.
-                          return InkWell(
-                            onTap: () {
-                              // Calls the onPressed callback when an item is tapped.
-                              if (widget.onPressed != null) {
-                                widget.onPressed!(index);
-                              }
-                            },
-                            // The renderItem function is called to build the UI for each item.
-                            child: Container(
-                              decoration: widget.itemContainerStyle
-                                  .decoration, // Applies the decoration from the widget's properties.
-                              color:
-                                  widget.itemContainerStyle.decoration != null
-                                      ? null
-                                      : widget.itemContainerStyle.color,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: widget.renderItem(itemData),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                                .vertical, // Sets the scroll direction based on the horizontal property.
+                        // GridView.builder creates a grid of items.
+                        child: widget.isFixed ? wrapWidget() : buildGridView()),
                   ),
                 ],
               ),
@@ -236,9 +260,9 @@ class SectionGridView extends StatefulWidget {
   const SectionGridView({
     super.key,
     required this.sections, // required property
-    required this.itemsPerRow, // required property
     required this.renderItem, // required property
-    required this.itemSize, // required property
+    this.itemsPerRow = 3, // default value set to 3
+    this.itemSize = 100, // default value set to 100 px
     this.physics, // default value set to null
     this.minItemDimension = 120.0, // default value set to 120 px
     this.gridViewHeight = 300, // default value set to 300 px
@@ -246,22 +270,31 @@ class SectionGridView extends StatefulWidget {
     this.horizontal = false, // default value set to false
     this.verticalSpacing = 10, // default value set to 10 px
     this.horizontalSpacing = 10, // default value set to 10 px
+    this.adjustGridToStyles = false, // default value set to false
     this.invertedRow = false, // default value set to false
     this.onPressed, // default value set to null
+    this.isFixed = false, // default value set to false
     this.style =
         const SectionGridViewStyle(), // default value set to SectionGridViewStyle()
     this.onNewItemAdded, // default value set to null
     this.containerWidth = double.infinity, // default value set to infinity
+    this.containerHeight = 300, // default value set to 300 px
     this.footerWidget = const SizedBox(), // default value set to SizedBox()
     this.itemContainerStyle =
         const ContainerStyle(), // default value set to ContainerStyle()
   });
 
-  /// The style of the container of the items in the grid view.
+  /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
   final ContainerStyle itemContainerStyle;
 
-  /// The width of the mainContainer.
+  /// The width of the main container, only matters if it's greater than [gridViewWidth] .
   final double containerWidth;
+
+  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
+  final double containerHeight;
+
+  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
+  final double itemSize;
 
   /// The footer width.
   final Widget footerWidget;
@@ -272,11 +305,14 @@ class SectionGridView extends StatefulWidget {
   /// The style to to apply on the section grid.
   final SectionGridViewStyle style;
 
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
-  final int itemsPerRow;
+  /// whether to adjust the grid to the styles or not.
+  final bool adjustGridToStyles;
 
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
-  final double itemSize;
+  /// is true will use the original size instead of adjusting to grid
+  final bool isFixed;
+
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
+  final int itemsPerRow;
 
   /// The height of the gridview.
   final double gridViewHeight;
@@ -305,7 +341,7 @@ class SectionGridView extends StatefulWidget {
   /// Whether to invert the row.
   final bool invertedRow;
 
-  /// The minimum dimension (width or height) of each grid item.
+  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
   final double minItemDimension;
 
   /// The physics of the grid view.
@@ -335,6 +371,79 @@ class _SectionGridViewState extends State<SectionGridView> {
   void initState() {
     super
         .initState(); // Always call super.initState() first in initState() method.
+  }
+
+  Widget buildGridView(section, title, data, dataInverted, sectionIndex) {
+    return GridView.builder(
+      scrollDirection:
+          widget.horizontal // Sets the scroll direction of the grid view.
+              ? Axis.horizontal
+              : Axis.vertical,
+      padding:
+          widget.style.gridViewPadding, // The padding inside the grid view.
+      shrinkWrap: true, // Ensures the GridView takes minimum space.
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount:
+            widget.itemsPerRow, // The number of items per row/column.
+        mainAxisExtent: (widget.minItemDimension > widget.itemSize
+            ? widget.minItemDimension
+            : widget.itemSize), // The size of items on the main axis.
+        crossAxisSpacing:
+            widget.horizontalSpacing, // Spacing between items horizontally.
+        mainAxisSpacing:
+            widget.verticalSpacing, // Spacing between items vertically.
+      ),
+      itemCount: data.length, // The number of items in the section.
+      itemBuilder: (context, index) {
+        // Builder function for each item.
+        // Decides if the row should be inverted based on the invertedRow property.
+        final itemData = widget.invertedRow ? dataInverted[index] : data[index];
+        // InkWell wraps each item to provide tap functionality.
+        return InkWell(
+          onTap: () {
+            // Calls the onPressed callback when the item is tapped.
+            if (widget.onPressed != null) {
+              widget.onPressed!(sectionIndex, index);
+            }
+          },
+          // Calls renderItem to build the UI for each item.
+          child: Container(
+            decoration: widget.itemContainerStyle
+                .decoration, // Applies the decoration from the widget's properties.
+            color: widget.itemContainerStyle.decoration != null
+                ? null
+                : widget.itemContainerStyle.color,
+            child: Align(
+              alignment: Alignment.center,
+              child: widget.renderItem(itemData),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget wrapWidget(sectionIndex, data) {
+    return Padding(
+      padding: widget.style.gridViewPadding,
+      child: Wrap(
+        direction: widget.horizontal ? Axis.vertical : Axis.horizontal,
+        spacing: widget.horizontalSpacing,
+        runSpacing: widget.verticalSpacing,
+        children: data.map<Widget>((itemData) {
+          return InkWell(
+            onTap: () {
+              if (widget.onPressed != null) {
+                if (widget.onPressed != null) {
+                  widget.onPressed!(sectionIndex, data.indexOf(itemData));
+                } // Calls the onPressed callback when the item is tapped.
+              }
+            },
+            child: widget.renderItem(itemData),
+          );
+        }).toList(),
+      ),
+    );
   }
 
   // getTitleWidget is a helper method that creates a title widget with the provided title string.
@@ -373,7 +482,12 @@ class _SectionGridViewState extends State<SectionGridView> {
       padding:
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
-        width: widget.containerWidth,
+        height: widget.adjustGridToStyles
+            ? widget.containerHeight
+            : widget.gridViewHeight, // The height of the grid view container.
+        width: widget.adjustGridToStyles
+            ? widget.containerWidth
+            : widget.gridViewWidth,
         decoration: widget.style
             .decoration, // Applies the decoration from the widget's properties.
         color: widget.style.decoration != null
@@ -429,61 +543,10 @@ class _SectionGridViewState extends State<SectionGridView> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           // GridView.builder creates a grid of items.
-                          child: GridView.builder(
-                            scrollDirection: widget
-                                    .horizontal // Sets the scroll direction of the grid view.
-                                ? Axis.horizontal
-                                : Axis.vertical,
-                            padding: widget.style
-                                .gridViewPadding, // The padding inside the grid view.
-                            shrinkWrap:
-                                true, // Ensures the GridView takes minimum space.
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: widget
-                                  .itemsPerRow, // The number of items per row/column.
-                              mainAxisExtent: (widget.minItemDimension >
-                                      widget.itemSize
-                                  ? widget.minItemDimension
-                                  : widget
-                                      .itemSize), // The size of items on the main axis.
-                              crossAxisSpacing: widget
-                                  .horizontalSpacing, // Spacing between items horizontally.
-                              mainAxisSpacing: widget
-                                  .verticalSpacing, // Spacing between items vertically.
-                            ),
-                            itemCount: data
-                                .length, // The number of items in the section.
-                            itemBuilder: (context, index) {
-                              // Builder function for each item.
-                              // Decides if the row should be inverted based on the invertedRow property.
-                              final itemData = widget.invertedRow
-                                  ? dataInverted[index]
-                                  : data[index];
-                              // InkWell wraps each item to provide tap functionality.
-                              return InkWell(
-                                onTap: () {
-                                  // Calls the onPressed callback when the item is tapped.
-                                  if (widget.onPressed != null) {
-                                    widget.onPressed!(sectionIndex, index);
-                                  }
-                                },
-                                // Calls renderItem to build the UI for each item.
-                                child: Container(
-                                  decoration: widget.itemContainerStyle
-                                      .decoration, // Applies the decoration from the widget's properties.
-                                  color: widget.itemContainerStyle.decoration !=
-                                          null
-                                      ? null
-                                      : widget.itemContainerStyle.color,
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: widget.renderItem(itemData),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                          child: widget.isFixed
+                              ? wrapWidget(sectionIndex, data)
+                              : buildGridView(section, title, data,
+                                  dataInverted, sectionIndex),
                         ),
                       ),
                       widget.footerWidget,
