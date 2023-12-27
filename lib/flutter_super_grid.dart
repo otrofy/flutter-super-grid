@@ -270,6 +270,7 @@ class SectionGridView extends StatefulWidget {
     this.horizontal = false, // default value set to false
     this.verticalSpacing = 10, // default value set to 10 px
     this.horizontalSpacing = 10, // default value set to 10 px
+    this.adjustGridToStyles = false, // default value set to false
     this.invertedRow = false, // default value set to false
     this.onPressed, // default value set to null
     this.isFixed = false, // default value set to false
@@ -277,16 +278,23 @@ class SectionGridView extends StatefulWidget {
         const SectionGridViewStyle(), // default value set to SectionGridViewStyle()
     this.onNewItemAdded, // default value set to null
     this.containerWidth = double.infinity, // default value set to infinity
+    this.containerHeight = 300, // default value set to 300 px
     this.footerWidget = const SizedBox(), // default value set to SizedBox()
     this.itemContainerStyle =
         const ContainerStyle(), // default value set to ContainerStyle()
   });
 
-  /// The style of the container of the items in the grid view.
+  /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
   final ContainerStyle itemContainerStyle;
 
-  /// The width of the mainContainer.
+  /// The width of the main container, only matters if it's greater than [gridViewWidth] .
   final double containerWidth;
+
+  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
+  final double containerHeight;
+
+  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
+  final double itemSize;
 
   /// The footer width.
   final Widget footerWidget;
@@ -297,14 +305,14 @@ class SectionGridView extends StatefulWidget {
   /// The style to to apply on the section grid.
   final SectionGridViewStyle style;
 
+  /// whether to adjust the grid to the styles or not.
+  final bool adjustGridToStyles;
+
   /// is true will use the original size instead of adjusting to grid
   final bool isFixed;
 
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
   final int itemsPerRow;
-
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
-  final double itemSize;
 
   /// The height of the gridview.
   final double gridViewHeight;
@@ -333,7 +341,7 @@ class SectionGridView extends StatefulWidget {
   /// Whether to invert the row.
   final bool invertedRow;
 
-  /// The minimum dimension (width or height) of each grid item.
+  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
   final double minItemDimension;
 
   /// The physics of the grid view.
@@ -474,7 +482,12 @@ class _SectionGridViewState extends State<SectionGridView> {
       padding:
           widget.style.padding, // Uses padding from the widget's properties.
       child: Container(
-        width: widget.containerWidth,
+        height: widget.adjustGridToStyles
+            ? widget.containerHeight
+            : widget.gridViewHeight, // The height of the grid view container.
+        width: widget.adjustGridToStyles
+            ? widget.containerWidth
+            : widget.gridViewWidth,
         decoration: widget.style
             .decoration, // Applies the decoration from the widget's properties.
         color: widget.style.decoration != null
