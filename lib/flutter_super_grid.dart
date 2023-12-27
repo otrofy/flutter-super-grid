@@ -260,9 +260,9 @@ class SectionGridView extends StatefulWidget {
   const SectionGridView({
     super.key,
     required this.sections, // required property
-    required this.itemsPerRow, // required property
     required this.renderItem, // required property
-    required this.itemSize, // required property
+    this.itemsPerRow = 3, // default value set to 3
+    this.itemSize = 100, // default value set to 100 px
     this.physics, // default value set to null
     this.minItemDimension = 120.0, // default value set to 120 px
     this.gridViewHeight = 300, // default value set to 300 px
@@ -544,9 +544,9 @@ class _SectionGridViewState extends State<SectionGridView> {
                           padding: const EdgeInsets.all(8.0),
                           // GridView.builder creates a grid of items.
                           child: widget.isFixed
-                              ? buildGridView(section, title, data,
-                                  dataInverted, sectionIndex)
-                              : wrapWidget(sectionIndex, data),
+                              ? wrapWidget(sectionIndex, data)
+                              : buildGridView(section, title, data,
+                                  dataInverted, sectionIndex),
                         ),
                       ),
                       widget.footerWidget,
