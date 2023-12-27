@@ -117,6 +117,39 @@ SectionGridView(
 | `horizontalSpacing`     | Horizontal spacing between items (for all three).          | 10                      | ✔️              | ✔️              | ✔️               |
 | `isFixed`               | Whether the grid item size is fixed (for SimpleGridView).  | false                   | ✔️              | ✔️              | ❌               |
 
+
+| Configuration           | Type | Default Value           | Description                                               |
+|-------------------------|------|-------------------------|-----------------------------------------------------------|
+| `data`                  | -    | -                       | The data to display in the grid.                           |
+| `sections`              | -    | -                       | The sections to display in the grid (for SectionGridView). |
+| `renderItem`            | -    | -                       | Function that renders each item in the grid.               |
+| `itemsPerRow`           | -    | 0                       | Number of items per row or column.                         |
+| `itemSize`              | -    | 120.0                   | The size of items in the main axis.                        |
+| `itemWidth`             | -    | 100                     | The width of each grid item (for SimpleGridView).          |
+| `itemHeight`            | -    | 100                     | The height of each grid item (for SimpleGridView).         |
+| `minItemDimension`      | -    | 120.0                   | Minimum dimension (width or height) of each grid item.     |
+| `staticDimension`       | -    | null                    | Static width or height for the container (for SimpleGridView). |
+| `additionalRow`         | -    | SizedBox                | Additional row to be displayed at the bottom of the grid (for SimpleGridView). |
+| `additionalRowStyle`    | -    | null                    | Style of the additional row (for SimpleGridView).          |
+| `containerStyle`        | -    | SimpleGridViewContainerStyle | Style of the container of the widget in the grid view.     |
+| `containerHeight`       | -    | 300                     | Height of the container.                                   |
+| `containerWidth`        | -    | double.infinity         | Width of the container.                                    |
+| `gridViewHeight`        | -    | 300                     | Height of the gridview.                                    |
+| `gridViewWidth`         | -    | double.infinity         | Width of the gridview.                                     |
+| `horizontal`            | -    | false                   | Whether the grid view is horizontal.                       |
+| `invertedRow`           | -    | false                   | Whether to invert the row.                                 |
+| `physics`               | -    | null                    | The physics of the scroll view (for FlatGridView and SectionGridView). |
+| `onPressed`             | -    | null                    | Callback when an item is pressed (for SectionGridView and FlatGridView). |
+| `style`                 | -    | See specific styles     | Style configuration for the grid view (for all three).     |
+| `adjustGridToStyles`    | -    | false                   | Whether to adjust the grid to styles (for SimpleGridView). |
+| `onNewItemAdded`        | -    | null                    | Callback when a new item is added (for SectionGridView and FlatGridView). |
+| `footerWidget`          | -    | SizedBox                | Widget to be displayed as a footer (for SectionGridView and FlatGridView). |
+| `itemContainerStyle`    | -    | ContainerStyle()        | Style for the container of each item (for FlatGridView).   |
+| `verticalSpacing`       | -    | 10                      | Vertical spacing between items (for all three).            |
+| `horizontalSpacing`     | -    | 10                      | Horizontal spacing between items (for all three).          |
+| `isFixed`               | -    | false                   | Whether the grid item size is fixed (for SimpleGridView).  |
+
+
 Note: ✔️ indicates that the configuration is available for the corresponding widget, and ❌ indicates that it is not applicable.
 
 
