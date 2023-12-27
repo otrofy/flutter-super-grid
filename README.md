@@ -4,7 +4,7 @@ A customizable Flutter package for displaying grid views of sections.
 
 ### Example App
 
-![Example Image](https://github.com/otrofy/flutter-super-grid/blob/PubPublish/gif/supergrid.gif?raw=true)
+![Example Image](https://github.com/otrofy/flutter-super-grid/blob/main/gif/supergrid.gif?raw=true)
 
 ## Installation
 
@@ -42,35 +42,9 @@ SimpleGridView(
     // Customize how each item is rendered
     return YourCustomItemWidget(itemData);
   },
-  itemWidth: 150.0,
-  itemHeight: 200.0,
-  color: Colors.blue,
-  padding: EdgeInsets.all(16.0),
-  gridViewPadding: EdgeInsets.all(8.0),
-  verticalSpacing: 10.0,
-  horizontalSpacing: 10.0,
-  horizontal: false,
-  invertedRow: false,
-  onPressed: (index) {
-    // Handle item tap
-  },
+  // ... (See Configuration Table below)
 )
 ```
-
-#### Configuration
-
-- `data`: The data to display in the grid.
-- `renderItem`: The function that renders each item in the grid.
-- `itemWidth`: The width of each grid item.
-- `itemHeight`: The height of each grid item.
-- `color`: Background color of the grid container.
-- `padding`: Padding around the grid container.
-- `gridViewPadding`: Padding for the internal GridView.
-- `verticalSpacing`: Spacing between grid items vertically.
-- `horizontalSpacing`: Spacing between grid items horizontally.
-- `horizontal`: Whether the grid view is horizontal.
-- `invertedRow`: Whether to invert the row.
-- `onPressed`: Callback when an item is tapped.
 
 ## FlatGridView
 
@@ -86,34 +60,9 @@ FlatGridView(
     return YourCustomItemWidget(itemData);
   },
   itemsPerRow: 3,
-  itemSize: 150.0,
-  color: Colors.blue,
-  padding: EdgeInsets.all(16.0),
-  gridViewPadding: EdgeInsets.all(8.0),
-  verticalSpacing: 10.0,
-  horizontalSpacing: 10.0,
-  horizontal: false,
-  invertedRow: false,
-  onPressed: (index) {
-    // Handle item tap
-  },
+  // ... (See Configuration Table below)
 )
 ```
-
-#### Configuration
-
-- `data`: The data to display in the grid.
-- `renderItem`: The function that renders each item in the grid.
-- `itemsPerRow`: Number of items per row or column.
-- `itemSize`: The size of items in the main axis.
-- `color`: Background color of the grid container.
-- `padding`: Padding around the grid container.
-- `gridViewPadding`: Padding for the internal GridView.
-- `verticalSpacing`: Spacing between grid items vertically.
-- `horizontalSpacing`: Spacing between grid items horizontally.
-- `horizontal`: Whether the grid view is horizontal.
-- `invertedRow`: Whether to invert the row.
-- `onPressed`: Callback when an item is tapped.
 
 ## SectionGridView
 
@@ -129,44 +78,48 @@ SectionGridView(
     return YourCustomItemWidget(itemData);
   },
   itemsPerRow: 3,
-  itemSize: 150.0,
-  color: Colors.blue,
-  padding: EdgeInsets.all(16.0),
-  gridViewPadding: EdgeInsets.all(8.0),
-  verticalSpacing: 10.0,
-  horizontalSpacing: 10.0,
-  invertedRow: false,
-  onPressed: (sectionIndex, index) {
-    // Handle item tap
-  },
-  titleAlignment: TitleAlignment.start,
-  titleBackgroundColor: Colors.transparent,
-  titlePadding: EdgeInsets.all(8.0),
-  titleTextStyle: TextStyle(
-    fontWeight: FontWeight.normal,
-    fontSize: 16,
-    color: Colors.black,
-  ),
+  // ... (See Configuration Table below)
 )
+
 ```
+## Configuration Table
 
-#### Configuration
+## Configuration Table
 
-- `sections`: The sections to display in the grid.
-- `renderItem`: The function that renders each item in the grid.
-- `itemsPerRow`: Number of items per row or column.
-- `itemSize`: The size of items in the main axis.
-- `color`: Background color of the grid container.
-- `padding`: Padding around the grid container.
-- `gridViewPadding`: Padding for the internal GridView.
-- `verticalSpacing`: Spacing between grid items vertically.
-- `horizontalSpacing`: Spacing between grid items horizontally.
-- `invertedRow`: Whether to invert the row.
-- `onPressed`: Callback when an item is tapped.
-- `titleAlignment`: Alignment of the title.
-- `titleBackgroundColor`: Background color of the title container.
-- `titlePadding`: Padding around the title.
-- `titleTextStyle`: Style of the title.
+| Configuration           | Description                                               | Default Value           | SimpleGridView  | FlatGridView    | SectionGridView |
+|-------------------------|-----------------------------------------------------------|-------------------------|-----------------|-----------------|------------------|
+| `data`                  | The data to display in the grid.                           | -                       | ✔️              | ✔️              | ❌               |
+| `sections`              | The sections to display in the grid (for SectionGridView). | -                       | ❌              | ❌              | ✔️               |
+| `renderItem`            | Function that renders each item in the grid.               | -                       | ✔️              | ✔️              | ✔️               |
+| `itemsPerRow`           | Number of items per row or column.                         | 0                       | ✔️              | ✔️              | ✔️               |
+| `itemSize`              | The size of items in the main axis.                         | 120.0                   | ✔️              | ✔️              | ✔️               |
+| `itemWidth`             | The width of each grid item (for SimpleGridView).           | 100                     | ✔️              | ❌              | ❌               |
+| `itemHeight`            | The height of each grid item (for SimpleGridView).          | 100                     | ✔️              | ❌              | ❌               |
+| `minItemDimension`      | Minimum dimension (width or height) of each grid item.     | 120.0                   | ✔️              | ✔️              | ✔️               |
+| `staticDimension`       | Static width or height for the container (for SimpleGridView). | null                | ✔️              | ❌              | ✔️               |
+| `additionalRow`         | Additional row to be displayed at the bottom of the grid (for SimpleGridView). | SizedBox | ✔️              | ❌              | ❌               |
+| `additionalRowStyle`    | Style of the additional row (for SimpleGridView).           | null                    | ✔️              | ❌              | ❌               |
+| `containerStyle`        | Style of the container of the widget in the grid view.     | SimpleGridViewContainerStyle | ✔️              | ✔️              | ✔️               |
+| `containerHeight`       | Height of the container.                                   | 300                     | ✔️              | ✔️              | ✔️               |
+| `containerWidth`        | Width of the container.                                    | double.infinity         | ✔️              | ✔️              | ✔️               |
+| `gridViewHeight`        | Height of the gridview.                                    | 300                     | ✔️              | ✔️              | ✔️               |
+| `gridViewWidth`         | Width of the gridview.                                     | double.infinity         | ✔️              | ✔️              | ✔️               |
+| `horizontal`            | Whether the grid view is horizontal.                       | false                   | ✔️              | ✔️              | ✔️               |
+| `invertedRow`           | Whether to invert the row.                                 | false                   | ✔️              | ✔️              | ✔️               |
+| `physics`               | The physics of the scroll view (for FlatGridView and SectionGridView). | null          | ✔️              | ✔️              | ✔️               |
+| `onPressed`             | Callback when an item is pressed (for SectionGridView and FlatGridView). | null         | ✔️              | ✔️              | ✔️               |
+| `style`                 | Style configuration for the grid view (for all three).     | See specific styles     | ✔️              | ✔️              | ✔️               |
+| `adjustGridToStyles`    | Whether to adjust the grid to styles (for SimpleGridView). | false                   | ✔️              | ✔️              | ❌               |
+| `onNewItemAdded`        | Callback when a new item is added (for SectionGridView and FlatGridView). | null        | ✔️              | ✔️              | ✔️               |
+| `footerWidget`          | Widget to be displayed as a footer (for SectionGridView and FlatGridView). | SizedBox | ✔️              | ✔️              | ✔️               |
+| `itemContainerStyle`    | Style for the container of each item (for FlatGridView).   | ContainerStyle()        | ✔️              | ✔️              | ✔️               |
+| `verticalSpacing`       | Vertical spacing between items (for all three).            | 10                      | ✔️              | ✔️              | ✔️               |
+| `horizontalSpacing`     | Horizontal spacing between items (for all three).          | 10                      | ✔️              | ✔️              | ✔️               |
+| `isFixed`               | Whether the grid item size is fixed (for SimpleGridView).  | false                   | ✔️              | ✔️              | ❌               |
+
+Note: ✔️ indicates that the configuration is available for the corresponding widget, and ❌ indicates that it is not applicable.
+
+
 
 
 ## Documentation
