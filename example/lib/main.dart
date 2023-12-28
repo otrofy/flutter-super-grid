@@ -1,4 +1,5 @@
 import 'package:example/second_tab.dart';
+import 'package:example/tird_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:example/first_tab.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             FirstTab(),
             SizedBox(height: 52, width: 50, child: SecondTab()),
-            Text("22222")
+            SizedBox(height: 52, width: 50, child: TirdTab()),
           ],
         ),
       ),
