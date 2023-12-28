@@ -2,7 +2,6 @@
 
 A customizable Flutter package for displaying grid views of sections.
 
-### Example App
 
 ![Example Image](https://github.com/otrofy/flutter-super-grid/blob/main/gif/supergrid.gif?raw=true)
 
