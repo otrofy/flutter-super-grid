@@ -87,14 +87,14 @@ SectionGridView(
 
 | Configuration           | Type                     | Default Value           | Description                                               |
 |-------------------------|--------------------------|-------------------------|-----------------------------------------------------------|
-| `data`                  | List                     | -                       | The data to display in the grid(for all three).                           |
+| `data`                  | List                     | -                       | The data to display in the grid(for SimpleGridView and FlatGridView).                           |
 | `sections`              | List                     | -                       | The sections to display in the grid (for SectionGridView). |
 | `renderItem`            | Function                 | -                       | Function that renders each item in the grid(for all three).               |
-| `itemsPerRow`           | int                      | 0                       | Number of items per row or column(for all three).                         |
+| `itemsPerRow`           | int                      | 0                       | Number of items per row or column(for all three)(just apply when fixed is false) .                         |
 | `itemSize`              | double                   | 120.0                   | The size of items in the main axis(for all three).                        |
 | `itemWidth`             | double                   | 100                     | The width of each grid item (for SimpleGridView).          |
 | `itemHeight`            | double                   | 100                     | The height of each grid item (for SimpleGridView).         |
-| `minItemDimension`      | double                   | 120.0                   | Minimum dimension (width or height) of each grid item.     |
+| `minItemDimension`      | double                   | 120.0                   | Minimum dimension (width or height) of each grid item(just apply when fixed is false) .     |
 | `staticDimension`       | double or null           | null                    | Static width or height for the container (for SimpleGridView). |
 | `additionalRow`         | Widget                   | SizedBox                | Additional row to be displayed at the bottom of the grid (for SimpleGridView). |
 | `additionalRowStyle`    | Style or null            | null                    | Style of the additional row (for SimpleGridView).          |
@@ -108,10 +108,10 @@ SectionGridView(
 | `physics`               | ScrollPhysics or null    | null                    | The physics of the scroll view (for all three). |
 | `onPressed`             | Function or null         | null                    | Callback when an item is pressed (for SectionGridView and FlatGridView). |
 | `style`                 | Style                    | See specific styles     | Style configuration for the grid view (for all three).     |
-| `adjustGridToStyles`    | bool                     | false                   | Whether to adjust the grid to styles (for SimpleGridView and FlatGridView). |
+| `adjustGridToStyles`    | bool                     | false                   | Whether to adjust the grid to styles (for all three). |
 | `onNewItemAdded`        | Function or null         | null                    | Callback when a new item is added (for SectionGridView and FlatGridView). |
 | `footerWidget`          | Widget                   | SizedBox                | Widget to be displayed as a footer (for SectionGridView and FlatGridView). |
-| `itemContainerStyle`    | Style                    | ContainerStyle()        | Style for the container of each item (for FlatGridView).   |
+| `itemContainerStyle`    | Style                    | ContainerStyle()        | Style for the container of each item (for FlatGridView)(just apply when fixed is false)   |
 | `verticalSpacing`       | double                   | 10                      | Vertical spacing between items (for all three).            |
 | `horizontalSpacing`     | double                   | 10                      | Horizontal spacing between items (for all three).          |
 | `isFixed`               | bool                     | false                   | Whether the grid item size is fixed (for all three).  |
