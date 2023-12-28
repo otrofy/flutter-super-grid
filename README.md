@@ -89,11 +89,11 @@ SectionGridView(
 | `data`                  | List                     | -                       | The data to display in the grid (SimpleGridView and FlatGridView).                           |
 | `sections`              | List                     | -                       | The sections to display in the grid (SectionGridView only). |
 | `renderItem`            | Function                 | -                       | Function that renders each item in the grid.               |
-| `itemsPerRow`           | int                      | 0                       | Number of items per row or column(just apply when fixed is false) .                         |
+| `itemsPerRow`           | int                      | 0                       | Number of items per row or column(apply when fixed is false) .                         |
 | `itemSize`              | double                   | 120.0                   | The size of items in the main axis.                        |
 | `itemWidth`             | double                   | 100                     | The width of each grid item (SimpleGridView only).          |
 | `itemHeight`            | double                   | 100                     | The height of each grid item (SimpleGridView only).         |
-| `minItemDimension`      | double                   | 120.0                   | Minimum dimension (width or height) of each grid item(just apply when fixed is false) .     |
+| `minItemDimension`      | double                   | 120.0                   | Minimum dimension (width or height) of each grid item(apply when fixed is false) .     |
 | `staticDimension`       | double or null           | null                    | Static width or height for the container (SimpleGridView only). |
 | `additionalRow`         | Widget                   | SizedBox                | Additional row to be displayed at the bottom of the grid (SimpleGridView only). |
 | `additionalRowStyle`    | Style or null            | null                    | Style of the additional row (SimpleGridView only).          |
@@ -110,7 +110,7 @@ SectionGridView(
 | `adjustGridToStyles`    | bool                     | false                   | Whether to adjust the grid to styles. |
 | `onNewItemAdded`        | Function or null         | null                    | Callback when a new item is added (SectionGridView and FlatGridView). |
 | `footerWidget`          | Widget                   | SizedBox                | Widget to be displayed as a footer (SectionGridView and FlatGridView). |
-| `itemContainerStyle`    | Style                    | ContainerStyle()        | Style for the container of each item (FlatGridView only)(just apply when fixed is false)   |
+| `itemContainerStyle`    | Style                    | ContainerStyle()        | Style for the container of each item (FlatGridView only)(apply when fixed is false)   |
 | `verticalSpacing`       | double                   | 10                      | Vertical spacing between items.            |
 | `horizontalSpacing`     | double                   | 10                      | Horizontal spacing between items.          |
 | `isFixed`               | bool                     | false                   | Whether the grid item size is fixed.  |
