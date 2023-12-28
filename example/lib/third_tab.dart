@@ -40,13 +40,11 @@ class ThirdTab extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
               gridViewPadding: EdgeInsets.all(24.0),
             ),
-            itemHeight: 100,
-            itemWidth: 100,
             verticalSpacing: 10.0,
             horizontalSpacing: 10.0,
             horizontal: true,
             invertedRow: true,
-            additionalRow: Container(
+            footerWidget: Container(
               height: 100,
               width: 420,
               color: Colors.red,
