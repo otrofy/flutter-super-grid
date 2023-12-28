@@ -5,8 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_super_grid/flutter_super_grid.dart';
 
-class TirdTab extends StatelessWidget {
-  const TirdTab({super.key});
+class ThirdTab extends StatelessWidget {
+  const ThirdTab({super.key});
 
   @override
   Widget build(BuildContext context) {
