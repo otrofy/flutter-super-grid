@@ -674,6 +674,19 @@ class _SimpleGridViewState extends State<SimpleGridView> {
   }
 }
 
+// SectionGridViewStyle defines the style for the SectionGridView.
+///
+/// It allows customization of various aspects of the grid's appearance.
+///
+/// Properties:
+/// * [decoration]: The decoration to paint behind the main container. Use the [color] property for a simple solid color.
+/// * [color]: The color to paint behind the child. Use this property for a simple color background.
+/// * [padding]: Empty space to inscribe inside the decoration. The child, if any, is placed inside this padding.
+/// * [gridViewPadding]: Empty space to inscribe between the main container and the grid view.
+/// * [titlePadding]: Empty space to inscribe inside the title.
+/// * [titleAlignment]: The alignment of the title within its container.
+/// * [titleBackgroundColor]: The background color of the title.
+/// * [titleTextStyle]: The style of the title text, including font size, weight, and color.
 class SectionGridViewStyle {
   const SectionGridViewStyle({
     this.decoration,
@@ -690,50 +703,25 @@ class SectionGridViewStyle {
     ),
   });
 
-  /// The decoration to paint behind the main container.
-  ///
-  /// Use the (color) property to specify a simple solid color.
-  ///
-  /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
-
-  /// The color to paint behind the (child).
-  ///
-  /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the (decoration)
-  /// property.
-  ///
-  /// If the (decoration) is used, this property must be null. A background
-  /// color may still be painted by the (decoration) even if this property is
-  /// null.
   final Color color;
-
-  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
-  /// placed inside this padding.
-  ///
-  /// This padding is in addition to any padding inherent in the (decoration);
-  /// see (Decoration.padding).
   final EdgeInsets padding;
-
-  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
-  /// placed inside this padding.
-  ///
   final EdgeInsets gridViewPadding;
-
-  /// Empty space to inscribe inside the Title.
   final EdgeInsets titlePadding;
-
-  /// The alignment of the title.
   final TitleAlignment titleAlignment;
-
-  /// The background color of the title.
   final Color titleBackgroundColor;
-
-  /// The style of the title text.
   final TextStyle titleTextStyle;
 }
 
+/// ContainerStyle defines the styling for containers used in grid views.
+///
+/// This class provides a way to customize the appearance of containers in the grid.
+///
+/// Properties:
+/// * [decoration]: The decoration to paint behind the main container. Use this for complex backgrounds like gradients or images.
+/// * [color]: The color to paint behind the child. Prefer this property for a simple solid color. Cannot be used with [decoration].
+/// * [padding]: Empty space to inscribe inside the decoration. The child is placed inside this padding. This is in addition to any padding inherent in the decoration.
+/// * [gridViewPadding]: Empty space to inscribe between the main container and the grid view. This affects the layout of the grid view within the container.
 class ContainerStyle {
   const ContainerStyle({
     this.decoration,
@@ -742,78 +730,21 @@ class ContainerStyle {
     this.gridViewPadding = const EdgeInsets.all(8.0),
   });
 
-  /// The decoration to paint behind the main container.
-  ///
-  /// Use the (color) property to specify a simple solid color.
-  ///
-  /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
-
-  /// The color to paint behind the (child).
-  ///
-  /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the (decoration)
-  /// property.
-  ///
-  /// If the (decoration) is used, this property must be null. A background
-  /// color may still be painted by the (decoration) even if this property is
-  /// null.
   final Color color;
-
-  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
-  /// placed inside this padding.
-  ///
-  /// This padding is in addition to any padding inherent in the (decoration);
-  /// see (Decoration.padding).
   final EdgeInsets padding;
-
-  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
-  /// placed inside this padding.
-  ///
   final EdgeInsets gridViewPadding;
 }
 
-class SimpleGridViewContainerStyle {
-  const SimpleGridViewContainerStyle({
-    this.decoration,
-    this.color = Colors.transparent,
-    this.padding = const EdgeInsets.all(0),
-    this.gridViewPadding = const EdgeInsets.all(8.0),
-  });
-
-  /// The decoration to paint behind the main container.
-  ///
-  /// Use the (color) property to specify a simple solid color.
-  ///
-  /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
-  final BoxDecoration? decoration;
-
-  /// The color to paint behind the (child).
-  ///
-  /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the (decoration)
-  /// property.
-  ///
-  /// If the (decoration) is used, this property must be null. A background
-  /// color may still be painted by the (decoration) even if this property is
-  /// null.
-  final Color color;
-
-  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
-  /// placed inside this padding.
-  ///
-  /// This padding is in addition to any padding inherent in the (decoration);
-  /// see (Decoration.padding).
-  final EdgeInsets padding;
-
-  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
-  /// placed inside this padding.
-  ///
-  final EdgeInsets gridViewPadding;
-}
-
+/// FlatGridViewStyle defines the styling for containers used in FlatGridViews.
+///
+/// This class offers customization for the appearance of containers within a FlatGridView.
+///
+/// Properties:
+/// * [decoration]: The decoration to paint behind the main container. Suitable for complex backgrounds like gradients or images.
+/// * [color]: The color to paint behind the child. Ideal for simple solid colors. Not used simultaneously with [decoration].
+/// * [padding]: Empty space to inscribe inside the decoration. Adds to any inherent padding in the decoration and positions the child within.
+/// * [gridViewPadding]: Space between the main container and the grid view. Influences the layout of the grid view within the container.
 class FlatGridViewStyle {
   const FlatGridViewStyle({
     this.decoration,
@@ -822,38 +753,21 @@ class FlatGridViewStyle {
     this.gridViewPadding = const EdgeInsets.all(8.0),
   });
 
-  /// The decoration to paint behind the main container.
-  ///
-  /// Use the (color) property to specify a simple solid color.
-  ///
-  /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
-
-  /// The color to paint behind the (child).
-  ///
-  /// This property should be preferred when the background is a simple color.
-  /// For other cases, such as gradients or images, use the (decoration)
-  /// property.
-  ///
-  /// If the (decoration) is used, this property must be null. A background
-  /// color may still be painted by the (decoration) even if this property is
-  /// null.
   final Color color;
-
-  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
-  /// placed inside this padding.
-  ///
-  /// This padding is in addition to any padding inherent in the (decoration);
-  /// see (Decoration.padding).
   final EdgeInsets padding;
-
-  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
-  /// placed inside this padding.
-  ///
   final EdgeInsets gridViewPadding;
 }
 
+/// SimpleGridViewStyle defines the styling for containers used in SimpleGridViews.
+///
+/// This class allows for customization of the container's appearance within a SimpleGridView.
+///
+/// Properties:
+/// * [decoration]: The decoration to paint behind the main container, suitable for complex backgrounds like gradients or images.
+/// * [color]: The color to paint behind the child, recommended for a simple solid color. Not to be used simultaneously with [decoration].
+/// * [padding]: Empty space to inscribe inside the decoration. This padding positions the child within it, adding to any inherent padding in the decoration.
+/// * [gridViewPadding]: Space between the main container and the grid view. Influences the layout of the grid view within its container.
 class SimpleGridViewStyle {
   const SimpleGridViewStyle({
     this.decoration,
@@ -862,45 +776,10 @@ class SimpleGridViewStyle {
     this.gridViewPadding = const EdgeInsets.all(8.0),
   });
 
-  /// The decoration to paint behind the main container.
-  ///
-  /// Use the (color) property to specify a simple solid color.
-  ///
-  /// The (child) is not clipped to the decoration. To clip a child to the shape
-  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
   final BoxDecoration? decoration;
-
-  /// The color to paint behind the (child).
-  ///
-  /// This property should be preferred when the background is a simple color.
   final Color color;
-
-  /// Empty space to inscribe inside the [decoration]. The (child), if any, is
-  /// placed inside this padding.
-  ///
-  /// This padding is in addition to any padding inherent in the (decoration);
-  /// see (Decoration.padding).
   final EdgeInsets padding;
-
-  /// Empty space to inscribe between the main container and grid view. The (child), if any, is
-  /// placed inside this padding.
-  ///
   final EdgeInsets gridViewPadding;
-}
-
-class AditionalRowStyle {
-  const AditionalRowStyle({
-    this.color = Colors.transparent,
-    this.padding = const EdgeInsets.all(0),
-  });
-
-  /// The color to paint behind the (child).
-  ///
-  /// This property should be preferred when the background is a simple color.
-  final Color color;
-
-  /// see [Decoration.padding].
-  final EdgeInsets padding;
 }
 
 Widget wrapWidget(
