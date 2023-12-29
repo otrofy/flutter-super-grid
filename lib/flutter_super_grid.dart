@@ -840,7 +840,6 @@ Widget buildGridView({
   final effectiveData = invertItems ? data.reversed.toList() : data;
 
   return GridView.builder(
-    physics: const NeverScrollableScrollPhysics(),
     scrollDirection: horizontal ? Axis.horizontal : Axis.vertical,
     padding: padding ?? const EdgeInsets.all(8.0),
     shrinkWrap: true,
