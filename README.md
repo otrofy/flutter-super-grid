@@ -2,10 +2,7 @@
 
 A customizable Flutter package for displaying grid views of sections.
 
-
-![Example SectionGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/section-grid.gif?raw=true)
-![Example FlatGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/flat-grid.gif?raw=true)
-![Example SimpleGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/simple-grid.gif?raw=true)
+![Example App](https://github.com/otrofy/flutter-super-grid/blob/main/gif/super-grid.gif?raw=true)
 
 ## Installation
 
@@ -31,6 +28,7 @@ $ flutter pub get
 - Section titles with customizable styling and alignment.
 
 ## SectionGridView
+![Example SectionGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/section-grid.gif?raw=true)
 
 ### Usage
 
@@ -50,6 +48,7 @@ SectionGridView(
 ```
 
 ## FlatGridView
+![Example FlatGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/flat-grid.gif?raw=true)
 
 ### Usage
 
@@ -68,6 +67,7 @@ FlatGridView(
 ```
 
 ## SimpleGridView
+![Example SimpleGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/simple-grid.gif?raw=true)
 
 ### Usage
 
