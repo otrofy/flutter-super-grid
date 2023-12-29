@@ -122,7 +122,8 @@ class FlatGridView extends CommonGrid {
     double gridViewWidth = double.infinity, // default value set to infinity
     double containerWidth = double.infinity, // default value set to infinity
     double containerHeight = 300, // default value set to 300 px
-    Widget footerWidget = const SizedBox(), // default value set to SizedBox()
+    Widget footerWidget = const SizedBox(),
+    // default value set to SizedBox()
     ScrollPhysics? physics, // default value set to null
   }) : super(
           itemSize: itemSize,
@@ -649,6 +650,7 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                               null,
                               true)
                           : buildGridView(
+                              physics: const NeverScrollableScrollPhysics(),
                               data: data,
                               renderItem: widget.renderItem,
                               horizontal: widget.horizontal,
@@ -829,6 +831,7 @@ Widget buildGridView({
   required double horizontalSpacing,
   required double verticalSpacing,
   required double minItemDimension,
+  ScrollPhysics? physics,
   required double itemSize,
   bool invertItems = false,
   void Function(int itemIndex)? onTapFlat,
@@ -840,6 +843,7 @@ Widget buildGridView({
   final effectiveData = invertItems ? data.reversed.toList() : data;
 
   return GridView.builder(
+    physics: physics,
     scrollDirection: horizontal ? Axis.horizontal : Axis.vertical,
     padding: padding ?? const EdgeInsets.all(8.0),
     shrinkWrap: true,
