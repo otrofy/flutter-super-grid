@@ -30,21 +30,23 @@ $ flutter pub get
 - Option to invert the row and display the grid horizontally.
 - Section titles with customizable styling and alignment.
 
-## SimpleGridView
+## SectionGridView
 
 ### Usage
 
 ```dart
 import 'package:flutter_super_grid/flutter_super_grid.dart';
 
-SimpleGridView(
-  data: yourDataList,
+SectionGridView(
+  sections: yourSectionsList,
   renderItem: (itemData) {
     // Customize how each item is rendered
     return YourCustomItemWidget(itemData);
   },
+  itemsPerRow: 3,
   // ... (See Configuration Table below)
 )
+
 ```
 
 ## FlatGridView
@@ -65,24 +67,23 @@ FlatGridView(
 )
 ```
 
-## SectionGridView
+## SimpleGridView
 
 ### Usage
 
 ```dart
 import 'package:flutter_super_grid/flutter_super_grid.dart';
 
-SectionGridView(
-  sections: yourSectionsList,
+SimpleGridView(
+  data: yourDataList,
   renderItem: (itemData) {
     // Customize how each item is rendered
     return YourCustomItemWidget(itemData);
   },
-  itemsPerRow: 3,
   // ... (See Configuration Table below)
 )
-
 ```
+
 
 ## Configuration Table
 
