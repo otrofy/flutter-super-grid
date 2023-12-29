@@ -17,7 +17,10 @@ class ThirdTab extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.0),
           child: Text(
             "Top artists",
-            style: TextStyle(fontSize: 32.0, color: Colors.white),
+            style: TextStyle(
+                fontSize: 32.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
           ),
         ),
         SimpleGridView(
