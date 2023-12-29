@@ -1,8 +1,6 @@
 import 'package:example/data.dart';
 import 'package:flutter/material.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter_super_grid/flutter_super_grid.dart';
 
 class ThirdTab extends StatelessWidget {
@@ -19,10 +17,7 @@ class ThirdTab extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.0),
           child: Text(
             "Top artists",
-            style: TextStyle(
-                fontSize: 32.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 32.0, color: Colors.white),
           ),
         ),
         SimpleGridView(

@@ -12,7 +12,6 @@ void main() {
             body: SimpleGridView(
               data: const [],
               renderItem: (data) => Container(),
-              itemSize: 100,
             ),
           ),
         ),
@@ -30,7 +29,6 @@ void main() {
             body: SimpleGridView(
               data: testData,
               renderItem: (data) => Text(data),
-              itemSize: 100,
             ),
           ),
         ),
