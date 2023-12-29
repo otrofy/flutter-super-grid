@@ -3,8 +3,8 @@
 A customizable Flutter package for displaying grid views of sections.
 
 
-![Example SectionGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/supergrid.gif?raw=true)
-![Example FlatGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/flatgrid.gif?raw=true)
+![Example SectionGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/section-grid.gif?raw=true)
+![Example FlatGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/flat-grid.gif?raw=true)
 ![Example SimpleGrid](https://github.com/otrofy/flutter-super-grid/blob/main/gif/simple-grid.gif?raw=true)
 
 ## Installation
