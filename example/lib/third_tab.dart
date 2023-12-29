@@ -11,55 +11,108 @@ class ThirdTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: SimpleGridView(
-            data: data,
-            renderItem: (itemData) {
-              return Container(
-                height: 10 * (data.indexOf(itemData) * 1 + 1),
-                width: 10 * (data.indexOf(itemData) * 1 + 1),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      15.0), // Ajusta el radio según sea necesario
-                  child: CachedNetworkImage(
-                    imageUrl: itemData,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(), // Puedes personalizar el indicador de carga
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    fit: BoxFit
-                        .cover, // Ajusta el modo de ajuste de la imagen según sea necesario
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 16.0),
+          child: Text(
+            "Top artists",
+            style: TextStyle(fontSize: 32.0, color: Colors.white),
+          ),
+        ),
+        SimpleGridView(
+          data: artist,
+          gridViewHeight: 550,
+          renderItem: (itemData) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  flex: 20,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        (artist.indexOf(itemData) * 1 + 1).toString(),
+                        style:
+                            const TextStyle(fontSize: 36.0, color: Colors.grey),
+                        textAlign: TextAlign.left,
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.grey),
+                        width: 5,
+                        height: 5,
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-            itemSize: 80.0,
-            itemsPerRow: 3,
-            isFixed: true,
-            style: const SimpleGridViewStyle(
-              color: Colors.green,
-              padding: EdgeInsets.all(16.0),
-              gridViewPadding: EdgeInsets.all(24.0),
-            ),
-            verticalSpacing: 10.0,
-            horizontalSpacing: 10.0,
-            horizontal: true,
-            invertedRow: true,
-            footerWidget: Container(
-              height: 100,
-              width: 420,
-              color: Colors.red,
-              child: const Row(
-                children: [
-                  Icon(
-                    Icons.abc,
-                    color: Colors.white,
+                Expanded(
+                  flex: 70,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12.0, left: 16),
+                        child: Container(
+                          width: 60.0,
+                          height: 60.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(
+                                itemData['artistPhoto'],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 12.0, left: 16),
+                        child: Row(
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    itemData['artistName'],
+                                    style: const TextStyle(
+                                        fontSize: 18.0, color: Colors.white),
+                                  ),
+                                ),
+                                Text(
+                                  itemData['Subscriptors'],
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  Text(
-                    "Foot Render Widget",
-                    style: TextStyle(color: Colors.white),
-                  )
-                ],
-              ),
-            )));
+                ),
+              ],
+            );
+          },
+          itemsPerRow: 1,
+          horizontal: false,
+          invertedRow: false,
+          minItemDimension: 70,
+          itemSize: 70,
+        ),
+      ],
+    ));
   }
 }

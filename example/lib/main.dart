@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
             indicatorColor: Colors.white,
             unselectedLabelColor: Colors.grey,
             tabs: [
-              Tab(text: 'Section Grid'),
+              Tab(text: 'SectionGrid'),
               Tab(text: 'FlatGrid'),
               Tab(text: 'SimpleGrid'),
             ],
@@ -55,8 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
         body: const TabBarView(
           children: [
             FirstTab(),
-            SizedBox(height: 52, width: 50, child: SecondTab()),
-            SizedBox(height: 52, width: 50, child: ThirdTab()),
+            SecondTab(),
+            ThirdTab(),
           ],
         ),
       ),
