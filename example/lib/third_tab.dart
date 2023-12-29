@@ -43,12 +43,20 @@ class ThirdTab extends StatelessWidget {
                             const TextStyle(fontSize: 36.0, color: Colors.grey),
                         textAlign: TextAlign.left,
                       ),
-                      Container(
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.grey),
-                        width: 5,
-                        height: 5,
-                      ),
+                      itemData['growth']
+                          ? Container(
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.grey),
+                              width: 10,
+                              height: 10,
+                            )
+                          : Image.asset(
+                              'assets/images/growth961.png', // Ajusta la ruta según tu estructura de carpetas
+                              width:
+                                  15.0, // Ajusta el ancho según tus necesidades
+                              height:
+                                  15.0, // Ajusta la altura según tus necesidades
+                            ),
                     ],
                   ),
                 ),

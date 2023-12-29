@@ -13,27 +13,35 @@ class SecondTab extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          createText("Today's Artist"),
-          createFlatGrid(artist1),
-          createText("Your favorite Artists"),
-          createFlatGrid(artist2),
-          createText("Recommended for you"),
-          createFlatGrid(artist3),
-          createText("Our selection"),
-          createFlatGrid(artist1),
-          createText("Most listened"),
-          createFlatGrid(artist2),
-          createText("Best sellers"),
-          createFlatGrid(artist3),
-          createText("90's are back"),
-          createFlatGrid(artist2),
-          createText("Your favorite Artist"),
-          createFlatGrid(artist3),
+          const TextWidget("Today's Artist"),
+          FlatGridWidget(artist1),
+          const TextWidget("Your favorite Artists"),
+          FlatGridWidget(artist2),
+          const TextWidget("Recommended for you"),
+          FlatGridWidget(artist3),
+          const TextWidget("Our selection"),
+          FlatGridWidget(artist1),
+          const TextWidget("Most listened"),
+          FlatGridWidget(artist2),
+          const TextWidget("Best sellers"),
+          FlatGridWidget(artist3),
+          const TextWidget("90's are back"),
+          FlatGridWidget(artist2),
+          const TextWidget("Your favorite Artist"),
+          FlatGridWidget(artist3),
         ],
       ),
     );
   }
-  Widget createText(text) {
+}
+
+class TextWidget extends StatelessWidget {
+  final String text;
+
+  const TextWidget(this.text, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, top: 16),
       child: FittedBox(
@@ -46,7 +54,15 @@ class SecondTab extends StatelessWidget {
       ),
     );
   }
-  Widget createFlatGrid(data) {
+}
+
+class FlatGridWidget extends StatelessWidget {
+  final List<Map<String, dynamic>> data;
+
+  const FlatGridWidget(this.data, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return FlatGridView(
       data: data,
       renderItem: (itemData) {
@@ -99,7 +115,7 @@ class SecondTab extends StatelessWidget {
       horizontal: true,
       invertedRow: true,
       onPressed: (index) {
-        // Handle item tapER
+        // Handle item tap
       },
     );
   }
