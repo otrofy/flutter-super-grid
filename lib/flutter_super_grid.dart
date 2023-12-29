@@ -38,14 +38,56 @@ class FlatGridView extends StatefulWidget {
     this.onNewItemAdded,
   });
 
+  //
+  //Data-Releated Properties
+  //
+
+  /// The data to display in the grid.
+  final List data;
+
+  /// The function that renders each item in the grid.
+  final Widget Function(dynamic data) renderItem;
+
   /// The callback function when a new item is added to the data list.
   final void Function()? onNewItemAdded;
+
+  /// The callback function when an item is pressed.
+  final void Function(int index)? onPressed;
+
+  //
+  //Grid Configuration Properties
+  //
+
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
+  final int itemsPerRow;
+
+  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
+  final double itemSize;
+
+  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
+  final double minItemDimension;
+
+  /// The spacing between grid items vertically.
+  final double verticalSpacing;
+
+  /// The spacing between grid items horizontally.
+  final double horizontalSpacing;
 
   /// is true will use the original size instead of adjusting to grid
   final bool isFixed;
 
+  /// Whether the grid view is horizontal.
+  final bool horizontal;
+
+  /// Whether to invert the row.
+  final bool invertedRow;
+
   /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
   final bool adjustGridToStyles;
+
+  //
+  //Layout and Style Properties
+  //
 
   /// The style of the grid view.
   final FlatGridViewStyle style;
@@ -53,14 +95,12 @@ class FlatGridView extends StatefulWidget {
   /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
   final ContainerStyle itemContainerStyle;
 
-  /// The data to display in the grid.
-  final List data;
-
   /// The widget rendered at the bottom of the grid view.
   final Widget footerWidget;
 
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
-  final int itemsPerRow;
+  //
+  // Dimensions of the grid and container
+  //
 
   /// The height of the gridview.
   final double gridViewHeight;
@@ -73,30 +113,6 @@ class FlatGridView extends StatefulWidget {
 
   /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
   final double containerHeight;
-
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
-  final double itemSize;
-
-  /// The spacing between grid items vertically.
-  final double verticalSpacing;
-
-  /// The spacing between grid items horizontally.
-  final double horizontalSpacing;
-
-  /// The function that renders each item in the grid.
-  final Widget Function(dynamic data) renderItem;
-
-  /// The callback function when an item is pressed.
-  final void Function(int index)? onPressed;
-
-  /// Whether to invert the row.
-  final bool invertedRow;
-
-  /// Whether the grid view is horizontal.
-  final bool horizontal;
-
-  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
-  final double minItemDimension;
 
   /// The physics of the grid view.
   final ScrollPhysics? physics;
@@ -246,50 +262,9 @@ class SectionGridView extends StatefulWidget {
         const ContainerStyle(), // default value set to ContainerStyle()
   });
 
-  /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
-  final ContainerStyle itemContainerStyle;
-
-  /// The width of the main container, only matters if it's greater than [gridViewWidth] .
-  final double containerWidth;
-
-  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
-  final double containerHeight;
-
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
-  final double itemSize;
-
-  /// The footer width.
-  final Widget footerWidget;
-
-  /// The callback function when a new item is added to the sections list.
-  final void Function()? onNewItemAdded;
-
-  /// The style to to apply on the section grid.
-  final SectionGridViewStyle style;
-
-  /// whether to adjust the grid to the styles or not.
-  final bool adjustGridToStyles;
-
-  /// is true will use the original size instead of adjusting to grid
-  final bool isFixed;
-
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
-  final int itemsPerRow;
-
-  /// The height of the gridview.
-  final double gridViewHeight;
-
-  /// The width of the gridview.
-  final double gridViewWidth;
-
-  /// Whether the gridview grows horizontally or vertically.
-  final bool horizontal;
-
-  /// The spacing between grid items vertically.
-  final double verticalSpacing;
-
-  /// The spacing between grid items horizontally.
-  final double horizontalSpacing;
+  //
+  //Data-Releated Properties
+  //
 
   /// The sections to display in the grid.
   final List<Map<String, dynamic>> sections;
@@ -297,14 +272,71 @@ class SectionGridView extends StatefulWidget {
   /// The function that renders each item in the grid.
   final Widget Function(dynamic data) renderItem;
 
+  /// The callback function when a new item is added to the sections list.
+  final void Function()? onNewItemAdded;
+
   /// The callback function when an item is pressed.
   final void Function(int sectionIndex, int index)? onPressed;
+
+  //
+  //Grid Configuration Properties
+  //
+
+  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
+  final int itemsPerRow;
+
+  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
+  final double itemSize;
+
+  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
+  final double minItemDimension;
+
+  /// The spacing between grid items vertically.
+  final double verticalSpacing;
+
+  /// The spacing between grid items horizontally.
+  final double horizontalSpacing;
+
+  /// is true will use the original size instead of adjusting to grid
+  final bool isFixed;
+
+  /// Whether the gridview grows horizontally or vertically.
+  final bool horizontal;
 
   /// Whether to invert the row.
   final bool invertedRow;
 
-  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
-  final double minItemDimension;
+  /// whether to adjust the grid to the styles or not.
+  final bool adjustGridToStyles;
+
+  //
+  //Layout and Style Properties
+  //
+
+  /// The style to to apply on the section grid.
+  final SectionGridViewStyle style;
+
+  /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
+  final ContainerStyle itemContainerStyle;
+
+  /// The footer width.
+  final Widget footerWidget;
+
+  //
+  // Dimensions of the grid and container
+  //
+
+  /// The height of the gridview.
+  final double gridViewHeight;
+
+  /// The width of the gridview.
+  final double gridViewWidth;
+
+  /// The width of the main container, only matters if it's greater than [gridViewWidth] .
+  final double containerWidth;
+
+  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
+  final double containerHeight;
 
   /// The physics of the grid view.
   final ScrollPhysics? physics;
@@ -496,32 +528,28 @@ class SimpleGridView extends StatefulWidget {
     this.adjustGridToStyles = false,
   });
 
-  /// The style of the grid view.
-  final SimpleGridViewStyle style;
+  //
+  //Data-Releated Properties
+  //
 
-  /// The physics of the grid view.
-  final ScrollPhysics? physics;
+  /// The data to display in the grid.
+  final List data;
 
-  /// The height of the containerHeight.
-  final double containerHeight;
+  ///  The function that renders each item in the grid.
+  final Widget Function(dynamic data) renderItem;
 
-  /// The width of the containerHeight.
-  final double containerWidth;
+  //
+  //Grid Configuration Properties
+  //
 
-  /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
-  final bool adjustGridToStyles;
-
-  /// The height of the gridview.
-  final double gridViewHeight;
-
-  /// The width of the gridview.
-  final double gridViewWidth;
-
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
+  ///  The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
   final int itemsPerRow;
 
   /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
   final double itemSize;
+
+  /// The minimum dimension (width or height) of each grid item.
+  final double minItemDimension;
 
   /// The spacing between grid items vertically.
   final double verticalSpacing;
@@ -529,29 +557,49 @@ class SimpleGridView extends StatefulWidget {
   /// The spacing between grid items horizontally.
   final double horizontalSpacing;
 
-  /// The sections to display in the grid.
-  final List data;
-
-  /// The function that renders each item in the grid.
-  final Widget Function(dynamic data) renderItem;
-
-  /// Whether to invert the row.
-  final bool invertedRow;
-
-  /// Whether the grid view is horizontal.
-  final bool horizontal;
-
-  /// is true will use a wrap instead of a gridView to render the item
+  /// is true will use the original size instead of adjusting to grid
   final bool isFixed;
 
-  /// The minimum dimension (width or height) of each grid item.
-  final double minItemDimension;
+  /// Whether the gridview grows horizontally or vertically.
+  final bool horizontal;
+
+  ///
+  final bool invertedRow;
+
+  /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
+  final bool adjustGridToStyles;
+
+  //
+  //Layout and Style Properties
+  //
+
+  /// The style of the grid view.
+  final SimpleGridViewStyle style;
+
+  /// The style of the container of the widget in the grid view.
+  final SimpleGridViewContainerStyle itemContainerStyle;
 
   /// Specifies an additional row to be displayed at the bottom of the grid.
   final Widget footerWidget;
 
-  /// The style of the container of the widget in the grid view.
-  final SimpleGridViewContainerStyle itemContainerStyle;
+  //
+  // Dimensions of the grid and container
+  //
+
+  /// The height of the containerHeight.
+  final double containerHeight;
+
+  /// The width of the containerHeight.
+  final double containerWidth;
+
+  /// The height of the gridview.
+  final double gridViewHeight;
+
+  /// The width of the gridview.
+  final double gridViewWidth;
+
+  /// The physics of the grid view.
+  final ScrollPhysics? physics;
 
   @override
   State<SimpleGridView> createState() => _SimpleGridViewState();
