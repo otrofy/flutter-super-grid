@@ -10,20 +10,38 @@ enum TitleAlignment {
   end,
 }
 
-// A widget that displays a flat grid of items.
-class FlatGridView extends StatefulWidget {
-  /// Creates a `FlatGridView`.
-  const FlatGridView({
+/// CommonGrid is an abstract base class for grid views.
+///
+/// It defines common properties and functionalities shared across different grid types.
+///
+/// Properties:
+/// * [isFixed]: Determines if the original size is used instead of adjusting to grid.
+/// * [adjustGridToStyles]: Set to true to automatically adjust grid dimensions based on style and container size.
+/// * [itemContainerStyle]: Style of the container of the widget in the grid view, applicable when [isFixed] is false.
+/// * [footerWidget]: The widget rendered at the bottom of the grid view.
+/// * [itemsPerRow]: Number of items per row in a vertically growing grid or per column in a horizontally growing grid, applicable when [isFixed] is false.
+/// * [gridViewHeight]: The height of the grid view.
+/// * [gridViewWidth]: The width of the grid view.
+/// * [containerWidth]: The width of the main container, relevant if it's greater than [gridViewWidth].
+/// * [containerHeight]: The height of the main container, relevant if it's greater than [gridViewHeight].
+/// * [itemSize]: Size of the grid item in the main axis direction, applicable when [isFixed] is false.
+/// * [verticalSpacing]: Spacing between grid items vertically.
+/// * [horizontalSpacing]: Spacing between grid items horizontally.
+/// * [renderItem]: Function that renders each item in the grid.
+/// * [invertedRow]: Determines whether to invert the row.
+/// * [horizontal]: Specifies if the grid view is horizontal.
+/// * [minItemDimension]: Minimum dimension of each grid item, applicable when [isFixed] is false.
+/// * [physics]: The physics of the grid view.
+abstract class CommonGrid extends StatefulWidget {
+  const CommonGrid({
     super.key,
-    required this.data,
     required this.renderItem,
-    this.itemsPerRow = 3,
-    this.itemSize = 120,
-    this.minItemDimension = 120.0, // default value set to 120 px
-    this.style = const FlatGridViewStyle(),
-    this.itemContainerStyle = const ContainerStyle(),
+    this.itemSize = 120.0,
+    this.minItemDimension = 120.0,
     this.verticalSpacing = 10,
     this.horizontalSpacing = 10,
+    this.itemsPerRow = 3,
+    this.itemContainerStyle = const ContainerStyle(),
     this.isFixed = false,
     this.horizontal = false,
     this.invertedRow = false,
@@ -34,72 +52,100 @@ class FlatGridView extends StatefulWidget {
     this.containerHeight = 300,
     this.footerWidget = const SizedBox(),
     this.physics,
-    this.onPressed,
-    this.onNewItemAdded,
   });
 
-  /// The callback function when a new item is added to the data list.
-  final void Function()? onNewItemAdded;
-
-  /// is true will use the original size instead of adjusting to grid
   final bool isFixed;
-
-  /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
   final bool adjustGridToStyles;
-
-  /// The style of the grid view.
-  final FlatGridViewStyle style;
-
-  /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
   final ContainerStyle itemContainerStyle;
-
-  /// The data to display in the grid.
-  final List data;
-
-  /// The widget rendered at the bottom of the grid view.
   final Widget footerWidget;
-
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
   final int itemsPerRow;
-
-  /// The height of the gridview.
   final double gridViewHeight;
-
-  /// The width of the gridview.
   final double gridViewWidth;
-
-  /// The width of the main container, only matters if it's greater than [gridViewWidth] .
   final double containerWidth;
-
-  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
   final double containerHeight;
-
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
   final double itemSize;
-
-  /// The spacing between grid items vertically.
   final double verticalSpacing;
-
-  /// The spacing between grid items horizontally.
   final double horizontalSpacing;
-
-  /// The function that renders each item in the grid.
   final Widget Function(dynamic data) renderItem;
-
-  /// The callback function when an item is pressed.
-  final void Function(int index)? onPressed;
-
-  /// Whether to invert the row.
   final bool invertedRow;
-
-  /// Whether the grid view is horizontal.
   final bool horizontal;
-
-  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
   final double minItemDimension;
-
-  /// The physics of the grid view.
   final ScrollPhysics? physics;
+
+  @override
+  State<CommonGrid> createState(); // Abstract method
+}
+
+// A widget that displays a flat grid of items.
+class FlatGridView extends CommonGrid {
+  /// FlatGridView is a widget for displaying a flat grid of items.
+  ///
+  /// It combines common grid functionalities with specific features for a flat layout.
+  ///
+  /// Properties:
+  /// * [data]: The data to display in the grid.
+  /// * [renderItem]: The function that renders each item in the grid.
+  /// * [itemSize]: The size of the grid item. Defaults to 120.0, applicable when [isFixed] is false.
+  /// * [minItemDimension]: The minimum dimension (width or height) of each grid item. Defaults to 120.0, applicable when [isFixed] is false.
+  /// * [verticalSpacing]: The spacing between grid items vertically. Defaults to 10.
+  /// * [horizontalSpacing]: The spacing between grid items horizontally. Defaults to 10.
+  /// * [itemsPerRow]: The number of items per row in the grid. Defaults to 3, applicable when [isFixed] is false.
+  /// * [itemContainerStyle]: Style of the container of each item in the grid. Defaults to [ContainerStyle], applicable when [isFixed] is false.
+  /// * [isFixed]: If true, uses the original size instead of adjusting to grid. Defaults to false.
+  /// * [horizontal]: If true, the grid view grows horizontally. Defaults to false.
+  /// * [invertedRow]: If true, inverts the order of the row. Defaults to false.
+  /// * [adjustGridToStyles]: If true, adjusts the total dimensions of the grid based on style and container size. Defaults to false.
+  /// * [gridViewHeight]: The height of the grid view. Defaults to 300.
+  /// * [gridViewWidth]: The width of the grid view. Defaults to infinity.
+  /// * [containerWidth]: The width of the main container. Relevant if greater than [gridViewWidth]. Defaults to infinity.
+  /// * [containerHeight]: The height of the main container. Relevant if greater than [gridViewHeight]. Defaults to 300.
+  /// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
+  /// * [physics]: The physics of the grid view.
+  const FlatGridView({
+    super.key,
+    required super.renderItem, // required property
+    required this.data, // required property
+    this.onNewItemAdded,
+    this.onPressed,
+    double itemSize = 120.0, // default value set to 120 px
+    double minItemDimension = 120.0, // default value set to 120 px
+    double verticalSpacing = 10, // default value set to 10 px
+    double horizontalSpacing = 10, // default value set to 10 px
+    int itemsPerRow = 3, // default value set to 3
+    this.style = const FlatGridViewStyle(),
+    ContainerStyle itemContainerStyle = const ContainerStyle(),
+    bool isFixed = false, // default value set to false
+    bool horizontal = false, // default value set to false
+    bool invertedRow = false, // default value set to false
+    bool adjustGridToStyles = false, // default value set to false
+    double gridViewHeight = 300, // default value set to 300 px
+    double gridViewWidth = double.infinity, // default value set to infinity
+    double containerWidth = double.infinity, // default value set to infinity
+    double containerHeight = 300, // default value set to 300 px
+    Widget footerWidget = const SizedBox(), // default value set to SizedBox()
+    ScrollPhysics? physics, // default value set to null
+  }) : super(
+          itemSize: itemSize,
+          minItemDimension: minItemDimension,
+          verticalSpacing: verticalSpacing,
+          horizontalSpacing: horizontalSpacing,
+          itemsPerRow: itemsPerRow,
+          itemContainerStyle: itemContainerStyle,
+          isFixed: isFixed,
+          horizontal: horizontal,
+          invertedRow: invertedRow,
+          adjustGridToStyles: adjustGridToStyles,
+          gridViewHeight: gridViewHeight,
+          gridViewWidth: gridViewWidth,
+          containerWidth: containerWidth,
+          containerHeight: containerHeight,
+          footerWidget: footerWidget,
+          physics: physics,
+        );
+  final void Function()? onNewItemAdded;
+  final List data;
+  final void Function(int index)? onPressed;
+  final FlatGridViewStyle style;
 
   @override
   State<FlatGridView> createState() => _FlatGridViewState();
@@ -216,98 +262,81 @@ class _FlatGridViewState extends State<FlatGridView> {
   }
 }
 
-/// A widget that displays a grid of sections.
-class SectionGridView extends StatefulWidget {
-  /// Creates a `SectionGridView`.
+/// SectionGridView is a widget for displaying a sections with grids.
+///
+/// Combines common grid functionalities from [CommonGrid] with features specific for a sectional layout.
+///
+/// Properties:
+/// * [sections]: The sections to display in the grid, each section containing its data and title.
+/// * [renderItem]: The function that renders each item in the grid.
+/// * [itemSize]: The size of the grid item. Defaults to 120.0, applicable when [isFixed] is false.
+/// * [minItemDimension]: The minimum dimension (width or height) of each grid item. Defaults to 120.0, applicable when [isFixed] is false.
+/// * [verticalSpacing]: The spacing between grid items vertically. Defaults to 10.
+/// * [horizontalSpacing]: The spacing between grid items horizontally. Defaults to 10.
+/// * [itemsPerRow]: The number of items per row in the grid. Defaults to 3, applicable when [isFixed] is false.
+/// * [itemContainerStyle]: Style of the container of each item in the grid. Defaults to [ContainerStyle], applicable when [isFixed] is false.
+/// * [isFixed]: If true, uses the original size instead of adjusting to grid. Defaults to false.
+/// * [horizontal]: If true, the grid view grows horizontally. Defaults to false.
+/// * [invertedRow]: If true, inverts the order of the row. Defaults to false.
+/// * [adjustGridToStyles]: If true, adjusts the total dimensions of the grid based on style and container size. Defaults to false.
+/// * [gridViewHeight]: The height of the grid view. Defaults to 300.
+/// * [gridViewWidth]: The width of the grid view. Defaults to infinity.
+/// * [containerWidth]: The width of the main container. Relevant if greater than [gridViewWidth]. Defaults to infinity.
+/// * [containerHeight]: The height of the main container. Relevant if greater than [gridViewHeight]. Defaults to 300.
+/// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
+/// * [physics]: The physics of the grid view.
+///
+/// Specific properties for `SectionGridView`:
+/// * [onNewItemAdded]: Callback function when a new item is added to the sections list.
+/// * [onPressed]: Callback function when an item in a section is pressed.
+/// * [style]: The style to apply to the section grid.
+class SectionGridView extends CommonGrid {
   const SectionGridView({
     super.key,
-    required this.sections, // required property
-    required this.renderItem, // required property
-    this.itemsPerRow = 3, // default value set to 3
-    this.itemSize = 100, // default value set to 100 px
-    this.physics, // default value set to null
-    this.minItemDimension = 120.0, // default value set to 120 px
-    this.gridViewHeight = 300, // default value set to 300 px
-    this.gridViewWidth = double.infinity, // default value set to infinity
-    this.horizontal = false, // default value set to false
-    this.verticalSpacing = 10, // default value set to 10 px
-    this.horizontalSpacing = 10, // default value set to 10 px
-    this.adjustGridToStyles = false, // default value set to false
-    this.invertedRow = false, // default value set to false
-    this.onPressed, // default value set to null
-    this.isFixed = false, // default value set to false
-    this.style =
-        const SectionGridViewStyle(), // default value set to SectionGridViewStyle()
-    this.onNewItemAdded, // default value set to null
-    this.containerWidth = double.infinity, // default value set to infinity
-    this.containerHeight = 300, // default value set to 300 px
-    this.footerWidget = const SizedBox(), // default value set to SizedBox()
-    this.itemContainerStyle =
-        const ContainerStyle(), // default value set to ContainerStyle()
-  });
+    required this.sections,
+    required super.renderItem,
+    this.onNewItemAdded,
+    this.onPressed,
+    double itemSize = 120.0,
+    double minItemDimension = 120.0,
+    double verticalSpacing = 10,
+    double horizontalSpacing = 10,
+    int itemsPerRow = 3,
+    ContainerStyle itemContainerStyle = const ContainerStyle(),
+    bool isFixed = false,
+    bool horizontal = false,
+    bool invertedRow = false,
+    bool adjustGridToStyles = false,
+    double gridViewHeight = 300,
+    double gridViewWidth = double.infinity,
+    double containerWidth = double.infinity,
+    double containerHeight = 300,
+    Widget footerWidget = const SizedBox(),
+    ScrollPhysics? physics,
+    this.style = const SectionGridViewStyle(),
+  }) : super(
+          itemSize: itemSize,
+          minItemDimension: minItemDimension,
+          verticalSpacing: verticalSpacing,
+          horizontalSpacing: horizontalSpacing,
+          itemsPerRow: itemsPerRow,
+          itemContainerStyle: itemContainerStyle,
+          isFixed: isFixed,
+          horizontal: horizontal,
+          invertedRow: invertedRow,
+          adjustGridToStyles: adjustGridToStyles,
+          gridViewHeight: gridViewHeight,
+          gridViewWidth: gridViewWidth,
+          containerWidth: containerWidth,
+          containerHeight: containerHeight,
+          footerWidget: footerWidget,
+          physics: physics,
+        );
 
-  /// The style of the container of the widget in the grid view, this is only when [isFixed] is false.
-  final ContainerStyle itemContainerStyle;
-
-  /// The width of the main container, only matters if it's greater than [gridViewWidth] .
-  final double containerWidth;
-
-  /// The Height of the main container, only matters if it's greater than [gridViewHeight] .
-  final double containerHeight;
-
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis), this is only when [isFixed] is false.
-  final double itemSize;
-
-  /// The footer width.
-  final Widget footerWidget;
-
-  /// The callback function when a new item is added to the sections list.
   final void Function()? onNewItemAdded;
-
-  /// The style to to apply on the section grid.
-  final SectionGridViewStyle style;
-
-  /// whether to adjust the grid to the styles or not.
-  final bool adjustGridToStyles;
-
-  /// is true will use the original size instead of adjusting to grid
-  final bool isFixed;
-
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally, this is only when [isFixed] is false..
-  final int itemsPerRow;
-
-  /// The height of the gridview.
-  final double gridViewHeight;
-
-  /// The width of the gridview.
-  final double gridViewWidth;
-
-  /// Whether the gridview grows horizontally or vertically.
-  final bool horizontal;
-
-  /// The spacing between grid items vertically.
-  final double verticalSpacing;
-
-  /// The spacing between grid items horizontally.
-  final double horizontalSpacing;
-
-  /// The sections to display in the grid.
   final List<Map<String, dynamic>> sections;
-
-  /// The function that renders each item in the grid.
-  final Widget Function(dynamic data) renderItem;
-
-  /// The callback function when an item is pressed.
   final void Function(int sectionIndex, int index)? onPressed;
-
-  /// Whether to invert the row.
-  final bool invertedRow;
-
-  /// The minimum dimension (width or height) of each grid item, this is only when [isFixed] is false.
-  final double minItemDimension;
-
-  /// The physics of the grid view.
-  final ScrollPhysics? physics;
+  final SectionGridViewStyle style;
 
   @override
   State<SectionGridView> createState() => _SectionGridViewState();
@@ -470,88 +499,75 @@ class _SectionGridViewState extends State<SectionGridView> {
   }
 }
 
-/// A widget that displays a simple grid view.
-class SimpleGridView extends StatefulWidget {
-  /// Creates a `SimpleGridView`.
+/// SimpleGridView is a widget for displaying a simple grid view.
+///
+/// Combines common grid functionalities from [CommonGrid] with specific features for a simpler layout.
+///
+/// Properties:
+/// * [data]: The data to display in the grid.
+/// * [renderItem]: The function that renders each item in the grid.
+/// * [itemSize]: The size of the grid item. Defaults to 120.0, applicable when [isFixed] is false.
+/// * [minItemDimension]: The minimum dimension (width or height) of each grid item. Defaults to 120.0, applicable when [isFixed] is false.
+/// * [verticalSpacing]: The spacing between grid items vertically. Defaults to 10.
+/// * [horizontalSpacing]: The spacing between grid items horizontally. Defaults to 10.
+/// * [itemsPerRow]: The number of items per row in the grid. Defaults to 3, applicable when [isFixed] is false.
+/// * [itemContainerStyle]: Style of the container of each item in the grid. Defaults to [ContainerStyle], applicable when [isFixed] is false.
+/// * [isFixed]: If true, uses the original size instead of adjusting to grid. Defaults to false.
+/// * [horizontal]: If true, the grid view grows horizontally. Defaults to false.
+/// * [invertedRow]: If true, inverts the order of the row. Defaults to false.
+/// * [adjustGridToStyles]: If true, adjusts the total dimensions of the grid based on style and container size. Defaults to false.
+/// * [gridViewHeight]: The height of the grid view. Defaults to 300.
+/// * [gridViewWidth]: The width of the grid view. Defaults to infinity.
+/// * [containerWidth]: The width of the main container. Relevant if greater than [gridViewWidth]. Defaults to infinity.
+/// * [containerHeight]: The height of the main container. Relevant if greater than [gridViewHeight]. Defaults to 300.
+/// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
+/// * [physics]: The physics of the grid view.
+///
+/// Specific properties for `SimpleGridView`:
+/// * [style]: The style to apply to the simple grid view.
+class SimpleGridView extends CommonGrid {
   const SimpleGridView({
     super.key,
     required this.data,
-    required this.renderItem,
-    this.itemsPerRow = 0,
-    this.itemSize = 120,
+    required super.renderItem,
+    double itemSize = 120.0,
+    double minItemDimension = 120.0,
+    double verticalSpacing = 10,
+    double horizontalSpacing = 10,
+    int itemsPerRow = 3,
+    ContainerStyle itemContainerStyle = const ContainerStyle(),
+    bool isFixed = false,
+    bool horizontal = false,
+    bool invertedRow = false,
+    bool adjustGridToStyles = false,
+    double gridViewHeight = 300,
+    double gridViewWidth = double.infinity,
+    double containerWidth = double.infinity,
+    double containerHeight = 300,
+    Widget footerWidget = const SizedBox(),
+    ScrollPhysics? physics,
     this.style = const SimpleGridViewStyle(),
-    this.verticalSpacing = 10,
-    this.horizontalSpacing = 10,
-    this.horizontal = false,
-    this.invertedRow = false,
-    this.minItemDimension = 120.0,
-    this.footerWidget = const SizedBox(),
-    this.itemContainerStyle = const SimpleGridViewContainerStyle(),
-    this.containerHeight = 300,
-    this.containerWidth = double.infinity,
-    this.gridViewHeight = 300,
-    this.gridViewWidth = double.infinity,
-    this.isFixed = false,
-    this.physics,
-    this.adjustGridToStyles = false,
-  });
+  }) : super(
+          itemSize: itemSize,
+          minItemDimension: minItemDimension,
+          verticalSpacing: verticalSpacing,
+          horizontalSpacing: horizontalSpacing,
+          itemsPerRow: itemsPerRow,
+          itemContainerStyle: itemContainerStyle,
+          isFixed: isFixed,
+          horizontal: horizontal,
+          invertedRow: invertedRow,
+          adjustGridToStyles: adjustGridToStyles,
+          gridViewHeight: gridViewHeight,
+          gridViewWidth: gridViewWidth,
+          containerWidth: containerWidth,
+          containerHeight: containerHeight,
+          footerWidget: footerWidget,
+          physics: physics,
+        );
 
-  /// The style of the grid view.
   final SimpleGridViewStyle style;
-
-  /// The physics of the grid view.
-  final ScrollPhysics? physics;
-
-  /// The height of the containerHeight.
-  final double containerHeight;
-
-  /// The width of the containerHeight.
-  final double containerWidth;
-
-  /// Set to true when you want the library to automatically adjust the total dimensions of the grid based on style and container size
-  final bool adjustGridToStyles;
-
-  /// The height of the gridview.
-  final double gridViewHeight;
-
-  /// The width of the gridview.
-  final double gridViewWidth;
-
-  /// The number of items per row if gridview grows vertically or items per column if gridview grows horizontally.
-  final int itemsPerRow;
-
-  /// The size of the grid item in the main axis direction (The grid will occupy the whole space available in the cross axis).
-  final double itemSize;
-
-  /// The spacing between grid items vertically.
-  final double verticalSpacing;
-
-  /// The spacing between grid items horizontally.
-  final double horizontalSpacing;
-
-  /// The sections to display in the grid.
   final List data;
-
-  /// The function that renders each item in the grid.
-  final Widget Function(dynamic data) renderItem;
-
-  /// Whether to invert the row.
-  final bool invertedRow;
-
-  /// Whether the grid view is horizontal.
-  final bool horizontal;
-
-  /// is true will use a wrap instead of a gridView to render the item
-  final bool isFixed;
-
-  /// The minimum dimension (width or height) of each grid item.
-  final double minItemDimension;
-
-  /// Specifies an additional row to be displayed at the bottom of the grid.
-  final Widget footerWidget;
-
-  /// The style of the container of the widget in the grid view.
-  final SimpleGridViewContainerStyle itemContainerStyle;
 
   @override
   State<SimpleGridView> createState() => _SimpleGridViewState();
