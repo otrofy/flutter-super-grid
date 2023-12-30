@@ -1,4 +1,5 @@
 # Flutter Super Grid
+[![Pub](https://img.shields.io/pub/v/flutter_super_grid.svg?style=flat-square)](https://pub.dev/packages/flutter_super_grid)
 
 A customizable Flutter package for displaying grid views of sections.
 
