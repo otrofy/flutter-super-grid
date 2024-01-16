@@ -45,10 +45,10 @@ class SectionGridView extends CommonGrid {
     bool horizontal = false,
     bool invertedRow = false,
     bool adjustGridToStyles = false,
-    double gridViewHeight = 300,
+    double? gridViewHeight,
     double gridViewWidth = double.infinity,
     double containerWidth = double.infinity,
-    double containerHeight = 300,
+    double? containerHeight,
     Widget footerWidget = const SizedBox(),
     ScrollPhysics? physics,
     this.style = const SectionGridViewStyle(),
@@ -167,7 +167,6 @@ class _SectionGridViewState extends State<SectionGridView> {
                   .isNotEmpty, // Checks if there are sections to display.
               // ListView.builder is used to create a list of sections dynamically.
               child: ListView.builder(
-                physics: widget.physics,
                 itemCount: widget
                     .sections.length, // The number of sections to display.
                 itemBuilder: (context, sectionIndex) {

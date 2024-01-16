@@ -36,10 +36,10 @@ abstract class CommonGrid extends StatefulWidget {
     this.horizontal = false,
     this.invertedRow = false,
     this.adjustGridToStyles = false,
-    this.gridViewHeight = 300,
+    this.gridViewHeight,
     this.gridViewWidth = double.infinity,
     this.containerWidth = double.infinity,
-    this.containerHeight = 300,
+    this.containerHeight,
     this.footerWidget = const SizedBox(),
     this.physics,
   });
@@ -49,10 +49,10 @@ abstract class CommonGrid extends StatefulWidget {
   final ContainerStyle itemContainerStyle;
   final Widget footerWidget;
   final int itemsPerRow;
-  final double gridViewHeight;
+  final double? gridViewHeight;
   final double gridViewWidth;
   final double containerWidth;
-  final double containerHeight;
+  final double? containerHeight;
   final double itemSize;
   final double verticalSpacing;
   final double horizontalSpacing;

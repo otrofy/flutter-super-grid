@@ -42,10 +42,10 @@ class FlatGridView extends CommonGrid {
     bool horizontal = false, // default value set to false
     bool invertedRow = false, // default value set to false
     bool adjustGridToStyles = false, // default value set to false
-    double gridViewHeight = 300, // default value set to 300 px
+    double? gridViewHeight, // default value set to 300 px
     double gridViewWidth = double.infinity, // default value set to infinity
     double containerWidth = double.infinity, // default value set to infinity
-    double containerHeight = 300, // default value set to 300 px
+    double? containerHeight, // default value set to 300 px
     Widget footerWidget = const SizedBox(), // default value set to SizedBox()
     ScrollPhysics? physics, // default value set to null
   }) : super(
@@ -116,66 +116,68 @@ class _FlatGridViewState extends State<FlatGridView> {
         // Stack allows for overlapping of widgets.
         child: Column(
           children: [
-            SizedBox(
-              height: widget.adjustGridToStyles
-                  ? widget.containerHeight
-                  : widget
-                      .gridViewHeight, // The height of the grid view container.
-              width: widget.adjustGridToStyles
-                  ? widget.containerWidth
-                  : widget
-                      .gridViewWidth, // The width of the grid view container.
-              child: Stack(
-                children: [
-                  // The Visibility widget conditionally renders its child widget based on the visible property.
-                  // This particular Visibility widget displays a message when there are no items to show.
-                  Visibility(
-                    visible: widget.data
-                        .isEmpty, // Determines visibility based on if the data list is empty.
-                    child: const Center(
-                        child: Text(
-                            "No items")), // Centered text to display when no items are present.
-                  ),
-                  // Another Visibility widget to only show the grid when there is data.
-                  Visibility(
-                    visible: widget.data
-                        .isNotEmpty, // Visibility depends on if there’s data in the list.
-                    // SingleChildScrollView allows the grid to be scrollable.
-                    child: SingleChildScrollView(
-                      physics: widget.physics,
-                      scrollDirection: widget.horizontal
-                          ? Axis.horizontal
-                          : Axis
-                              .vertical, // Sets the scroll direction based on the horizontal property.
-                      // GridView.builder creates a grid of items.
-                      child: widget.isFixed
-                          ? wrapWidget(
-                              null,
-                              data,
-                              widget.renderItem,
-                              widget.style,
-                              widget.horizontal,
-                              widget.horizontalSpacing,
-                              widget.verticalSpacing,
-                              widget.onPressed,
-                              false)
-                          : buildGridView(
-                              data: data,
-                              renderItem: widget.renderItem,
-                              horizontal: widget.horizontal,
-                              itemsPerRow: widget.itemsPerRow,
-                              horizontalSpacing: widget.horizontalSpacing,
-                              verticalSpacing: widget.verticalSpacing,
-                              minItemDimension: widget.minItemDimension,
-                              itemSize: widget.itemSize,
-                              invertItems: widget.invertedRow,
-                              onTapFlat: widget.onPressed,
-                              padding: widget.style.gridViewPadding,
-                              itemDecoration:
-                                  widget.itemContainerStyle.decoration),
+            Expanded(
+              child: SizedBox(
+                height: widget.adjustGridToStyles
+                    ? widget.containerHeight
+                    : widget
+                        .gridViewHeight, // The height of the grid view container.
+                width: widget.adjustGridToStyles
+                    ? widget.containerWidth
+                    : widget
+                        .gridViewWidth, // The width of the grid view container.
+                child: Stack(
+                  children: [
+                    // The Visibility widget conditionally renders its child widget based on the visible property.
+                    // This particular Visibility widget displays a message when there are no items to show.
+                    Visibility(
+                      visible: widget.data
+                          .isEmpty, // Determines visibility based on if the data list is empty.
+                      child: const Center(
+                          child: Text(
+                              "No items")), // Centered text to display when no items are present.
                     ),
-                  ),
-                ],
+                    // Another Visibility widget to only show the grid when there is data.
+                    Visibility(
+                      visible: widget.data
+                          .isNotEmpty, // Visibility depends on if there’s data in the list.
+                      // SingleChildScrollView allows the grid to be scrollable.
+                      child: SingleChildScrollView(
+                        physics: widget.physics,
+                        scrollDirection: widget.horizontal
+                            ? Axis.horizontal
+                            : Axis
+                                .vertical, // Sets the scroll direction based on the horizontal property.
+                        // GridView.builder creates a grid of items.
+                        child: widget.isFixed
+                            ? wrapWidget(
+                                null,
+                                data,
+                                widget.renderItem,
+                                widget.style,
+                                widget.horizontal,
+                                widget.horizontalSpacing,
+                                widget.verticalSpacing,
+                                widget.onPressed,
+                                false)
+                            : buildGridView(
+                                data: data,
+                                renderItem: widget.renderItem,
+                                horizontal: widget.horizontal,
+                                itemsPerRow: widget.itemsPerRow,
+                                horizontalSpacing: widget.horizontalSpacing,
+                                verticalSpacing: widget.verticalSpacing,
+                                minItemDimension: widget.minItemDimension,
+                                itemSize: widget.itemSize,
+                                invertItems: widget.invertedRow,
+                                onTapFlat: widget.onPressed,
+                                padding: widget.style.gridViewPadding,
+                                itemDecoration:
+                                    widget.itemContainerStyle.decoration),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             widget.footerWidget,
