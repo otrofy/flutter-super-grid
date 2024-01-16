@@ -9,3 +9,7 @@
 ## 1.0.2
 
 * Added isFixed, itemContainerStyle, adjustGridToStyles, GridViewHeight, GridViewWidth, containerWidth and containerHeight.
+
+## 1.0.3
+
+* HotFix scrolling for grid view when isFixed is false.
