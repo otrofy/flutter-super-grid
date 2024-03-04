@@ -13,3 +13,7 @@
 ## 1.0.3
 
 * HotFix scrolling for grid view when isFixed is false.
+
+## 1.0.4
+
+* Change library name internally
