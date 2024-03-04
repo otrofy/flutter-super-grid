@@ -21,3 +21,7 @@
 ## 1.0.5
 
 * HotFix lint issues
+
+## 1.0.6
+
+* HotFix lint style issues
