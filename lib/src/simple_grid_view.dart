@@ -1,4 +1,4 @@
-part of supergrid;
+part of flutter_super_grid;
 
 /// SimpleGridView is a widget for displaying a simple grid view.
 ///

@@ -1,5 +1,5 @@
 /// this is a library for creating grid views with different layouts and functionalities.
-library supergrid;
+library flutter_super_grid;
 
 export 'package:flutter_super_grid/src/styles.dart';
 import 'package:flutter/material.dart';

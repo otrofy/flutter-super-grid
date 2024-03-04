@@ -1,4 +1,4 @@
-part of supergrid;
+part of flutter_super_grid;
 
 // A widget that displays a flat grid of items.
 class FlatGridView extends CommonGrid {

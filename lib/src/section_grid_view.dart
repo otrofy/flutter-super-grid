@@ -1,4 +1,4 @@
-part of supergrid;
+part of flutter_super_grid;
 
 /// SectionGridView is a widget for displaying a sections with grids.
 ///

@@ -1,4 +1,4 @@
-part of supergrid;
+part of flutter_super_grid;
 
 /// CommonGrid is an abstract base class for grid views.
 ///
