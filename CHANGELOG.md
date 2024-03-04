@@ -25,3 +25,7 @@
 ## 1.0.6
 
 * HotFix lint style issues
+
+## 1.0.7 
+
+* Change readme
