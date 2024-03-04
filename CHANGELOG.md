@@ -17,3 +17,7 @@
 ## 1.0.4
 
 * Change library name internally
+
+## 1.0.5
+
+* HotFix lint issues
