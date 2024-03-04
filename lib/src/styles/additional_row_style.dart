@@ -1,4 +1,4 @@
-part of styles;
+part of '../styles.dart';
 
 class AditionalRowStyle {
   const AditionalRowStyle({

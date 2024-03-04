@@ -1,4 +1,4 @@
-part of styles;
+part of '../styles.dart';
 
 /// FlatGridViewStyle defines the styling for containers used in FlatGridViews.
 ///

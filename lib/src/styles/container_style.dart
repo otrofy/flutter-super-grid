@@ -1,4 +1,4 @@
-part of styles;
+part of '../styles.dart';
 
 /// ContainerStyle defines the styling for containers used in grid views.
 ///

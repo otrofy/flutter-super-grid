@@ -1,4 +1,4 @@
-part of styles;
+part of '../styles.dart';
 
 // SectionGridViewStyle defines the style for the SectionGridView.
 ///
