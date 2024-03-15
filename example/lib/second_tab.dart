@@ -1,4 +1,5 @@
 import 'package:example/data.dart';
+import 'package:example/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_super_grid/flutter_super_grid.dart';
@@ -138,40 +139,6 @@ class FlatGridWidget extends StatelessWidget {
           // Handle item tap
         },
       ),
-    );
-  }
-}
-
-class ScrollControllerWidget extends StatelessWidget {
-  final ScrollController controller;
-  const ScrollControllerWidget(this.controller, {super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-            onTap: () {
-              controller.animateTo(
-                controller.offset - MediaQuery.of(context).size.width / 4,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease,
-              );
-            },
-            child: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            )),
-        InkWell(
-            onTap: () {
-              controller.animateTo(
-                controller.offset + MediaQuery.of(context).size.width / 4,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease,
-              );
-            },
-            child: const Icon(Icons.arrow_forward, color: Colors.white))
-      ],
     );
   }
 }

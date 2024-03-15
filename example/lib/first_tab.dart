@@ -1,4 +1,5 @@
 import 'package:example/data.dart';
+import 'package:example/scroll_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_super_grid/flutter_super_grid.dart';
@@ -8,14 +9,17 @@ class FirstTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController controller1 = ScrollController();
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       physics: const ScrollPhysics(),
       child: Column(
         children: [
+          ScrollControllerWidget(controller1),
           SizedBox(
-            height: 700,
+            height: 200,
             child: SectionGridView(
+              controller: controller1,
               physics: const NeverScrollableScrollPhysics(),
               sections: sections,
               gridViewHeight: 185,

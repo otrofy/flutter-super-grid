@@ -51,25 +51,26 @@ class SectionGridView extends CommonGrid {
     double? containerHeight,
     Widget footerWidget = const SizedBox(),
     ScrollPhysics? physics,
+    ScrollController? controller,
     this.style = const SectionGridViewStyle(),
   }) : super(
-          itemSize: itemSize,
-          minItemDimension: minItemDimension,
-          verticalSpacing: verticalSpacing,
-          horizontalSpacing: horizontalSpacing,
-          itemsPerRow: itemsPerRow,
-          itemContainerStyle: itemContainerStyle,
-          isFixed: isFixed,
-          horizontal: horizontal,
-          invertedRow: invertedRow,
-          adjustGridToStyles: adjustGridToStyles,
-          gridViewHeight: gridViewHeight,
-          gridViewWidth: gridViewWidth,
-          containerWidth: containerWidth,
-          containerHeight: containerHeight,
-          footerWidget: footerWidget,
-          physics: physics,
-        );
+            itemSize: itemSize,
+            minItemDimension: minItemDimension,
+            verticalSpacing: verticalSpacing,
+            horizontalSpacing: horizontalSpacing,
+            itemsPerRow: itemsPerRow,
+            itemContainerStyle: itemContainerStyle,
+            isFixed: isFixed,
+            horizontal: horizontal,
+            invertedRow: invertedRow,
+            adjustGridToStyles: adjustGridToStyles,
+            gridViewHeight: gridViewHeight,
+            gridViewWidth: gridViewWidth,
+            containerWidth: containerWidth,
+            containerHeight: containerHeight,
+            footerWidget: footerWidget,
+            physics: physics,
+            controller: controller);
 
   final void Function()? onNewItemAdded;
   final List<Map<String, dynamic>> sections;
@@ -167,6 +168,8 @@ class _SectionGridViewState extends State<SectionGridView> {
                   .isNotEmpty, // Checks if there are sections to display.
               // ListView.builder is used to create a list of sections dynamically.
               child: ListView.builder(
+                physics: widget.physics,
+                controller: widget.controller,
                 itemCount: widget
                     .sections.length, // The number of sections to display.
                 itemBuilder: (context, sectionIndex) {
