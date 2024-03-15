@@ -47,25 +47,26 @@ class FlatGridView extends CommonGrid {
     double containerWidth = double.infinity, // default value set to infinity
     double? containerHeight, // default value set to 300 px
     Widget footerWidget = const SizedBox(), // default value set to SizedBox()
-    ScrollPhysics? physics, // default value set to null
+    ScrollPhysics? physics,
+    ScrollController? controller, // default value set to null
   }) : super(
-          itemSize: itemSize,
-          minItemDimension: minItemDimension,
-          verticalSpacing: verticalSpacing,
-          horizontalSpacing: horizontalSpacing,
-          itemsPerRow: itemsPerRow,
-          itemContainerStyle: itemContainerStyle,
-          isFixed: isFixed,
-          horizontal: horizontal,
-          invertedRow: invertedRow,
-          adjustGridToStyles: adjustGridToStyles,
-          gridViewHeight: gridViewHeight,
-          gridViewWidth: gridViewWidth,
-          containerWidth: containerWidth,
-          containerHeight: containerHeight,
-          footerWidget: footerWidget,
-          physics: physics,
-        );
+            itemSize: itemSize,
+            minItemDimension: minItemDimension,
+            verticalSpacing: verticalSpacing,
+            horizontalSpacing: horizontalSpacing,
+            itemsPerRow: itemsPerRow,
+            itemContainerStyle: itemContainerStyle,
+            isFixed: isFixed,
+            horizontal: horizontal,
+            invertedRow: invertedRow,
+            adjustGridToStyles: adjustGridToStyles,
+            gridViewHeight: gridViewHeight,
+            gridViewWidth: gridViewWidth,
+            containerWidth: containerWidth,
+            containerHeight: containerHeight,
+            footerWidget: footerWidget,
+            physics: physics,
+            controller: controller);
   final void Function()? onNewItemAdded;
   final List data;
   final void Function(int index)? onPressed;
@@ -143,6 +144,7 @@ class _FlatGridViewState extends State<FlatGridView> {
                           .isNotEmpty, // Visibility depends on if there’s data in the list.
                       // SingleChildScrollView allows the grid to be scrollable.
                       child: SingleChildScrollView(
+                        controller: widget.controller,
                         physics: widget.physics,
                         scrollDirection: widget.horizontal
                             ? Axis.horizontal

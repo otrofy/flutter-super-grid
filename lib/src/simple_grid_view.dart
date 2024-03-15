@@ -47,25 +47,26 @@ class SimpleGridView extends CommonGrid {
     double containerHeight = 300,
     Widget footerWidget = const SizedBox(),
     ScrollPhysics? physics,
+    ScrollController? controller,
     this.style = const SimpleGridViewStyle(),
   }) : super(
-          itemSize: itemSize,
-          minItemDimension: minItemDimension,
-          verticalSpacing: verticalSpacing,
-          horizontalSpacing: horizontalSpacing,
-          itemsPerRow: itemsPerRow,
-          itemContainerStyle: itemContainerStyle,
-          isFixed: isFixed,
-          horizontal: horizontal,
-          invertedRow: invertedRow,
-          adjustGridToStyles: adjustGridToStyles,
-          gridViewHeight: gridViewHeight,
-          gridViewWidth: gridViewWidth,
-          containerWidth: containerWidth,
-          containerHeight: containerHeight,
-          footerWidget: footerWidget,
-          physics: physics,
-        );
+            itemSize: itemSize,
+            minItemDimension: minItemDimension,
+            verticalSpacing: verticalSpacing,
+            horizontalSpacing: horizontalSpacing,
+            itemsPerRow: itemsPerRow,
+            itemContainerStyle: itemContainerStyle,
+            isFixed: isFixed,
+            horizontal: horizontal,
+            invertedRow: invertedRow,
+            adjustGridToStyles: adjustGridToStyles,
+            gridViewHeight: gridViewHeight,
+            gridViewWidth: gridViewWidth,
+            containerWidth: containerWidth,
+            containerHeight: containerHeight,
+            footerWidget: footerWidget,
+            physics: physics,
+            controller: controller);
 
   final SimpleGridViewStyle style;
   final List data;
@@ -133,6 +134,7 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                     // SingleChildScrollView allows the grid to be scrollable.
                     child: SingleChildScrollView(
                       physics: widget.physics,
+                      controller: widget.controller,
                       scrollDirection: widget.horizontal
                           ? Axis.horizontal
                           : Axis

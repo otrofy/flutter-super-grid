@@ -42,6 +42,7 @@ abstract class CommonGrid extends StatefulWidget {
     this.containerHeight,
     this.footerWidget = const SizedBox(),
     this.physics,
+    this.controller,
   });
 
   final bool isFixed;
@@ -61,6 +62,7 @@ abstract class CommonGrid extends StatefulWidget {
   final bool horizontal;
   final double minItemDimension;
   final ScrollPhysics? physics;
+  final ScrollController? controller;
 
   @override
   State<CommonGrid> createState(); // Abstract method
