@@ -17,7 +17,7 @@ class FirstTab extends StatelessWidget {
         children: [
           ScrollControllerWidget(controller1),
           SizedBox(
-            height: 200,
+            height: 600,
             child: SectionGridView(
               controller: controller1,
               physics: const NeverScrollableScrollPhysics(),
