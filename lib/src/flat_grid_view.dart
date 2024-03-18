@@ -24,6 +24,7 @@ class FlatGridView extends CommonGrid {
   /// * [containerWidth]: The width of the main container. Relevant if greater than [gridViewWidth]. Defaults to infinity.
   /// * [containerHeight]: The height of the main container. Relevant if greater than [gridViewHeight]. Defaults to 300.
   /// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
+  /// * [controller]:  ScrollController? to controll scroller in the grid view.
   /// * [physics]: The physics of the grid view.
   const FlatGridView({
     super.key,
@@ -47,25 +48,26 @@ class FlatGridView extends CommonGrid {
     double containerWidth = double.infinity, // default value set to infinity
     double? containerHeight, // default value set to 300 px
     Widget footerWidget = const SizedBox(), // default value set to SizedBox()
-    ScrollPhysics? physics, // default value set to null
+    ScrollPhysics? physics,
+    ScrollController? controller,
   }) : super(
-          itemSize: itemSize,
-          minItemDimension: minItemDimension,
-          verticalSpacing: verticalSpacing,
-          horizontalSpacing: horizontalSpacing,
-          itemsPerRow: itemsPerRow,
-          itemContainerStyle: itemContainerStyle,
-          isFixed: isFixed,
-          horizontal: horizontal,
-          invertedRow: invertedRow,
-          adjustGridToStyles: adjustGridToStyles,
-          gridViewHeight: gridViewHeight,
-          gridViewWidth: gridViewWidth,
-          containerWidth: containerWidth,
-          containerHeight: containerHeight,
-          footerWidget: footerWidget,
-          physics: physics,
-        );
+            itemSize: itemSize,
+            minItemDimension: minItemDimension,
+            verticalSpacing: verticalSpacing,
+            horizontalSpacing: horizontalSpacing,
+            itemsPerRow: itemsPerRow,
+            itemContainerStyle: itemContainerStyle,
+            isFixed: isFixed,
+            horizontal: horizontal,
+            invertedRow: invertedRow,
+            adjustGridToStyles: adjustGridToStyles,
+            gridViewHeight: gridViewHeight,
+            gridViewWidth: gridViewWidth,
+            containerWidth: containerWidth,
+            containerHeight: containerHeight,
+            footerWidget: footerWidget,
+            physics: physics,
+            controller: controller);
   final void Function()? onNewItemAdded;
   final List data;
   final void Function(int index)? onPressed;
@@ -143,6 +145,7 @@ class _FlatGridViewState extends State<FlatGridView> {
                           .isNotEmpty, // Visibility depends on if there’s data in the list.
                       // SingleChildScrollView allows the grid to be scrollable.
                       child: SingleChildScrollView(
+                        controller: widget.controller,
                         physics: widget.physics,
                         scrollDirection: widget.horizontal
                             ? Axis.horizontal
@@ -151,15 +154,15 @@ class _FlatGridViewState extends State<FlatGridView> {
                         // GridView.builder creates a grid of items.
                         child: widget.isFixed
                             ? wrapWidget(
-                                null,
-                                data,
-                                widget.renderItem,
-                                widget.style,
-                                widget.horizontal,
-                                widget.horizontalSpacing,
-                                widget.verticalSpacing,
-                                widget.onPressed,
-                                false)
+                                sectionIndex: null,
+                                data: data,
+                                renderItem: widget.renderItem,
+                                style: widget.style,
+                                horizontal: widget.horizontal,
+                                horizontalSpacing: widget.horizontalSpacing,
+                                verticalSpacing: widget.verticalSpacing,
+                                onPressed: widget.onPressed,
+                                simple: false)
                             : buildGridView(
                                 data: data,
                                 renderItem: widget.renderItem,
@@ -189,40 +192,45 @@ class _FlatGridViewState extends State<FlatGridView> {
 }
 
 Widget wrapWidget(
-    int? sectionIndex,
-    dynamic data,
-    Widget Function(dynamic data) renderItem,
+    {required int? sectionIndex,
+    required dynamic data,
+    required Widget Function(dynamic data) renderItem,
     dynamic style,
-    bool horizontal,
-    double horizontalSpacing,
-    double verticalSpacing,
+    required bool horizontal,
+    required double horizontalSpacing,
+    required double verticalSpacing,
     Function? onPressed,
-    bool? simple) {
+    bool? simple,
+    ScrollController? sectionController}) {
   return Padding(
     padding: style.gridViewPadding,
-    child: Wrap(
-      direction: horizontal ? Axis.vertical : Axis.horizontal,
-      spacing: horizontalSpacing,
-      runSpacing: verticalSpacing,
-      children: data.map<Widget>((itemData) {
-        return simple != null && simple
-            ? renderItem(itemData)
-            : InkWell(
-                onTap: () {
-                  if (onPressed != null) {
-                    sectionIndex != null
-                        ? onPressed(
-                            sectionIndex,
-                            data.indexOf(itemData),
-                          )
-                        : onPressed(
-                            data.indexOf(itemData),
-                          ); // Calls the onPressed callback when the item is tapped.;
-                  }
-                },
-                child: renderItem(itemData),
-              );
-      }).toList(),
+    child: SingleChildScrollView(
+      scrollDirection: horizontal ? Axis.horizontal : Axis.vertical,
+      controller: sectionController,
+      child: Wrap(
+        direction: horizontal ? Axis.vertical : Axis.horizontal,
+        spacing: horizontalSpacing,
+        runSpacing: verticalSpacing,
+        children: data.map<Widget>((itemData) {
+          return simple != null && simple
+              ? renderItem(itemData)
+              : InkWell(
+                  onTap: () {
+                    if (onPressed != null) {
+                      sectionIndex != null
+                          ? onPressed(
+                              sectionIndex,
+                              data.indexOf(itemData),
+                            )
+                          : onPressed(
+                              data.indexOf(itemData),
+                            ); // Calls the onPressed callback when the item is tapped.;
+                    }
+                  },
+                  child: renderItem(itemData),
+                );
+        }).toList(),
+      ),
     ),
   );
 }
@@ -236,6 +244,7 @@ Widget buildGridView({
   required double verticalSpacing,
   required double minItemDimension,
   ScrollPhysics? physics,
+  ScrollController? controller,
   required double itemSize,
   bool invertItems = false,
   void Function(int itemIndex)? onTapFlat,
@@ -248,6 +257,7 @@ Widget buildGridView({
 
   return GridView.builder(
     physics: physics,
+    controller: controller,
     scrollDirection: horizontal ? Axis.horizontal : Axis.vertical,
     padding: padding ?? const EdgeInsets.all(8.0),
     shrinkWrap: true,

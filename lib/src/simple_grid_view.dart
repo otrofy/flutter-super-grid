@@ -23,7 +23,7 @@ part of '../flutter_super_grid.dart';
 /// * [containerHeight]: The height of the main container. Relevant if greater than [gridViewHeight]. Defaults to 300.
 /// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
 /// * [physics]: The physics of the grid view.
-///
+/// * [controller]:  ScrollController? to controll scroller in the grid view.
 /// Specific properties for `SimpleGridView`:
 /// * [style]: The style to apply to the simple grid view.
 class SimpleGridView extends CommonGrid {
@@ -47,25 +47,26 @@ class SimpleGridView extends CommonGrid {
     double containerHeight = 300,
     Widget footerWidget = const SizedBox(),
     ScrollPhysics? physics,
+    ScrollController? controller,
     this.style = const SimpleGridViewStyle(),
   }) : super(
-          itemSize: itemSize,
-          minItemDimension: minItemDimension,
-          verticalSpacing: verticalSpacing,
-          horizontalSpacing: horizontalSpacing,
-          itemsPerRow: itemsPerRow,
-          itemContainerStyle: itemContainerStyle,
-          isFixed: isFixed,
-          horizontal: horizontal,
-          invertedRow: invertedRow,
-          adjustGridToStyles: adjustGridToStyles,
-          gridViewHeight: gridViewHeight,
-          gridViewWidth: gridViewWidth,
-          containerWidth: containerWidth,
-          containerHeight: containerHeight,
-          footerWidget: footerWidget,
-          physics: physics,
-        );
+            itemSize: itemSize,
+            minItemDimension: minItemDimension,
+            verticalSpacing: verticalSpacing,
+            horizontalSpacing: horizontalSpacing,
+            itemsPerRow: itemsPerRow,
+            itemContainerStyle: itemContainerStyle,
+            isFixed: isFixed,
+            horizontal: horizontal,
+            invertedRow: invertedRow,
+            adjustGridToStyles: adjustGridToStyles,
+            gridViewHeight: gridViewHeight,
+            gridViewWidth: gridViewWidth,
+            containerWidth: containerWidth,
+            containerHeight: containerHeight,
+            footerWidget: footerWidget,
+            physics: physics,
+            controller: controller);
 
   final SimpleGridViewStyle style;
   final List data;
@@ -133,6 +134,7 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                     // SingleChildScrollView allows the grid to be scrollable.
                     child: SingleChildScrollView(
                       physics: widget.physics,
+                      controller: widget.controller,
                       scrollDirection: widget.horizontal
                           ? Axis.horizontal
                           : Axis
@@ -140,15 +142,15 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                       // GridView.builder creates a grid of items.
                       child: widget.isFixed
                           ? wrapWidget(
-                              null,
-                              data,
-                              widget.renderItem,
-                              widget.style,
-                              widget.horizontal,
-                              widget.horizontalSpacing,
-                              widget.verticalSpacing,
-                              null,
-                              true)
+                              sectionIndex: null,
+                              data: data,
+                              renderItem: widget.renderItem,
+                              style: widget.style,
+                              horizontal: widget.horizontal,
+                              horizontalSpacing: widget.horizontalSpacing,
+                              verticalSpacing: widget.verticalSpacing,
+                              onPressed: null,
+                              simple: false)
                           : buildGridView(
                               physics: const NeverScrollableScrollPhysics(),
                               data: data,

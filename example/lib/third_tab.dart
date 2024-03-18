@@ -8,6 +8,7 @@ class ThirdTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController controller = ScrollController();
     return SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -23,7 +24,34 @@ class ThirdTab extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+                onTap: () {
+                  controller.animateTo(
+                    controller.offset - MediaQuery.of(context).size.width / 4,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                },
+                child: const Icon(
+                  Icons.arrow_upward,
+                  color: Colors.white,
+                )),
+            InkWell(
+                onTap: () {
+                  controller.animateTo(
+                    controller.offset + MediaQuery.of(context).size.width / 4,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                },
+                child: const Icon(Icons.arrow_downward, color: Colors.white))
+          ],
+        ),
         SimpleGridView(
+          controller: controller,
           data: artist,
           gridViewHeight: 550,
           renderItem: (itemData) {

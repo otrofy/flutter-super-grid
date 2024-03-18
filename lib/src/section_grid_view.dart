@@ -23,7 +23,8 @@ part of '../flutter_super_grid.dart';
 /// * [containerHeight]: The height of the main container. Relevant if greater than [gridViewHeight]. Defaults to 300.
 /// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
 /// * [physics]: The physics of the grid view.
-///
+/// * [controller]:  ScrollController? to controll scroller in the grid view.
+/// * [sectionController]:  List<ScrollController>? array of controllers to controll each section individually of the section grid view, this list of controllers must be the same length of the sections you want to have. 
 /// Specific properties for `SectionGridView`:
 /// * [onNewItemAdded]: Callback function when a new item is added to the sections list.
 /// * [onPressed]: Callback function when an item in a section is pressed.
@@ -51,30 +52,33 @@ class SectionGridView extends CommonGrid {
     double? containerHeight,
     Widget footerWidget = const SizedBox(),
     ScrollPhysics? physics,
+    ScrollController? controller,
+    this.sectionController,
     this.style = const SectionGridViewStyle(),
   }) : super(
-          itemSize: itemSize,
-          minItemDimension: minItemDimension,
-          verticalSpacing: verticalSpacing,
-          horizontalSpacing: horizontalSpacing,
-          itemsPerRow: itemsPerRow,
-          itemContainerStyle: itemContainerStyle,
-          isFixed: isFixed,
-          horizontal: horizontal,
-          invertedRow: invertedRow,
-          adjustGridToStyles: adjustGridToStyles,
-          gridViewHeight: gridViewHeight,
-          gridViewWidth: gridViewWidth,
-          containerWidth: containerWidth,
-          containerHeight: containerHeight,
-          footerWidget: footerWidget,
-          physics: physics,
-        );
+            itemSize: itemSize,
+            minItemDimension: minItemDimension,
+            verticalSpacing: verticalSpacing,
+            horizontalSpacing: horizontalSpacing,
+            itemsPerRow: itemsPerRow,
+            itemContainerStyle: itemContainerStyle,
+            isFixed: isFixed,
+            horizontal: horizontal,
+            invertedRow: invertedRow,
+            adjustGridToStyles: adjustGridToStyles,
+            gridViewHeight: gridViewHeight,
+            gridViewWidth: gridViewWidth,
+            containerWidth: containerWidth,
+            containerHeight: containerHeight,
+            footerWidget: footerWidget,
+            physics: physics,
+            controller: controller);
 
   final void Function()? onNewItemAdded;
   final List<Map<String, dynamic>> sections;
   final void Function(int sectionIndex, int index)? onPressed;
   final SectionGridViewStyle style;
+  final List<ScrollController>? sectionController;
 
   @override
   State<SectionGridView> createState() => _SectionGridViewState();
@@ -167,6 +171,8 @@ class _SectionGridViewState extends State<SectionGridView> {
                   .isNotEmpty, // Checks if there are sections to display.
               // ListView.builder is used to create a list of sections dynamically.
               child: ListView.builder(
+                physics: widget.physics,
+                controller: widget.controller,
                 itemCount: widget
                     .sections.length, // The number of sections to display.
                 itemBuilder: (context, sectionIndex) {
@@ -196,16 +202,21 @@ class _SectionGridViewState extends State<SectionGridView> {
                           // GridView.builder creates a grid of items.
                           child: widget.isFixed
                               ? wrapWidget(
-                                  sectionIndex,
-                                  data,
-                                  widget.renderItem,
-                                  widget.style,
-                                  widget.horizontal,
-                                  widget.horizontalSpacing,
-                                  widget.verticalSpacing,
-                                  widget.onPressed,
-                                  false)
+                                  sectionIndex: null,
+                                  data: data,
+                                  renderItem: widget.renderItem,
+                                  style: widget.style,
+                                  horizontal: widget.horizontal,
+                                  horizontalSpacing: widget.horizontalSpacing,
+                                  verticalSpacing: widget.verticalSpacing,
+                                  onPressed: widget.onPressed,
+                                  simple: false,
+                                  sectionController:
+                                      widget.sectionController?[sectionIndex],
+                                )
                               : buildGridView(
+                                  controller:
+                                      widget.sectionController?[sectionIndex],
                                   data: data,
                                   sectionIndex: sectionIndex,
                                   renderItem: widget.renderItem,
