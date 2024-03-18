@@ -23,7 +23,7 @@ part of '../flutter_super_grid.dart';
 /// * [containerHeight]: The height of the main container. Relevant if greater than [gridViewHeight]. Defaults to 300.
 /// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
 /// * [physics]: The physics of the grid view.
-///
+/// * [controller]:  ScrollController? to controll scroller in the grid view.
 /// Specific properties for `SimpleGridView`:
 /// * [style]: The style to apply to the simple grid view.
 class SimpleGridView extends CommonGrid {
@@ -142,15 +142,15 @@ class _SimpleGridViewState extends State<SimpleGridView> {
                       // GridView.builder creates a grid of items.
                       child: widget.isFixed
                           ? wrapWidget(
-                              null,
-                              data,
-                              widget.renderItem,
-                              widget.style,
-                              widget.horizontal,
-                              widget.horizontalSpacing,
-                              widget.verticalSpacing,
-                              null,
-                              true)
+                              sectionIndex: null,
+                              data: data,
+                              renderItem: widget.renderItem,
+                              style: widget.style,
+                              horizontal: widget.horizontal,
+                              horizontalSpacing: widget.horizontalSpacing,
+                              verticalSpacing: widget.verticalSpacing,
+                              onPressed: null,
+                              simple: false)
                           : buildGridView(
                               physics: const NeverScrollableScrollPhysics(),
                               data: data,
