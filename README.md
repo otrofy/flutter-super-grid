@@ -11,7 +11,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_super_grid: ^1.0.7
+  flutter_super_grid: ^1.0.8
 ```
 
 Then, run:
