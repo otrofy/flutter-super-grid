@@ -19,14 +19,15 @@ class FirstTab extends StatelessWidget {
       physics: const ScrollPhysics(),
       child: Column(
         children: [
-          ScrollControllerWidget(controller1),
-          ScrollControllerWidget(controllerA),
-          ScrollControllerWidget(controllerB),
-          ScrollControllerWidget(controllerC),
+          // ScrollControllerWidget(controller1),
+          // ScrollControllerWidget(controllerA),
+          // ScrollControllerWidget(controllerB),
+          // ScrollControllerWidget(controllerC),
           SizedBox(
             height: 700,
             child: SectionGridView(
               isFixed: false,
+              sectionController: controller,
               controller: controller1,
               physics: const NeverScrollableScrollPhysics(),
               sections: sections,
