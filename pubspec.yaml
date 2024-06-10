@@ -1,6 +1,6 @@
 name: flutter_super_grid
 description: "Flutter package with grid views: SimpleGridView for basic grids, FlatGridView for advanced options, and SectionGridView for sectioned grids and addtional styling."
-version: 1.0.8
+version: 1.0.9
 homepage: https://otrofy.com
 repository: https://github.com/otrofy/flutter-super-grid
 screenshots:

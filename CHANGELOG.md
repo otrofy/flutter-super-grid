@@ -32,3 +32,7 @@
 ## 1.0.8 
 
 * Add Scroll controller to all grids.
+
+## 1.0.9
+
+* Update Dart.
