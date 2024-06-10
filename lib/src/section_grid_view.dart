@@ -24,7 +24,7 @@ part of '../flutter_super_grid.dart';
 /// * [footerWidget]: The widget rendered at the bottom of the grid view. Defaults to [SizedBox].
 /// * [physics]: The physics of the grid view.
 /// * [controller]:  ScrollController? to controll scroller in the grid view.
-/// * [sectionController]:  List<ScrollController>? array of controllers to controll each section individually of the section grid view, this list of controllers must be the same length of the sections you want to have. 
+/// * [sectionController]:  List<ScrollController>? array of controllers to controll each section individually of the section grid view, this list of controllers must be the same length of the sections you want to have.
 /// Specific properties for `SectionGridView`:
 /// * [onNewItemAdded]: Callback function when a new item is added to the sections list.
 /// * [onPressed]: Callback function when an item in a section is pressed.
