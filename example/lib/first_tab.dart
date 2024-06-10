@@ -13,7 +13,6 @@ class FirstTab extends StatelessWidget {
     ScrollController controllerA = ScrollController();
     ScrollController controllerB = ScrollController();
     ScrollController controllerC = ScrollController();
-    List<ScrollController> controller = [controllerA, controllerB, controllerC];
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       physics: const ScrollPhysics(),
